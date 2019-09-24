@@ -19,6 +19,7 @@ Route::get('test', function(){
 Route::get('home', 'HomeController@index');
 
 Route::post('empresa/store', 'empresaController@store');
+Route::post('empresa/search', 'empresaController@store');
 Route::post('empresa/update', 'empresaController@update');
 Route::get('empresa/edit/{id}','empresaController@edit');
 Route::get('empresa/destroy/{id}','empresaController@destroy');

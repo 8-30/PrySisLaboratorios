@@ -36,6 +36,28 @@
                         <th>EMP_RELACION_SUFICIENCIA</th>
                         <th>OPCIONES</th>
                       </tr>
+                    <form  action="/empresa/search"  method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                      <tr>
+
+                          <td>
+                          <input type="number" name="EMP_CODIGO"  class="form-control" >
+                          </td>
+                        
+                          <td><input type="Search" name="EMP_NOMBRE"  class="form-control"  ></td>
+                          <td><input type="Search" name="EMP_FIRMA_DEE"  class="form-control"  ></td>
+                          <td><input type="Search" name="EMP_PIE_DEE"  class="form-control"  ></td>
+                          <td><input type="Search" name="EMP_FIRMA_JEFE"  class="form-control"  ></td>
+                          <td><input type="Search" name="EMP_PIE_JEFE"  class="form-control" ></td>
+                          <td><input type="Search" name="EMP_FIRMA_LAB"  class="form-control" ></td>
+                          <td><input type="Search" name="EMP_PIE_LAB"  class="form-control"  ></td>
+                          <td><input type="number" name="EMP_ESTADO"  class="form-control" ></td>
+                          <td><input type="number"  class="form-control" name="EMP_RELACION_SUFICIENCIA"  ></td>
+                          <td>
+                          <input type="submit"  class="btn-primary" value="Search">
+                          </td>
+                        </tr>
+                    </form>  
                     @foreach ($empresas as $empresa)
 
                       <tr>

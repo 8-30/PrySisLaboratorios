@@ -67,7 +67,12 @@ class empresaController extends Controller {
 		
 		//
 	}
-
+	public function search(Request $request)
+	{
+	
+		return redirect('empresa');
+		//
+	}
 	/**
 	 * Show the form for editing the specified resource.
 	 *
