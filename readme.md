@@ -21,4 +21,3 @@ Thank you for considering contributing to the Laravel framework! The contributio
 ### License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
-# PrySisLaboratorios

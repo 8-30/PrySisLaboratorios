@@ -1,0 +1,277 @@
+::-moz-selection {
+  background: #FF5900;
+  color: #FF5900;
+  text-shadow: none;
+}
+::selection {
+  background: #FF5900;
+  color: #FF5900;
+  text-shadow: none;
+}
+
+
+a {
+	color: #FF5900;
+}
+
+a:hover {
+	color:#FF5900;
+}
+
+footer .nav-list li a:hover,footer ul.regular li a:hover  {
+	color:#FF5900;
+}
+
+.btn-link:hover {
+  color: #FF5900;
+}
+
+.btn-color {
+  background: #FF5900;
+  *background: #FF5900;
+}
+.btn-color:hover,
+.btn-color.active,
+.btn-color.disabled,
+.btn-color[disabled] {
+  background: #FF5900;
+  *background: #FF5900;
+}
+
+/* portfolio */
+ul.filter li.active a{
+    background: #FF5900;	
+}
+
+ul.filter li a:hover {
+    color: #FF5900;
+}
+
+.portfolio-area li:hover .desc {
+    background: #FF5900;	
+}
+
+
+
+/* fontawesome icons */
+.icon-square:hover,
+.icon-rounded:hover,
+.icon-circled:hover {
+    background-color: #FF5900;
+}
+[class^="icon-"].active,
+[class*=" icon-"].active {
+    background-color: #FF5900;
+}
+
+/* header */
+
+.navbar .nav li.active a {
+	color:#FF5900;	
+}
+
+.navbar .nav li ul.dropdown-menu li a:hover, .navbar .nav li.active ul.dropdown-menu li a:hover  {
+	background:#FF5900;
+	
+}
+.color {
+	background: #FF5900;
+	color:#FF5900;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: #FF5900;
+  outline: 0;
+  outline: thin dotted \9;
+  /* IE6-9 */
+
+}
+
+/* sequence slider */
+.sequence-nav .next:hover,.sequence-nav .prev:hover {
+	background: #FF5900;
+}
+
+/* breadcrumb */
+.breadcrumb {
+
+}
+
+
+/* accordion */
+.accordion-heading a:hover {
+	color: #FF5900;
+}
+.accordion-heading .active{
+	color: #FF5900;
+}
+
+/* pricing box */
+.priceBox.special .emphasis {
+  background: #FF5900;
+}
+
+/* tagline */
+.tagline {
+	border-bottom:5px solid #FF5900;
+}
+
+
+/* styled list */
+ul.list.colored li:before {
+	color: #FF5900;
+}
+
+
+/* button */
+.btn-link {
+	color: #FF5900;
+}
+
+.nav .dropdown-toggle .caret {
+  margin-top: 6px;
+  border-top-color: #FF5900;
+  border-bottom-color: #FF5900;
+}
+
+
+
+/* tabs */
+.tabbable .nav > li > a:hover,
+.tabbable .nav > li > a:focus {
+  	background-color: #FF5900;
+}
+.tabbable .nav-tabs > .active > a,
+.tabbable .nav-tabs > .active > a:hover,
+.tabbable .nav-tabs > .active > a:focus {
+  	background-color: #FF5900;
+}
+
+/* accordion */
+.accordion-heading:hover .accordion-toggle,
+.accordion-heading:hover .accordion-toggle.inactive {
+	background:#FF5900;
+}
+.accordion-heading .accordion-toggle.active {
+	background:#FF5900;
+}
+
+
+
+/* label */
+.label-orange,
+.badge-orange {
+  background-color: #FF5900;
+}
+
+
+/* nav */
+.nav-list > .active > a,
+.nav-list > .active > a:hover {
+  background: #FF5900;
+}
+
+
+.nav-pills > .active > a,
+.nav-pills > .active > a:hover {
+  background: #FF5900;
+}
+
+.nav .dropdown-toggle .caret {
+  border-top-color: #FF5900;
+  border-bottom-color: #FF5900;
+}
+
+/* custom progress bar according template skin */
+.progress-orange .bar,
+.progress .bar-orange {
+  background: #FF5900;
+}
+
+.progress-orange.progress-striped .bar,
+.progress-striped .bar-orange {
+  background: #FF5900;
+}
+
+/* pagination */
+
+.pagination ul li a:hover {
+  background: #FF5900;
+  border-color:#FF5900;
+}
+
+
+/* widget */
+aside .widget ul.cat li a:hover {
+	color: #FF5900;
+}
+
+aside .widget ul.recent-posts li a:hover {
+	color: #FF5900;
+}
+
+aside .widget ul.tags li a {
+  background: #FF5900;
+}
+
+
+/* article */
+
+.entry-body a h5.title:hover {
+	color: #FF5900;
+}
+
+article.blog-post .post-heading h3 a:hover {
+	color:#FF5900;
+}
+
+article.last-post {
+	background: #FF5900;
+}
+
+ul.time-post li.year{
+	border-bottom:1px solid #FF5900;
+}
+
+ /* 404 */
+ 
+
+.error-body{
+	background:#FF5900;
+	padding:20px;
+	text-align:center;
+}
+
+/* footer */
+footer .subfooter {
+	border-top:5px solid #FF5900;
+}
+
+/* misc */
+a.thumbnail:hover {
+  border-color: #FF5900;
+}
+
+ul.filter li.active a:hover,.flex-control-nav li a:hover, .flex-control-nav li a.active{
+	background: #FF5900;
+}
+
+.thumbnail h4 a:hover, .thumbnail .meta  span a:hover, ul.recent li h6 a:hover, ul.post-meta li a:hover, .media-body span, .media-body .media-heading a:hover, form label span, article.last-post h5 a:hover{
+	color: #FF5900;
+	text-decoration:none;
+}
