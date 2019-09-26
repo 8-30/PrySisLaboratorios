@@ -13,9 +13,14 @@
 
 Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
+Route::get('docente', 'docenteController@index');
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+Route::get('docente/create', 'docenteController@create');
+Route::post('docente/store', 'docenteController@store');
+Route::get('docente/{id}/edit', 'docenteController@edit');
+Route::post('docente/update', 'docenteController@update');
+Route::post('docente/{id}/destroy', 'docenteController@destroy');
+
+
+
+
