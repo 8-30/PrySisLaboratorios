@@ -20,7 +20,7 @@
       
       <a href="empresa/create" class="btn btn-primary mb-2" >Agregar</a> 
       <br><br>
-      <table  id="empTable" id="example" class="table table-striped table-bordered"  >
+      <table  id="empTable" class="table table-striped table-bordered"  >
         <thead>
           <tr>
             <th>ID</th>
@@ -82,31 +82,31 @@
 
 </html>
 <script >
-
-$(document).ready( function () {
-  
-    $('#empTable').DataTable();
-    $('#empTable tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-    } );
+$(document).ready(function() {
+    $('#empTable').DataTable( {
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
  
-    // DataTable
-    var table = $('#empTable').DataTable();
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
  
-    // Apply the search
-    table.columns().every( function () {
-        var that = this;
- 
-        $( 'input', this.footer() ).on( 'keyup change clear', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
     } );
 } );
+
 </script>
 
 
