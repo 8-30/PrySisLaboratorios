@@ -2,49 +2,92 @@
 <!DOCTYPE html>
 <html>
  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ADD </title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  </head>
+ @extends('layouts.principal')
+ @section('empresa')
  <body >
- <div class="container">
-
-    <div align="center" class="table-title" >
-        <h1>AGREGAR </h1>
-            <hr>
-            <div style="width:50%" align="center">
-                    <form  action="/empresa/store"  method="post">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            NOMBRE <input type="text" class="form-control"  name="EMP_NOMBRE"  ><br>
-                            EMP_FIRMA_DEE: <input type="text" class="form-control"  name="EMP_FIRMA_DEE"  ><br>
-                            EMP_PIE_DEE: <input type="text" class="form-control"  name="EMP_PIE_DEE"  ><br>
-                            EMP_FIRMA_JEFE: <input type="text" class="form-control"  name="EMP_FIRMA_JEFE"  ><br>
-                            EMP_PIE_JEFE: <input type="text"  class="form-control" name="EMP_PIE_JEFE" ><br>
-                            EMP_FIRMA_LAB: <input type="text"  class="form-control"  name="EMP_FIRMA_LAB"  ><br>
-                            EMP_PIE_LAB: <input type="text"  class="form-control" name="EMP_PIE_LAB"  ><br>
-                            EMP_ESTADO: <input type="number"  class="form-control" name="EMP_ESTADO"  ><br>
-                            EMP_RELACION_SUFICIENCIA: <input type="number" class="form-control"  name="EMP_RELACION_SUFICIENCIA"  ><br>
-                            <input type="submit" class="btn-primary"  value="Submit">
-                    </form>
+        
+        <div class="container">
+         <h2>Crear Empresa</h2>
+         <form  action="/empresa/store"  method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <div class="row"> 
+                <div class="col">
+                        <div class="form-group">
+                        <label for="EMP_NOMBRE">Nombre  Laboratorio General</label>
+                                <input type="text" class="form-control"  name="EMP_NOMBRE" required >
+                        </div>
+                </div>
+             
+                <div class="col">
+                        <div class="form-group">
+                        <label for="EMP_FIRMA_DEE">Nombre Director de Departamento</label>
+                                <input type="text" class="form-control"  name="EMP_FIRMA_DEE" required >
+                        </div>
+                </div>
+             
+                <div class="col">
+                        <div class="form-group">
+                        <label for="EMP_PIE_DEE:">Cargo del Director Departamento</label>
+                                <input type="text" class="form-control"  name="EMP_PIE_DEE"  required >
+                        </div>
+                </div>
+             
+                <div class="col">
+                        <div class="form-group">
+                        <label for="EMP_FIRMA_JEFE">Nombre del Jefe del Laboratorio</label>
+                                <input type="text" class="form-control"  name="EMP_FIRMA_JEFE"  required >
+                        </div>
+                </div>
+           </div>     
+           <div class="row">
+                <div class="col">
+                        <div class="form-group">
+                        <label for="EMP_PIE_JEFE">Cargo del Jefe de Laboratorio</label>
+                                <input type="text"  class="form-control" name="EMP_PIE_JEFE" required >
+                        </div>
+                </div>
+             
+                <div class="col">
+                        <div class="form-group">
+                        <label for="EMP_FIRMA_LAB">Nombre Laboratorista</label>
+                                <input type="text"  class="form-control"  name="EMP_FIRMA_LAB" required >
+                        </div>
+                </div>
+             
+                <div class="col">
+                        <div class="form-group">
+                        <label for="EMP_PIE_LAB">Cargo del Laboratorista</label>
+                                <input type="text"  class="form-control" name="EMP_PIE_LAB" required  >
+                        </div>
+                </div>
+             
+                <div class="col">
+                        <div class="form-group">
+                        <label for="EMP_ESTADO">Estado del Laboratorio</label>
+                        <select class="form-control" id="EMP_ESTADO" name="EMP_ESTADO" required>
+                                <option>0</option>
+                                <option>1</option>
+                        </select>
+                        </div>
+                </div>
             </div>
-    </div>
- </div> 
+            <div class="row">
+                <div class="col">
+                        <label for="">Relacion Suficiencia</label>
+                        <select class="form-control" id="EMP_RELACION_SUFICIENCIA" name="EMP_RELACION_SUFICIENCIA" required>
+                                <option>0</option>
+                                <option>1</option>
+                        </select>
+                </div>
+            </div>
+                <br>
+                <button type="submit" class="btn btn-primary mb-2">Crear</button>
+                 <a href="{{url('empresa')}}" class="btn btn-danger mb-2">Cancelar</a> 
+             
+        </form>
+       </div> 
 </body>
 </html>
-
-
-
-
-
-
-
-
-<br>
 

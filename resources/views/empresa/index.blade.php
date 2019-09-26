@@ -1,91 +1,113 @@
 
-
+@extends('layouts.principal')
 <!DOCTYPE html>
+
 <html>
  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>EMPRESA </title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <script  type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
  </head>
+
  <body >
- <div class="container">
-
-    <div class="table-title" >
-        <h1>EMPRESA </h1>
-            <hr>
-            <div >
-            <table  class="table table-condensed table-bordered table-hover">
-
-                      <tr>
-                        <th>ID</th>
-                        <th>EMP_NOMBRE</th> 
-                        <th>EMP_FIRMA_DEE</th>
-                        <th>EMP_PIE_DEE</th> 
-                        <th>EMP_PIE_JEFE</th>
-                        <th>EMP_FIRMA_JEFE</th>
-                        <th>EMP_PIE_LAB</th> 
-                        <th>EMP_PIE_LAB</th>
-                        <th>EMP_ESTADO</th> 
-                        <th>EMP_RELACION_SUFICIENCIA</th>
-                        <th>OPCIONES</th>
-                      </tr>
-                    <form  action="/empresa/search"  method="post">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      <tr>
-
-                          <td>
-                          <input type="number" name="EMP_CODIGO"  class="form-control" >
-                          </td>
-                        
-                          <td><input type="Search" name="EMP_NOMBRE"  class="form-control"  ></td>
-                          <td><input type="Search" name="EMP_FIRMA_DEE"  class="form-control"  ></td>
-                          <td><input type="Search" name="EMP_PIE_DEE"  class="form-control"  ></td>
-                          <td><input type="Search" name="EMP_FIRMA_JEFE"  class="form-control"  ></td>
-                          <td><input type="Search" name="EMP_PIE_JEFE"  class="form-control" ></td>
-                          <td><input type="Search" name="EMP_FIRMA_LAB"  class="form-control" ></td>
-                          <td><input type="Search" name="EMP_PIE_LAB"  class="form-control"  ></td>
-                          <td><input type="number" name="EMP_ESTADO"  class="form-control" ></td>
-                          <td><input type="number"  class="form-control" name="EMP_RELACION_SUFICIENCIA"  ></td>
-                          <td>
-                          <input type="submit"  class="btn-primary" value="Search">
-                          </td>
-                        </tr>
-                    </form>  
-                    @foreach ($empresas as $empresa)
-
-                      <tr>
-                          <td>
-                              <a href="empresa/edit/{{$empresa->EMP_CODIGO}}" >{{ $empresa->EMP_CODIGO }}</a> 
-                          </td>
-                          <td>{{ $empresa->EMP_NOMBRE }}</td>
-                          <td>{{ $empresa->EMP_FIRMA_DEE }}</td>
-                          <td>{{ $empresa->EMP_PIE_DEE }}</td>
-                          <td>{{ $empresa->EMP_FIRMA_JEFE }}</td>
-                          <td>{{ $empresa->EMP_PIE_JEFE }}</td>
-                          <td>{{ $empresa->EMP_FIRMA_LAB }}</td>
-                          <td>{{ $empresa->EMP_PIE_LAB }}</td>
-                          <td>{{ $empresa->EMP_ESTADO }}</td>
-                          <td>{{ $empresa->EMP_RELACION_SUFICIENCIA }}</td>
-                          <td>
-                              <a href="empresa/destroy/{{$empresa->EMP_CODIGO}}" >ELIMINAR</a> 
-                          </td>
-                      </tr>
-                    @endforeach
-             </table>
-
-
-            </div>
-    </div>
-    <a href="empresa/create" class="btn-info" >Agregar</a> 
- </div> 
+ 
+@section('empresa')
+  <div class="container" style="margin-right: 350px;">
+      <h1>EMPRESA </h1>
+      
+      <a href="empresa/create" class="btn btn-primary mb-2" >Agregar</a> 
+      <br><br>
+      <table  id="empTable" id="example" class="table table-striped table-bordered"  >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Laboratorio General</th> 
+            <th>Director Departamento</th>
+            <th>Cargo Director Departamento</th> 
+            <th>Jefe Laboratorio</th>
+            <th>Cargo Jefe Laboratorio</th>
+            <th>Laboratorista</th> 
+            <th>Cargo Laboratorista</th>
+            <th>Estado Laboratorio</th> 
+            <th>Relacion Suficiencia</th>
+            <th>OPCIONES</th>
+          </tr>
+        
+          
+        </thead>
+        <tbody>
+        
+        
+        @foreach ($empresas as $empresa)
+          <tr>
+            <td>{{ $empresa->EMP_CODIGO }}</td>
+            <td>{{ $empresa->EMP_NOMBRE }}</td>
+            <td>{{ $empresa->EMP_FIRMA_DEE }}</td>
+            <td>{{ $empresa->EMP_PIE_DEE }}</td>
+            <td>{{ $empresa->EMP_FIRMA_JEFE }}</td>
+            <td>{{ $empresa->EMP_PIE_JEFE }}</td>
+            <td>{{ $empresa->EMP_FIRMA_LAB }}</td>
+            <td>{{ $empresa->EMP_PIE_LAB }}</td>
+            <td>{{ $empresa->EMP_ESTADO }}</td>
+            <td>{{ $empresa->EMP_RELACION_SUFICIENCIA }}</td>
+           
+            <td>
+                <a href="empresa/edit/{{$empresa->EMP_CODIGO}}" class="btn btn-primary mb-2"><span class="oi oi-pencil"></span></a>
+                <a href="empresa/destroy/{{$empresa->EMP_CODIGO}}" class="btn btn-danger mb-2"><span class="oi oi-trash"></span></a>
+            </td>
+          </tr>
+      
+        @endforeach
+        <tbody>
+        <tfoot>
+        <tr>
+                <th>ID</th>
+                <th>Laboratorio</th>
+                <th>Director Dep</th>
+                <th>Cargo Director Dep</th>
+                <th>Jefe Lab</th>
+                <th>Cargo Jefe Lab</th>
+                <th>Laboratorista</th>
+                <th>Cargo Laboratorista</th>
+                <th>Estado Laboratorio</th>
+                <th>Relacion Suficiencia</th>
+            </tr>
+        </tfoot>
+     </table>
+    </div >
 </body>
+
 </html>
+<script >
+
+$(document).ready( function () {
+  
+    $('#empTable').DataTable();
+    $('#empTable tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+ 
+    // DataTable
+    var table = $('#empTable').DataTable();
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change clear', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+} );
+</script>
+
 
 
