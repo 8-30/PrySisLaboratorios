@@ -20,7 +20,7 @@
       
       <a href="empresa/create" class="btn btn-primary mb-2" >Agregar</a> 
       <br><br>
-      <table  id="empTable" class="table table-striped table-bordered"  >
+      <table  id="empTable" class="table table-striped table-bordered table-responsive"  >
         <thead>
           <tr>
             <th>ID</th>
