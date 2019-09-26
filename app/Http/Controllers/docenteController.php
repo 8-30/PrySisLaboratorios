@@ -15,7 +15,7 @@ class docenteController extends Controller {
 	 */
 	public function index()
 	{
-		$docentes = DOCENTE::All();
+		$docentes = DOCENTE::paginate(10);
 		return view('docente.index', compact('docentes'));
 	}
 
