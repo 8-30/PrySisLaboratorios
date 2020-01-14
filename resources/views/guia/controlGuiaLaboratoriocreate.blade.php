@@ -15,7 +15,7 @@
                 @if(isset($fecha)) 
                     <input type="input" class="form-control" id="GUI_FECHA" name="GUI_FECHA" readonly value="{{$fecha->CON_DIA}} ">
                     <span style="color:#FF0000";>Tiene Guias Atrasadas</span>
-                @else
+                @else   
                     <input type="date" class="form-control" id="GUI_FECHA" name="GUI_FECHA">
                 @endif
                     
@@ -42,26 +42,26 @@
             <div class="form-group row">
                 <label for="GUI_EQUIPO_MATERIALES"class="col-sm-2 col-form-label">Equipos y Materiales<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <input type="input" class="form-control" id="GUI_EQUIPO_MATERIALES" name="GUI_EQUIPO_MATERIALES"   value="@if(isset($guia)) {{$guia->GUI_EQUIPO_MATERIALES}} @endif" required>
+                        <textarea type="input" class="form-control" id="GUI_EQUIPO_MATERIALES" name="GUI_EQUIPO_MATERIALES" required>@if(isset($guia)){{$guia->GUI_EQUIPO_MATERIALES}} @endif</textarea>
                     
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_TRABAJO_PREPARATORIO"class="col-sm-2 col-form-label">Instrucciones<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <input type="input" class="form-control" id="GUI_TRABAJO_PREPARATORIO" name="GUI_TRABAJO_PREPARATORIO"  value="@if(isset($guia)) {{$guia->GUI_TRABAJO_PREPARATORIO}} @endif" required>
+                        <textarea type="input" class="form-control" id="GUI_TRABAJO_PREPARATORIO" name="GUI_TRABAJO_PREPARATORIO" required>@if(isset($guia)){{$guia->GUI_TRABAJO_PREPARATORIO}} @endif</textarea>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_ACTIVIDADES"class="col-sm-2 col-form-label">Actividades por desarrollar<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <input type="input" class="form-control" id="GUI_ACTIVIDADES" name="GUI_ACTIVIDADES"   value="@if(isset($guia)) {{$guia->GUI_ACTIVIDADES}} @endif" required>
+                        <textarea type="input" class="form-control" id="GUI_ACTIVIDADES" name="GUI_ACTIVIDADES" required>@if(isset($guia)){{$guia->GUI_ACTIVIDADES}} @endif</textarea>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_RESULTADOS"class="col-sm-2 col-form-label">Resultados obtenidos<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <input type="input" class="form-control" id="GUI_RESULTADOS" name="GUI_RESULTADOS"   value="@if(isset($guia)) {{$guia->GUI_RESULTADOS}} @endif" required>
+                        <textarea type="input" class="form-control" id="GUI_RESULTADOS" name="GUI_RESULTADOS" required>@if(isset($guia)){{$guia->GUI_RESULTADOS}} @endif</textarea>                
                 </div>
             </div>
             <div class="form-group row">
@@ -91,7 +91,11 @@
             <div class="form-group row">
                 <label for="GUI_DURACION"class="col-sm-2 col-form-label">Duracion<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <input type="number" class="form-control" id="GUI_DURACION" name="GUI_DURACION"   value="@if(isset($guia)) {{$guia->GUI_DURACION}} @endif" required>
+                    @if(isset($guia))
+                        <input type="input" class="form-control" id="GUI_DURACION" name="GUI_DURACION"   value="@if(isset($guia)){{$guia->GUI_DURACION}}@endif" required>
+                    @else
+                      <input type="number" class="form-control" id="GUI_DURACION" name="GUI_DURACION" required>
+                    @endif
                 </div>
             </div>
         <!-- Submit Button -->

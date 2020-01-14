@@ -24,4 +24,6 @@ class EventoOcacional extends Model {
         return $this->belongsTo('App\docente', 'DOC_CODIGO');
     }
 
+
+
 }

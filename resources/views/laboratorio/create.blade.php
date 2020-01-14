@@ -28,6 +28,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" >
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="LAB_ABREVIATURA">Abreviatura<span style="color:#FF0000";>*</span></label>
+                            <input type="text" class="form-control" id="LAB_ABREVIATURA" name="LAB_ABREVIATURA" placeholder="Nombre del laboratorio en abreviatura" required>
+                        </div>
+                    </div>
+                    <div class="col" style="display: flex;align-items: center;">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="LAB_ESTADO" name="LAB_ESTADO">
+                            <label class="custom-control-label" for="LAB_ESTADO">Estado<span style="color:#FF0000";>*</span></label>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col">
                         <div class="form-group">

@@ -2,7 +2,6 @@
 @section('content')
 @include('shared.title', array('titulo' => 'Guías'))
 
-
 <div class="container-fluid">
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <p class="h4 alert-heading">
@@ -29,6 +28,7 @@
     @endif
 
     <a href="{{url('guia/crearGuia')}}" class="btn btn-success mb-2">Crear Guías</a>
+    <a href="{{url('guia/regresarListarGuia/'.$materia_guia[0]->DOC_CODIGO)}}" class="btn btn-danger mb-2 float-center">Regresar a Guías y Solicitudes</a>
 
     <table id="ListTable" class="table table-hover table-bordered results">
         <thead>
@@ -104,17 +104,17 @@
             <tr>
                 <td scope="row">{{$guiap -> CON_DIA}}</td>
                 <td scope="row">
-                @if ($guiap -> CON_EXTRA!==1)
-                    HORA
-                @else
-                    <b>OCASIONAL</b>
-                @endif
+                    @if ($guiap -> CON_EXTRA !== 1)
+                        HORARIO
+                    @else
+                        <b>OCASIONAL</b>
+                    @endif
                 </td>
                 <td scope="row">{{$guiap -> CON_NUMERO_HORAS}}</td>
                 <td scope="row">{{$guiap -> CON_HORA_ENTRADA}}</td>
                 <td scope="row">{{$guiap -> CON_HORA_SALIDA}}</td>
                 <td scope="row" class="h3 text-center">
-                @if($guiap ->CON_EXTRA == 1)
+                @if($guiap ->CON_EXTRA == 1  || $guiap->CON_REG_FIRMA_ENTRADA == null)
                     ****
                 @else
                     @if ($guiap -> CON_GUIA !== 1)

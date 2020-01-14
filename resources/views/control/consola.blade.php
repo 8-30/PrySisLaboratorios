@@ -1,6 +1,6 @@
 @extends('app')
 @section('content')
-@include('shared.title', array('titulo' => 'Consola de Control'))
+@include('shared.title', array('titulo' => 'Control Laboratorio'))
 
 <div class="container fluid">
     @if (session('title') && session('subtitle'))
