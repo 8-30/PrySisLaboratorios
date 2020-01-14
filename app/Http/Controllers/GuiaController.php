@@ -139,6 +139,12 @@ class GuiaController extends Controller {
 		}
 	}
 
+	public function regresarListarGuia($doc_id) {
+		$docente = Docente::where('DOC_CODIGO',$doc_id)->first();
+		$requestObj = new Request(array('usuario' => $docente->DOC_MIESPE, 'clave' => $docente->DOC_CLAVE));
+		return $this->index($requestObj);
+	}
+
 	public function logout() {
 		session()->forget('DOC_CODIGO');
 		return view('guias.login');
