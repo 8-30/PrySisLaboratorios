@@ -1,9 +1,10 @@
 @extends('app')
 @section('content')    
 <div class="jumbotron">
-    <h2>CREAR GUIA</h2>
-
-    
+    <h2> <span style="color:#ED7624" >CREAR GUIA: {{ $materia }} </span></h2>
+</div>
+<div class="col">
+    <a href="{{url('guia/listarGuias/'. session('MAT_CODIGO'))}}" class="btn btn-primary mb-2 float-center">Regresar a la lista de Guias</a>  &nbsp 
 </div>
 <div class="container-fluid">
     <div class="row">

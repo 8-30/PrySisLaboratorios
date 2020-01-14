@@ -12,7 +12,7 @@ $("#MAT_CODIGO").change(function(event){
        $("#DOC_CODIGO").empty();
         for(i = 0; i<respuesta.length; i++){
             $("#DOC_CODIGO").append("<option value='"+respuesta[i].DOC_CODIGO+"'>"
-                +respuesta[i].DOC_NOMBRES+"</option>");
+                +respuesta[i].DOC_NOMBRES+" "+respuesta[i].DOC_APELLIDOS+"</option>");
         }
       }
     });

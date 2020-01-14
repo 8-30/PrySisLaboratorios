@@ -7,7 +7,7 @@
 
 @extends('app')
 @section('content')
-@include('shared.title', array('titulo' => 'Lista de Control'))
+@include('shared.title', array('titulo' => 'Generar Control'))
 
 <div class="container-fluid">
   @if (session('success'))
@@ -37,9 +37,9 @@
                   <div class="card-body text-primary">
                     <div class="form-group">
                       @if (!session('fecha'))
-                      <input type="text" class="form-control" name="CON_DIA" id="CON_DIA" value="{{$controles['fecha']}}" />
+                      <input type="date" class="form-control" name="CON_DIA" id="CON_DIA" value="{{$controles['fecha']}}" />
                       @else
-                      <input type="text" class="form-control" name="CON_DIA" id="CON_DIA" value="{{session('fecha')}}" />
+                      <input type="date" class="form-control" name="CON_DIA" id="CON_DIA" value="{{session('fecha')}}" />
                       @endif
                     </div>
                     

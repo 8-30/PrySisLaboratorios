@@ -34,6 +34,8 @@
                 <th scope="col">CAPACIDAD</th>
                 <th scope="col">CAMPUS</th>
                 <th scope="col">EMPRESA</th>
+                <th scope="col">ABREVIATURA</th>
+                <th scope="col">ESTADO</th>
                 <th scope="col">ACCIONES</th>
             </tr>
         </thead>
@@ -46,6 +48,14 @@
             <td scope="row">{{$lab -> LAB_CAPACIDAD}}</td>
             <td scope="row">{{$lab -> campus->CAM_NOMBRE}}</td>
             <td scope="row">{{$lab -> empresa->EMP_NOMBRE}}</td>
+            <td scope="row">{{$lab -> LAB_ABREVIATURA}}</td>
+            <td scope="row">
+                 @if ($lab->LAB_ESTADO === 1)
+                    <span class="badge badge-primary">Activo</span>
+                    @elseif ($lab->LAB_ESTADO === 0)
+                    <span class="badge badge-danger">Inactivo</span>
+                    @endif
+            </td>
             <td>
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <a href="{{url('laboratorio/'.$lab->LAB_CODIGO.'/edit')}}" class="btn btn-primary mb-2"><span class="oi oi-pencil"></span></a>

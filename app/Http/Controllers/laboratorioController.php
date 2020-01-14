@@ -44,11 +44,17 @@ class LaboratorioController extends Controller {
 	public function store(Request $request)
 	{
 		//
+		$estado = 0;
+		if ($request['LAB_ESTADO'] === 'on') {
+			$estado = 1;
+		}
 	laboratorio::create([
 			'LAB_NOMBRE' => $request['LAB_NOMBRE'], 
 			'LAB_CAPACIDAD' => $request['LAB_CAPACIDAD'], 
 			'CAM_CODIGO' => $request['CAM_CODIGO'], 
-			'EMP_CODIGO' => $request['EMP_CODIGO']
+			'EMP_CODIGO' => $request['EMP_CODIGO'],
+			'LAB_ABREVIATURA' => $request['LAB_ABREVIATURA'], 
+			'LAB_ESTADO' => $estado
 		]);
 
 		return redirect('laboratorio')
@@ -79,6 +85,11 @@ class LaboratorioController extends Controller {
 	 */
 	public function update(Request $request)
 	{
+		if ($request['LAB_ESTADO'] === 'on') {
+			$request['LAB_ESTADO'] = 1;
+		} else {
+			$request['LAB_ESTADO'] = 0;
+		}
 		$laboratorios =	laboratorio::find( $request['LAB_CODIGO']);
 		$laboratorios->fill($request->all());
 		$laboratorios->save();
