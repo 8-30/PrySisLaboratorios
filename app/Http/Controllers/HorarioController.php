@@ -20,8 +20,8 @@ class HorarioController extends Controller {
 	 */
 	public function index(Request $request) {
 		$idempresa = $request->user()->empresa->EMP_CODIGO;
-		$laboratorios = Laboratorio::where('EMP_CODIGO',$idempresa)->get();		
-		// la condicion es que se verifique si ya 
+		$laboratorios = Laboratorio::where('EMP_CODIGO',$idempresa)->get();
+		// la condicion es que se verifique si ya
 		// hay un elemento con PER_CODIGO y LAB_CODIGO existente
 
 		$periodo = Periodo::where('PER_ESTADO', 1)
@@ -39,14 +39,12 @@ class HorarioController extends Controller {
 			if ($horario == 1) { // existe el registro
 				// mostramos el lapiz
 				$laboratorio->visible = 'lapiz';
-				// var_dump($laboratorio->toJson());
 			} elseif ($horario == 0) { // no existe el registro
 				// mostramos el plus
 				$laboratorio->visible = 'plus';
-				// var_dump($laboratorio->toJson());
 			}
 		}
-		
+
 		return view('horario.index', compact('laboratorios','idempresa'));
 	}
 
@@ -337,7 +335,7 @@ class HorarioController extends Controller {
 		if($request['HOR_VIERNES13_OPC'] === 'on') {
 			$HOR_VIERNES13_OPC = 1;
 		}
-	
+
 		Horario::create([
 			'LAB_CODIGO' => $request['LAB_CODIGO'],
 			'PER_CODIGO' => $request['PER_CODIGO'],
@@ -485,7 +483,7 @@ class HorarioController extends Controller {
 			'HOR_VIERNES12_OPC' => $HOR_VIERNES12_OPC,
 			'HOR_VIERNES13_OPC' => $HOR_VIERNES13_OPC
 		]);
-			
+
 		return redirect('horario')
 			->with('title', 'Horario registrado!')
 			->with('subtitle', 'El registro del horario para el periodo acádemico actual se ha realizado con éxito.');
@@ -499,7 +497,7 @@ class HorarioController extends Controller {
 		$horario = Horario::where('LAB_CODIGO', $labId)
 			->where('PER_CODIGO', $perId)
 			->first();
-		
+
 		$materias = Materia::select('MAT_CODIGO', 'MAT_ABREVIATURA')
 			->orderby('MAT_ABREVIATURA')
 			->where('PER_CODIGO', $perId)

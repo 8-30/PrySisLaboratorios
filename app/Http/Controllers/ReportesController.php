@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 /**
  * Sistema de Gestion de Laboratorios - ESPE
- * 
+ *
  * Author: Jerson Morocho
  		   Barrera Erick - LLamuca Andrea
  * Revisado por: Jerson Morocho
@@ -26,7 +26,7 @@ use App\Empresa;
 
 use PDF;
 use DB;
-use Carbon\Carbon; 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportesController extends Controller {
@@ -94,7 +94,7 @@ class ReportesController extends Controller {
 		$controles= $this->listar($request['CON_DIA'],$request['CAM_CODIGO']);
 		$campus=DB::select('SELECT * FROM campus');
 		return view('reportes.hojaControl', compact('controles','campus'));
-	
+
 	}
 
 	// El nombre del metodo no esta claro a que modulo pertenece
@@ -110,7 +110,7 @@ class ReportesController extends Controller {
 
 		//$controles["fecha"]=$fecha;
 		return $controles;
-	}	
+	}
 
 	public function horarioPorDocenteIndex()
 	{
@@ -132,7 +132,7 @@ class ReportesController extends Controller {
 		$periodos = Periodo::codigoNombre()->get();
 		$docentes = Docente::codigoNombre()->get();
 		$profesor = Docente::nombreDocente($docenteId)->first();
-		
+
 		$count = Horario::obtenerHorarioPorPeriodo($periodoId)->count();
 		$horario = Horario::obtenerHorarioPorPeriodo($periodoId)->first();
 		$materias = Materia::obtenerMateriaPorDocente($periodoId, $docenteId)->get();
@@ -171,28 +171,32 @@ class ReportesController extends Controller {
 		]);
 	}
 
-	public function materiaPorCarrera() {
-		$periodos = Periodo::codigoNombre()->get();
+	public function materiaPorCarrera(Request $request) {
+		$idempresa = $request->user()->empresa->EMP_CODIGO;
+		$periodos = Periodo::where('EMP_CODIGO', $idempresa)
+			->codigoNombre()->get();
 		$carreras = Carrera::codigoNombre()->get()->sortBy('CAR_NOMBRE');
 
 		$request = null;
 		$materias = null;
-		
+
 		return view('reportes.materiaCarrera', [
 			'periodos' => $periodos,
 			'carreras' => $carreras,
 			'valores'=> $request,
 			'materias'=> $materias
-		]);
-	}
+			]);
+		}
 
-  public function materiaPorCarreraPost(Request $request) {
-		$periodos = Periodo::codigoNombre()->get();
+	public function materiaPorCarreraPost(Request $request) {
+		$idempresa = $request->user()->empresa->EMP_CODIGO;
+		$periodos = Periodo::where('EMP_CODIGO', $idempresa)
+			->codigoNombre()->get();
 		$carreras = Carrera::codigoNombre()->get()->sortBy('CAR_NOMBRE');
 	  $materias = Materia::materiasx($request['PER_CODIGO'],$request['CAR_CODIGO'])->get();
 		$carreraSearch = Carrera::find($request['CAR_CODIGO']);
 		$periodoSearch = Periodo::find($request['PER_CODIGO']);
-		$valores  = $request; 
+		$valores  = $request;
 		return view('reportes.materiaCarrera', [
 			'periodos' => $periodos,
 			'carreras' => $carreras,
@@ -237,7 +241,7 @@ class ReportesController extends Controller {
 
 		$request=null;
 		$controles=null;
-		
+
 		return view('reportes.usoguiasentregadas', [
 			'periodos' => $periodos,
 			'docentes' => $docentes,
@@ -250,13 +254,13 @@ class ReportesController extends Controller {
 	{
 		$periodos = Periodo::codigoNombre()->get();
 		$docentes = docente::codigoNombre()->get();
-		
+
 		$materias=Materia::materiasxP($request['PER_CODIGO'],$request['DOC_CODIGO'])->get();
 		$controles= null;
 		for($i=0;$i<sizeof($materias);$i++){
 			$controles[$i]=control::entregadasx($materias[$i]['MAT_CODIGO'])->get();
 		}
-		
+
 		return view('reportes.usoguiasentregadas', [
 			'periodos' => $periodos->reverse(),
 			'docentes' => $docentes,
@@ -273,7 +277,7 @@ class ReportesController extends Controller {
 		$request=null;
 		$guias=null;
 
-		
+
 		return view('reportes.guiaxcarrera', [
 			'periodos' => $periodos->sortByDesc('PER_CODIGO'),
 			'carreras' => $carreras->sortBy('CAR_NOMBRE'),
@@ -290,12 +294,12 @@ class ReportesController extends Controller {
 		$periodoActual=Periodo::where('PER_CODIGO',$request->PER_CODIGO)->first();
 		$fechaInicial=$request['FECHA_INCIAL'];
 		$fechaFinal=$request['FECHA_FINAL'];
-		
+
 		$materias=Materia::materiasx($request['PER_CODIGO'],$request['CAR_CODIGO'])->get();
 		$j=0;
 		$guias=null;
 		for($i=0;$i<sizeof($materias);$i++){
-          
+
 			if($fechaInicial!="" && $fechaFinal!=""){
 			   $guiasValor[$i]=Guia::guiasxCarrera($materias[$i]['MAT_CODIGO'])->whereBetween('GUI_FECHA', [$fechaInicial, $fechaFinal])->get();
 			}else{
@@ -308,7 +312,7 @@ class ReportesController extends Controller {
 				$guias[$j]=$guiasValor[$i];
 				$j++;
 			}
-		}		
+		}
 		return view('reportes.guiaxcarrera', [
 			'periodos' => $periodos->sortByDesc('PER_CODIGO'),
 			'carreras' => $carreras->sortBy('CAR_NOMBRE'),
@@ -321,17 +325,17 @@ class ReportesController extends Controller {
 	}
 
 	public function pdfcontrol(Request $request)
-	{ 
+	{
 		$controles= $this->listar($request['CON_DIA'],$request['CAM_CODIGO']);
 		$pdf = PDF::loadView('reportes.pdfcontrol',compact('controles'))->setPaper('a4', 'landscape');
-		
+
         return $pdf->stream('ReporteControl.pdf');
 	}
 
 
 
 	public function pdfevento($id,$fechaIni,$fechaFin)
-	{ 
+	{
 		$periodos = Periodo::All();
 		$periodoActual=$id;
 		$fechaActual= Carbon::now()->format('Y-m-d');
@@ -339,12 +343,12 @@ class ReportesController extends Controller {
 		$fechaInicial=$fechaIni;
 		$data = DB::select('select  periodo.PER_NOMBRE as PER_NOMBRE, periodo.PER_CODIGO as PER_CODIGO , control.CON_CODIGO as  CON_CODIGO , laboratorio.LAB_NOMBRE as LAB_NOMBRE,materia.MAT_ABREVIATURA as MAT_NOMBRE,materia.MAT_CODIGO as MAT_CODIGO, concat(docente.DOC_TITULO," ",docente.DOC_NOMBRES," ",docente.DOC_APELLIDOS)   as DOC_NOMBRE ,control.CON_DIA as CON_DIA,control.CON_HORA_ENTRADA as CON_HORA_ENTRADA , control.CON_HORA_SALIDA as CON_HORA_SALIDA, control.CON_NUMERO_HORAS as CON_NUMERO_HORAS, control.CON_NOTA as CON_NOTA, periodo.PER_NOMBRE as PER_NOMBRE   from control,materia,docente,periodo,laboratorio where control.LAB_CODIGO = laboratorio.LAB_CODIGO and control.MAT_CODIGO =materia.MAT_CODIGO and control.DOC_CODIGO = docente.DOC_CODIGO and materia.PER_CODIGO =periodo.PER_CODIGO and control.CON_EXTRA=1 and periodo.PER_CODIGO='.$periodoActual.' and control.CON_DIA  between \' '.$fechaInicial.'\''.' and \''.$fechaFinal.'\''.' order by control.CON_DIA ASC; ');
 		$pdf = PDF::loadView('reportes.pdfevento',compact('data','fechaActual','fechaInicial','fechaFinal'))->setPaper('a4');
-		
+
         return $pdf->stream('Reporte.pdf');
 	}
 
 	public function pdfmateriacarrera($idper,$idcar)
-	{ 
+	{
 		$periodos = Periodo::codigoNombre()->get();
 		$carreras = Carrera::codigoNombre()->get();
 		$materias = Materia::materiasx($idper,$idcar)->get();
@@ -354,12 +358,12 @@ class ReportesController extends Controller {
 		$periodox = Periodo::find($idper);
 		$empresa = Empresa::find($periodox->EMP_CODIGO);
 		$pdf = PDF::loadView('reportes.pdfmateriacarrera', compact('materias','periodox','carrerax','fechaActual','empresa'))->setPaper('a4');
-		
+
 		return $pdf->stream('Reporte.pdf');
 	}
 
 	public function pdfhorariosala($idper,$idlab)
-	{ 
+	{
 		$periodoId = $idper;
 		$laboratorioId = $idlab;
 		$periodox=Periodo::find($idper);
@@ -398,12 +402,12 @@ class ReportesController extends Controller {
 		}
 
 		$pdf = PDF::loadView('reportes.pdfhorariosala',compact('periodos','laboratorios','count','horario','periodox','laboratoriox','fechaActual'))->setPaper('a4');
-		
+
         return $pdf->stream('Reporte.pdf');
 	}
 
 	public function pdfhorariodocente($idper,$iddoc)
-	{ 
+	{
 		$periodoId = $idper;
 		$docenteId = $iddoc;
 		$periodox=Periodo::find($idper);
@@ -443,12 +447,12 @@ class ReportesController extends Controller {
 		}
 
 		$pdf = PDF::loadView('reportes.pdfhorariodocente',compact('periodos','docentes','count','horario','profesor','periodox','Docentex','fechaActual'))->setPaper('a4');
-		
+
         return $pdf->stream('Reporte.pdf');
-	}	
+	}
 
 	public function pdfCarreraGuia($idperiodo,$idcarrera,$fechaIni,$fechaFin)
-	{ 
+	{
 		$periodo=Periodo::find($idperiodo);
 		$carrera=Carrera::find($idcarrera);
 		$fechaFinal=$fechaFin;
@@ -469,22 +473,22 @@ class ReportesController extends Controller {
 				$guias[$j]=$guiasValor[$i];
 				$j++;
 			}
-		}		
+		}
 
-		
+
 		$pdf = PDF::loadView('reportes.pdfcarreraGuias',compact('guias','periodo','carrera','fechaInicial','fechaFinal'))->setPaper('a4');
-		
+
         return $pdf->stream('Reporte.pdf');
 	}
 	public function pdfSolicitud($id)
-	{ 
+	{
 		$solicitud = Solicitud::find($id);
 		$solicitud->laboratorio->empresa->materiales;
 		$solicitud->detalleSolicitud;
 		$solicitud->docente;
 		$solicitud->materia;
 		$pdf = PDF::loadView('reportes.pdfsolicitud',compact('solicitud'))->setPaper('a4');
-		
+
         return $pdf->stream('Reporte.pdf');
 	}
 
@@ -493,6 +497,6 @@ class ReportesController extends Controller {
     {
         $this->middleware('auth');
 	}
-	
+
 
 }
