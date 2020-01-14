@@ -186,7 +186,8 @@ Route::get('guia/comboGuia/{id}', 'GuiaController@byGuiaGet');
 Route::get('guia/controlGuiaLaboratoriocreate', 'GuiaController@controlGuiaLaboratoriocreate');
 Route::post('guia/createGuiaSeleccion', 'GuiaController@createGuiaSeleccion');
 Route::post('guia/guardarGuia', 'GuiaController@guardarGuia');
-/////////////////////////////////////////////////////////////////
+Route::get('guia/regresarListarGuia/{id}', 'GuiaController@regresarListarGuia');
+//////////////////////////////////Routes AUTH
 Route::get('home', 'LoginController@index');
 Route::get('home/noticiadetail/{id}', 'LoginController@noticiadetail');
 Route::get('home/objetodetail/{id}', 'LoginController@objetodetail');
@@ -216,5 +217,3 @@ Route::get('role', 'RoleController@index');
 Route::get('role/{id}/edit', 'RoleController@edit');
 Route::get('role/{id}/destroy', 'RoleController@destroy');
 Route::post('role/update', 'RoleController@update');
-
-

@@ -5,7 +5,7 @@
 </div>
 <div class="container-fluid">
     <a href="{{url('solicitud/create')}}" class="btn btn-success mb-2">Crear Solicitud</a>
-    <a href="{{URL::previous()}}" class="btn btn-danger mb-2">Regresar a Guías y Solicitudes</a>
+    <a href="{{url('guia/regresarListarGuia/'.$materia_guia[0]->DOC_CODIGO)}}" class="btn btn-danger mb-2">Regresar a Guías y Solicitudes</a>
 
     <table id="ListTable" class="table table-hover table-bordered results">
         <thead>

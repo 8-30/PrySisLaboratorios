@@ -26,8 +26,12 @@ class SolicitudController extends Controller {
 		$materia = $id;
 		$docente = session('DOC_CODIGO');
 		$solicitudes = Solicitud::allSolicitudes($docente,$materia)->get();
+		$materia_guia = DB::select('select materia.MAT_ABREVIATURA, materia.DOC_CODIGO from materia where materia.MAT_CODIGO='.$materia);
 
-		return view('solicitud.index', ['solicitudes' => $solicitudes]);
+		return view('solicitud.index', [
+			'solicitudes' => $solicitudes,
+			'materia_guia' => $materia_guia
+			]);
 	}
 
 	public function edit($id) {
