@@ -152,8 +152,12 @@
     </li>
     @endif
   </ul>
-  @endif
   <div class="position-absolute" style="right:0">
-    <a class="nav-link text-light" href="{{url('/guias_y_solicitudes/login')}}"><span class="oi oi-book"></span> Guías y Solicitudes</a>
+    <a class="btn btn-orange" href="{{url('/guias_y_solicitudes/login')}}"><span class="oi oi-book"></span> Guías y Solicitudes</a>
   </div>
+  @else
+  <div class="m-auto">
+    <a class="btn btn-orange btn-pulse" href="{{url('/guias_y_solicitudes/login')}}"><span class="oi oi-book"></span> Guías y Solicitudes</a>
+  </div>
+@endif
 </nav>

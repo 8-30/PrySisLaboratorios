@@ -47,7 +47,8 @@ class WelcomeController extends Controller {
 					->where("NOT_FECHA_FIN",">=",$date)
 					->orderBy('NOT_CODIGO', 'DESC')
 					->get();
-		return view('welcome',['objetos' => $objetos, 'noticias' => $noticias]);
+	
+					return view('welcome',['objetos' => $objetos, 'noticias' => $noticias]);
 	}
 
 	public function noticiadetail($id)
