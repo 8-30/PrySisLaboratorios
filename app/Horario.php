@@ -218,7 +218,7 @@ class Horario extends Model {
 		->orWhere('HOR_VIERNES8',$materiaId)->orWhere('HOR_VIERNES9',$materiaId)->orWhere('HOR_VIERNES10',$materiaId)->orWhere('HOR_VIERNES11',$materiaId)
 		->orWhere('HOR_VIERNES12',$materiaId)->orWhere('HOR_VIERNES13',$materiaId);
 	}
-	public function scopeObtenerHorarioOcacionalMateria($query, $materiaId,$dia,$opcional)
+	public function scopescopeObtenerHorarioOcasionalMateria($query, $materiaId,$dia,$opcional)
 	{
 		return $query->where('HOR_'.$dia."1", $materiaId)->where('HOR_'.$opcional."1_OPC", 1)->orWhere('HOR_'.$dia."2", $materiaId)->where('HOR_'.$opcional."2_OPC", 1)->orWhere('HOR_'.$dia."3", $materiaId)->where('HOR_'.$opcional."3_OPC", 1)->orWhere('HOR_'.$dia."4", $materiaId)->where('HOR_'.$opcional."4_OPC", 1)
 		->orWhere('HOR_'.$dia."5", $materiaId)->where('HOR_'.$opcional."5_OPC", 1)->orWhere('HOR_'.$dia."6", $materiaId)->where('HOR_'.$opcional."6_OPC", 1)->orWhere('HOR_'.$dia."7", $materiaId)->where('HOR_'.$opcional."7_OPC", 1)->orWhere('HOR_'.$dia."8", $materiaId)->where('HOR_'.$opcional."8_OPC", 1)

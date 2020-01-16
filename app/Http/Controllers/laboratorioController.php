@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\laboratorio;
 use App\Campus;
 use App\empresa;
+use App\control;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -43,14 +44,21 @@ class LaboratorioController extends Controller {
 	public function store(Request $request)
 	{
 		//
+		$estado = 0;
+		if ($request['LAB_ESTADO'] === 'on') {
+			$estado = 1;
+		}
 	laboratorio::create([
 			'LAB_NOMBRE' => $request['LAB_NOMBRE'], 
 			'LAB_CAPACIDAD' => $request['LAB_CAPACIDAD'], 
 			'CAM_CODIGO' => $request['CAM_CODIGO'], 
-			'EMP_CODIGO' => $request['EMP_CODIGO']
+			'EMP_CODIGO' => $request['EMP_CODIGO'],
+			'LAB_ABREVIATURA' => $request['LAB_ABREVIATURA'], 
+			'LAB_ESTADO' => $estado
 		]);
 
 		return redirect('laboratorio')
+			->with('alert', 'alert-success')
 			->with('title','Laboratorio creado!')
 			->with('subtitle','Se ha creado correctamente el laboratorio.');
 	}
@@ -77,10 +85,16 @@ class LaboratorioController extends Controller {
 	 */
 	public function update(Request $request)
 	{
+		if ($request['LAB_ESTADO'] === 'on') {
+			$request['LAB_ESTADO'] = 1;
+		} else {
+			$request['LAB_ESTADO'] = 0;
+		}
 		$laboratorios =	laboratorio::find( $request['LAB_CODIGO']);
 		$laboratorios->fill($request->all());
 		$laboratorios->save();
 		return redirect('laboratorio')
+			->with('alert', 'alert-success')
 			->with('title','Laboratorio actualizado!')
 			->with('subtitle','Se han actualizado correctamente los datos del laboratorio.');
 	}
@@ -93,10 +107,20 @@ class LaboratorioController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		laboratorio::destroy($id);
-		return redirect('laboratorio')
-			->with('title','Laboratorio eliminado!')
-			->with('subtitle','Se ha eliminado correctamente el laboratorio.');
+		$validaControl = control::where('LAB_CODIGO',$id)->first();
+		
+		if (count($validaControl) === 1) {
+			return redirect('laboratorio')
+				->with('alert', 'alert-danger')
+				->with('title','Laboratorio no eliminado!')
+				->with('subtitle','El registro del laboratorio no se ha eliminado, el laboratorio tiene registros relacionados.');
+		}else{
+			laboratorio::destroy($id);
+			return redirect('laboratorio')
+				->with('alert', 'alert-success')
+				->with('title','Laboratorio eliminado!')
+				->with('subtitle','Se ha eliminado correctamente el laboratorio.');
+		}
 	}
 
 	//valida que este autenticado para acceder al controlador

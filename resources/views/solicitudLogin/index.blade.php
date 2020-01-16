@@ -25,7 +25,7 @@
                         
                         <td>
                             
-                           Guias <a href="{{url('solicitud/listarGuiasSolicitud/'.$mat->MAT_CODIGO)}}" class="btn btn-primary mb-2 float-right"><span class="oi oi-pencil"></span></a>                           
+                           Guias <a href="{{url('solicitud/'.$mat->MAT_CODIGO.'/index')}}" class="btn btn-primary mb-2 float-right"><span class="oi oi-pencil"></span></a>                           
                         </td>
                     </tr>
                 @endforeach

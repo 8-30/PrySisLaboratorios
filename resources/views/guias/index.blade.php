@@ -1,39 +1,41 @@
 @extends('app')
 @section('content')
+@include('shared.title', array('titulo' => 'Guías y Solicitudes'))
 
-<div class="jumbotron">
-<h2 ><pre style="color: #ED7624">Periodo:{{$periodo->PER_NOMBRE}}     Docente:{{$docente->DOC_TITULO}} {{$docente->DOC_NOMBRES}} {{$docente->DOC_APELLIDOS}}</pre></h2>
-</div>
 <div class="container">
+    <p class="h3" style="color: #ED7624">
+        Materia: <span class="font-weight-normal">{{ $periodo->PER_NOMBRE }}</span>
+    </p>
+    <p class="h3" style="color: #ED7624">
+        Docente: <span class="font-weight-normal">{{ $docente->DOC_TITULO }} {{ $docente->DOC_NOMBRES }} {{ $docente->DOC_APELLIDOS }}</span>
+    </p>
+
     @if(!empty($materias))
         <table id="ListTable1" class="table table-hover table-bordered results">
             <thead class="thead-dark">
                 <tr>
-                  
-                    <th style="color: #ED7624" scope="row">Carrera</th>
-                    <th style="color: #ED7624" scope="row">Nombre</th>
-                    <th style="color: #ED7624" scope="row">NRC</th>
-                    <th style="color: #ED7624" scope="row">Acciones</th>
+                    <th scope="row">Carrera</th>
+                    <th scope="row">Nombre</th>
+                    <th scope="row">NRC</th>
+                    <th scope="row">Acciones</th>
                 </tr>
             </thead>
             <tbody >
                 @foreach ($materias as $mat)
-                    <tr>       
-                        <td scope="row">{{$mat -> carrera -> CAR_NOMBRE}}</td> 
-                        <td scope="row">{{$mat -> MAT_NOMBRE}}</td> 
+                    <tr>
+                        <td scope="row">{{$mat -> carrera -> CAR_NOMBRE}}</td>
+                        <td scope="row">{{$mat -> MAT_NOMBRE}}</td>
                         <td scope="row">{{$mat -> MAT_NRC}}</td>
-                        
                         <td>
                             <a href="{{url('guia/listarGuias/'.$mat->MAT_CODIGO)}}" class="btn btn-primary mb-2 float-cente">Guia</a>
-                           <a href="{{url('solicitud/listarSolicitud/'.$mat->MAT_CODIGO)}}" class="btn btn-primary mb-2 float-center">Solicitud</a>  &nbsp 
-
+                            <a href="{{url('solicitud/'.$mat->MAT_CODIGO.'/index')}}" class="btn btn-primary mb-2 float-center">Solicitud</a>  &nbsp
                         </td>
                     </tr>
                 @endforeach
-            </tbody>   
+            </tbody>
         </table>
     @endif
-    <b>Las casillas sombreadas son horas ocacionales</b>
+    <b>Las casillas sombreadas son horas ocasionales</b>
     <table id="horarioDocenteTable" class="table table-hover table-bordered">
         <thead style="background-color: #9CA2A0">
             <tr class="d-flex">
@@ -78,6 +80,6 @@
             @endfor
         </tbody>
     </table>
-</div>  
+</div>
 @endsection
 

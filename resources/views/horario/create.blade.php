@@ -13,8 +13,7 @@
     <div class="card border-primary mb-3">
         <div class="card-header">Recomendaciones</div>
         <div class="card-body text-primary">
-            <h5 class="card-title">Checkbox</h5>
-            <p class="card-text">Los campos de tipo checkbox son campos opcionales y sirven para determinar si la hora es opcional.</p>
+            <p class="card-text">- Los campos de tipo checkbox son campos opcionales y sirven para determinar si la hora es opcional.</p>
         </div>
     </div>
     <form action="{{url('/horario/store')}}" method="POST">

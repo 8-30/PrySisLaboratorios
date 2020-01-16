@@ -52,6 +52,7 @@
         <div class="card-header text-info">Opciones</div>
         <div class="card-body text-info">
           <h5 class="card-title">Descargar</h5>
+          <p>Descargue el reporte a su ordenador en formato PDF.</p>
           @if (isset($materias))
           <a href="{{url('reporte/pdfmateriacarrera/'.$periodox->PER_CODIGO.'/'.$carrerax->CAR_CODIGO.'')}}" class="btn btn-info"><span class="oi oi-cloud-download"></span> Exportar a  PDF</a>
           @else
@@ -86,29 +87,29 @@
       @endforeach
     </span>
   </p>
-
   <table id="materiaCarreraTable" class="table table-hover table-bordered table-sm">
     <thead>
-      <tr class="d-flex">
-        <th class="col">ORD</th>
-        <th class="col">MATERIA</th>
-        <th class="col">NRC</th>
-        <th class="col">DOCENTE</th>
-        <th class="col">CREDITOS</th>
-        <th class="col">ESTUDIANTES</th>
-        <th class="col">ABREVIATURA</th>
+      <tr>
+        <th class="text-center">ORD</th>
+        <th class="text-center">MATERIA</th>
+        <th class="text-center">NRC</th>
+        <th class="text-center">DOCENTE</th>
+        <th class="text-center">CREDITOS</th>
+        <th class="text-center">ESTUDIANTES</th>
+        <th class="text-center">ABREVIATURA</th>
       </tr>
     </thead>
     <tbody>
-      @foreach ($materias as $mat)
-      <tr class="d-flex">
-        <td class="col opts">{{$mat ->MAT_CODIGO}}</td>
-        <td class="col opts">{{$mat ->MAT_NOMBRE}}</td>
-        <td class="col opts">{{$mat ->MAT_NRC}}</td>
-        <td class="col opts">{{$mat->docente->DOC_NOMBRES.' '.$mat->docente->DOC_APELLIDOS}}</td>
-        <td class="col opts">{{$mat ->MAT_CREDITOS}}</td>
-        <td class="col opts">{{$mat ->MAT_NUM_EST}}</td>
-        <td class="col opts">{{$mat ->MAT_ABREVIATURA}}</td>
+ <input type="hidden" value="{{$cont=1}}">
+@foreach ($materias as $mat )
+      <tr>
+        <td class="text-center">{{$cont++}}</td>
+        <td>{{$mat ->MAT_NOMBRE}}</td>
+        <td class="text-center">{{$mat ->MAT_NRC}}</td>
+        <td>{{$mat->docente->DOC_NOMBRES.' '.$mat->docente->DOC_APELLIDOS}}</td>
+        <td class="text-center">{{$mat ->MAT_CREDITOS}}</td>
+        <td class="text-center">{{$mat ->MAT_NUM_EST}}</td>
+        <td>{{$mat ->MAT_ABREVIATURA}}</td>
       </tr>
       @endforeach
     </tbody>

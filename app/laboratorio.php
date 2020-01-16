@@ -8,7 +8,7 @@ class Laboratorio extends Model {
 	protected $table = 'laboratorio';
 	protected $primaryKey = 'LAB_CODIGO';
 	//							1				2				3				4					5			6				7				8				9						10							11						12		13			14				
-	protected $fillable = ['LAB_NOMBRE', 'LAB_CAPACIDAD', 'CAM_CODIGO', 'EMP_CODIGO'];
+	protected $fillable = ['LAB_NOMBRE', 'LAB_CAPACIDAD', 'CAM_CODIGO', 'EMP_CODIGO','LAB_ABREVIATURA','LAB_ESTADO'];
 	public $timestamps = false;
 	
 	public function campus()
@@ -33,11 +33,11 @@ class Laboratorio extends Model {
 	
 	public function scopeCodigoNombreCapacidad($query)
 	{
-		return $query->select('LAB_CODIGO', 'LAB_NOMBRE', 'LAB_CAPACIDAD');
+		return $query->select('LAB_CODIGO', 'LAB_NOMBRE', 'LAB_CAPACIDAD','LAB_ABREVIATURA','LAB_ESTADO');
 	}
 
 	public function scopeFiltrarCampus($query,$campus){
-		return $query->select('LAB_CODIGO', 'LAB_NOMBRE', 'LAB_CAPACIDAD')->where('CAM_CODIGO',$campus);
+		return $query->select('LAB_CODIGO', 'LAB_NOMBRE', 'LAB_CAPACIDAD','LAB_ABREVIATURA','LAB_ESTADO')->where('CAM_CODIGO',$campus);
 	}
 
 }

@@ -6,7 +6,6 @@
  -->
 @extends('app')
 @section('content')
-@include('shared.title', array('titulo' => 'Info Objeto'))
     
 <div class="container">
     <div align="left">
@@ -23,7 +22,7 @@
     </div>
     <div align="center">
          @if(isset($objeto->OBR_IMAGEN))
-         <img src="{{$objeto -> OBR_IMAGEN}}"  id="pic" width="300" height="300" />
+         <img src="{{$objeto -> OBR_IMAGEN}}" id="pic" width="200" height="200" />
          @else
          <img src="{{URL::asset('images/icons/imgicon.png')}}"  id="pic" width="100" height="100" />
          @endif   

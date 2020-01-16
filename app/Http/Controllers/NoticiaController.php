@@ -4,12 +4,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Noticia;
 use App\Periodo;
-use App\empresa;
-
+use App\Empresa;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Input;
 use Image;
+use Carbon\Carbon; 
 
 class NoticiaController extends Controller {
 
@@ -25,10 +26,12 @@ class NoticiaController extends Controller {
 	 * @return Response
 	 */
 
-	public function index()
+	public function index(Request $request)
 	{
-		$noticias = Noticia::All();
-		return view('noticia.index', compact('noticias'));
+		$empid= $request->user()->empresa->EMP_CODIGO;
+		$noticias = Noticia::where('EMP_CODIGO',$empid)->get();
+		$empresa  = Empresa::find($empid);
+		return view('noticia.index', compact('noticias'),compact('empresa'));
 	}
 
 	/**
@@ -36,11 +39,21 @@ class NoticiaController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create(Request $request)
 	{
-		$periodo=Periodo::All();
-		$empresas=empresa::All();
-		return view('Noticia.create',["periodo"=>$periodo],["empresas"=>$empresas]);
+		$date = Carbon::now();
+		$periodos=Periodo::All()->reverse();
+		$periodo=Periodo::where('PER_ESTADO','1')->first();
+		$empid= $request->user()->empresa->EMP_CODIGO;
+		$empresa  = Empresa::find($empid);
+		$empresas  = Empresa::All();
+		return view('noticia.create', [
+			"periodo" => $periodo,
+			"periodos" => $periodos
+		], [
+			"empresas" => $empresas,
+			"empresa" => $empresa
+		])->with('date',$date);
 	}
 
 	/**
@@ -64,8 +77,8 @@ class NoticiaController extends Controller {
 		]);
 		
 		return redirect('noticia')
-			->with('title','Noticia Registrado!')
-			->with('subtitle','Se ha registrado correctamente La Noticia.');
+			->with('title','Noticia Registrada!')
+			->with('subtitle','Se ha añadido correctamente la noticia.');
 	}
 
 	/**
@@ -74,12 +87,15 @@ class NoticiaController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit(Request $request,$id)
 	{
 		$noticia =	Noticia::find($id);
-		$periodo=Periodo::All();
-		$empresas=empresa::All();
-		return view("noticia.update", ["noticia"=>$noticia,"periodo"=>$periodo,"empresas"=>$empresas]);
+		$empid= $request->user()->empresa->EMP_CODIGO;
+		$periodos=Periodo::All()->reverse();
+		$periodo=Periodo::where('PER_ESTADO','1')->first();
+		$empresa  = Empresa::find($empid);
+		$empresas  = Empresa::All();
+		return view("noticia.update", ["noticia"=>$noticia,"periodos"=>$periodos],["empresas"=>$empresas,"empresa"=>$empresa])->with('periodo',$periodo);
 	}
 
 	/**
@@ -90,9 +106,7 @@ class NoticiaController extends Controller {
 	 */
 	public function update(Request $request)
 	{
-		
-		$noticia =	Noticia::find( $request['NOT_CODIGO']);
-		
+		$noticia = Noticia::find( $request['NOT_CODIGO']);
 		//
 		$noticia->fill(
 			[
@@ -108,8 +122,8 @@ class NoticiaController extends Controller {
 		);
 		$noticia->save();
 		return redirect('noticia')
-			->with('title','Noticia actualizado!')
-			->with('subtitle','Se han actualizado correctamente los datos de la noticia.');
+			->with('title','Noticia actualizada!')
+			->with('subtitle','Se ha actualizado correctamente el contenido de la noticia.');
 	}
 
 	/**
@@ -123,7 +137,7 @@ class NoticiaController extends Controller {
 		Noticia::destroy($id);
 		return redirect('noticia')
 			->with('title','Noticia eliminada!')
-			->with('subtitle','Se ha eliminado correctamente la Noticia.');
+			->with('subtitle','Se ha eliminado correctamente la noticia.');
 	}
 
 }

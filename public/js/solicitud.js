@@ -16,13 +16,10 @@ $("#SOL_FECHA_USO").change(function(event){
 
         if ($.isEmptyObject(respuesta)) {
           alert("No tiene Horas disponible en Horario");
-        }else{
+        } else {
           $("#SOL_NOMBRELAB").val("Redes e Informatica ["+respuesta.laboratorio.LAB_NOMBRE+"]");
           $("#LAB_CODIGO").val(respuesta.LAB_CODIGO);
           $("#SOL_HORARIO_USO").val(respuesta.horaUso);
-          
-          
-
         }
       }
     });
