@@ -6,36 +6,41 @@ table {
    width: 100%;
    border-collapse:collapse;
    border: 1px solid black;
-
+   font-family:sans-serif; 
 }
 th, td {
    text-align: left;
    vertical-align: top;
    border:  solid #000;
    border: 1px solid black;
-   font-size: 12px
+   font-size: 12px;
+   font-family:sans-serif; 
    border-collapse:collapse;
 }
 
 #internatabla{
   width: 100%;
    border: 0;
+   font-family:sans-serif; 
    border-collapse:collapse;
 }
 
 #centrado{
   vertical-align:bottom;
   text-align:left;
+  font-family:sans-serif; 
   font-size: 9px
 }
 #fondo{
   background-color:rgb(189, 189, 189);
   vertical-align:bottom;
   text-align:left;
+  font-family:sans-serif; 
   font-size: 9px
 }
 p{
   font-size:9px;
+  font-family:sans-serif; 
 }
 
 </style>
