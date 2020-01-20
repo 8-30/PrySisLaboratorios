@@ -262,7 +262,7 @@ class ControlController extends Controller {
 		//echo $empresa;
 		$campus=0;
 		$date = $date->format('Y-m-d');
-		$date='2020-01-21';
+		//$date='2020-01-21';
 		//$control = Control::where('CON_DIA', $date)->get();
 		$control = Control::filtroEmpresa($date,$empresa)->get();
 		
@@ -333,7 +333,7 @@ class ControlController extends Controller {
 
 		$date = Carbon::now();
 		$date = $date->format('Y-m-d');
-		$date='2020-01-21';
+		//$date='2020-01-21';
 		
 		$control = Control::filtroEmpresaCampus($date,$empresa,$campus)->get();
 		
