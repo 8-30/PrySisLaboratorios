@@ -3,18 +3,22 @@
 @include('shared.title', array('titulo' => 'Consola de Control'))
 
 <div class="container-fluid">
-    @if (session('title') && session('subtitle'))
+    @if (session('title') || isset($title))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <h4 class="alert-heading">{{ session('title') }}</h4>
-        <p>{{ session('subtitle') }}</p>
+        <h4 class="alert-heading">@if(session('title') ) {{ session('title') }}@else {{ $title}}@endif</h4>
+        <p>@if(session('title') ) {{ session('subtitle') }} @else {{$subtitle}} @endif</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     @endif
-     @if(session('mensajes'))
+     @if(session('mensajes')||isset($mensajes))
         <div class="alert alert-warning">
+            @if(session('mensajes'))
             {{ session('mensajes') }}
+            @else
+            {{ $mensajes }}
+            @endif
         </div>
     @endif
     <div class="row">
@@ -40,7 +44,7 @@
         <div class="col"><br>[{{Auth::user()->name}}]</div>
     </div>
     <span class="counter pull-right"></span>
-    <table  id="ListTable" class="table table-hover table-bordered results">
+    <table id="ListTable" class="table table-hover table-bordered results">
         <thead>
             <tr>
                 <th scope="col">HORA ENTRADA</th>
@@ -88,6 +92,7 @@
                         <form action="{{url('control/updatePorGuia')}}" method="post">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="CON_CODIGO" value="{{ $control->CON_CODIGO }}">
+                            <input type="hidden" name="campus" value="{{$campus}}">
                             @if($control -> CON_GUIA == null)
                                 <button  type="submit" class="btn btn-light"><span class="badge badge-secondary">Guia Pendiente</span></button>
                             @endif
@@ -100,6 +105,7 @@
                         <form action="{{url('control/updatePorSolicitud')}}" method="post">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="CON_CODIGO" value="{{ $control->CON_CODIGO }}">
+                            <input type="hidden" name="campus" value="{{$campus}}">
                             @if($control -> SOL_CODIGO == null)
                                 <button  type="submit" class="btn btn-light"><span class="badge badge-secondary">Guia Pendiente</span></button>
                             @endif
