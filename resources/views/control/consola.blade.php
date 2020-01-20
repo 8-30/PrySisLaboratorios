@@ -1,8 +1,8 @@
 @extends('app')
 @section('content')
-@include('shared.title', array('titulo' => 'Control Laboratorio'))
+@include('shared.title', array('titulo' => 'Consola de Control'))
 
-<div class="container fluid">
+<div class="container-fluid">
     @if (session('title') && session('subtitle'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <h4 class="alert-heading">{{ session('title') }}</h4>
@@ -23,8 +23,16 @@
             <br>
             <form action="{{url('control/filtroCampus')}}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="radio" name="campus" value="1"> Campus Centro
-                <input type="radio" name="campus" value="2"> Campus Belisario Quevedo
+                @if($campus == 1)
+                    <input type="radio" name="campus" value="1" checked> Campus Centro
+                    <input type="radio" name="campus" value="2"> Campus Belisario Quevedo
+                @elseif($campus == 2)
+                    <input type="radio" name="campus" value="1" > Campus Centro
+                    <input type="radio" name="campus" value="2" checked> Campus Belisario Quevedo
+                @else
+                    <input type="radio" name="campus" value="1" > Campus Centro
+                    <input type="radio" name="campus" value="2" > Campus Belisario Quevedo
+                @endif
                 <button  type="submit" class="btn btn-primary mb-2">Aplicar Filtro</button>
             </form>
             
@@ -32,7 +40,7 @@
         <div class="col"><br>[{{Auth::user()->name}}]</div>
     </div>
     <span class="counter pull-right"></span>
-    <table class="table table-hover table-bordered results">
+    <table  id="ListTable" class="table table-hover table-bordered results">
         <thead>
             <tr>
                 <th scope="col">HORA ENTRADA</th>
@@ -53,6 +61,8 @@
                     <form action="{{url('control/updateD')}}" method="post">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="CON_CODIGO" value="{{ $control->CON_CODIGO }}">
+                        <input type="hidden" name="campus" value="{{$campus}}">
+                        
                         <input type="hidden" name="docente">
                         @if($control -> CON_REG_FIRMA_ENTRADA == null)
                             <button  type="submit" class="btn btn-success mb-2">Entrar</button>
@@ -71,7 +81,7 @@
                                 <p><span style="font-size:xx-large";>**</span></p>
                         @endif
                         @if($control -> CON_EXTRA != null)
-                            <p><span style="font-size:xx-large";>O</span></p>
+                            <p><span class="badge badge-primary">Solicitud Pendiente</span></p>
                         @endif
                     @endif
                     @if($control -> CON_REG_FIRMA_ENTRADA != null and $control -> CON_REG_FIRMA_SALIDA == null and $control -> CON_EXTRA == null)
@@ -79,10 +89,10 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="CON_CODIGO" value="{{ $control->CON_CODIGO }}">
                             @if($control -> CON_GUIA == null)
-                                <button  type="submit" class="btn btn-light"><span style="color:#FF0000; font-size:xx-large";>P</span></button>
+                                <button  type="submit" class="btn btn-light"><span class="badge badge-secondary">Guia Pendiente</span></button>
                             @endif
                             @if($control -> CON_GUIA != null)
-                                <button  type="submit" class="btn btn-light"><span style="color:#00FF00; font-size:xx-large"; >E</span></button>
+                                <button  type="submit" class="btn btn-light"><span class="color:#00FF00; font-size:xx-large"; >E</span></button>
                             @endif
                         </form>
                     @endif
@@ -91,10 +101,10 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="CON_CODIGO" value="{{ $control->CON_CODIGO }}">
                             @if($control -> SOL_CODIGO == null)
-                                <button  type="submit" class="btn btn-light"><span style="color:#FF0000; font-size:xx-large";>O</span></button>
+                                <button  type="submit" class="btn btn-light"><span class="badge badge-secondary">Guia Pendiente</span></button>
                             @endif
                             @if($control -> SOL_CODIGO != null)
-                                <button  type="submit" class="btn btn-light"><span style="color:#00FF00; font-size:xx-large"; >O</span></button>
+                                <button  type="submit" class="btn btn-light"><span class="badge badge-secondary">Guia Pendiente</span></button>
                             @endif
                         </form>
                     @endif
@@ -103,6 +113,7 @@
                     <form action="{{url('control/updateL')}}" method="post">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="CON_CODIGO" value="{{ $control->CON_CODIGO }}">
+                        <input type="hidden" name="campus" value="{{$campus}}">
                         <input type="hidden" name="laboratorista">
                         @if($control -> CON_LAB_ABRE == null)
                             <button  type="submit" class="btn btn-success mb-2">Entrar</button>

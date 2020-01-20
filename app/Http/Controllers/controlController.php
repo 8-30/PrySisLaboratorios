@@ -259,11 +259,11 @@ class ControlController extends Controller {
 		//
 		$date = Carbon::now();
 		$empresa = $request->user()->empresa->EMP_CODIGO;
-	
+		$campus=0;
 		$date = $date->format('Y-m-d');
 		//$control = Control::where('CON_DIA', $date)->get();
 		$control = Control::filtroEmpresa($date,$empresa)->get();
-		return view("control.consola", ["controles"=>$control]);
+		return view("control.consola", ["controles"=>$control])->with('campus', $campus);;
 		
 	}
 
@@ -285,7 +285,13 @@ class ControlController extends Controller {
 		} 
 
 		$control->save();
-		
+		/*
+		$campus = $request['campus'];
+		$campus = $request->input('campus');
+		$controles=$this->getLaboratorio($campus);
+		//echo ($campus);
+		return view("control.consola", ["controles"=>$controles])->with('campus', $campus) */
+
 		return redirect("control/consola");
 	}
 
@@ -305,12 +311,17 @@ class ControlController extends Controller {
 		}
 
 		$control->save();
-		
+
+		/*
+		$campus = $request['campus'];
+		$campus = $request->input('campus');
+		$controles=$this->getLaboratorio($campus);
+		//echo ($campus);
+		return view("control.consola", ["controles"=>$controles])->with('campus', $campus) */
 		return redirect("control/consola");
 	}
 
-	public function filtroCampus(Request $request){
-		$campus = $request->input('campus');
+	public function getLaboratorio($campus){
 		$laboratorios = Laboratorio::filtrarCampus($campus)->get();
 		$date = Carbon::now();
 		$date = $date->format('Y-m-d');
@@ -329,10 +340,13 @@ class ControlController extends Controller {
 			}
 			
 		}
-		
-		echo sizeof($controles);
-		
-		return view("control.consola", ["controles"=>$controles]);
+		return $controles;
+	}
+	public function filtroCampus(Request $request){
+		$campus = $request->input('campus');
+		$controles=$this->getLaboratorio($campus);
+		//echo ($campus);
+		return view("control.consola", ["controles"=>$controles])->with('campus', $campus);
 	}
 
 	//valida que este autenticado para acceder al controlador
