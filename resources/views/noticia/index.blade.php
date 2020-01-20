@@ -25,13 +25,15 @@
         <div class="col"></div>
         <div class="col"></div>
     </div>
-
+    <p class="h3" style="color: #ED7624">
+        Noticias: <span class="font-weight-normal">{{ $empresa->EMP_NOMBRE }}</span>
+    </p>
     <table class="table table-hover table-bordereds" id="ListTable">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">TITULO</th>
-                <th scope="col">FECHA INICION</th>
+                <th scope="col">FECHA INICIO</th>
                 <th scope="col">FECHA FIN</th>
                 <th scope="col">PERIODO</th>
                 <th scope="col">EMPRESA</th>
@@ -61,16 +63,5 @@
         @endforeach 
         </tbody>
     </table>
-    <!-- BOTONES DE NAVEGACION -->
-    <!-- <div class="clearfix">
-    <ul class="pagination">
-        <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-        <li class="page-item"><a href="#" class="page-link">1</a></li>
-        <li class="page-item"><a href="#" class="page-link">2</a></li>
-        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-        <li class="page-item"><a href="#" class="page-link">4</a></li>
-        <li class="page-item"><a href="#" class="page-link">5</a></li>
-        <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
-    </ul> -->
 </div>
 @endsection

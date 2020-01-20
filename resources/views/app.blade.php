@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="{{ URL::asset('css/index.css') }}" rel='stylesheet' type='text/css' />
   <link href="{{ URL::asset('css/table.css') }}" rel='stylesheet' type='text/css' />
+  <style type="text/css">
+    img.guia{
+    width: 75px; height: 40px;
+    }
+    }
+  </style>
   <!--
   <link href="{{ URL::asset('css/slicebox.css') }}" rel='stylesheet' type="text/css"/>
 	<link href="{{ URL::asset('css/demo.css') }}" rel='stylesheet' type="text/css" />
@@ -24,19 +30,18 @@
 <body>
   <header>
     <div class="header-img" style="background-image:url({{URL::asset('images/principal/header.png')}})">
-        <ul class="nav topnav float-right">
-          <a type="button" class="btn btn-dark" href="{{url('/')}}">Inicio</a>
+        <ul class="btn-group nav topnav float-right" role="group">
+          <a type="button" class="btn btn-dark btn-xs" href="{{url('/')}}">Inicio</a>
           @if(Auth::check())
-          <a type="button" class="btn btn-dark" href="{{url('/auth/logout')}}">Salir</a>
+          <a type="button" class="btn btn-dark btn-xs" href="{{url('/auth/logout')}}">Salir</a>
           @else
-          <a type="button" class="btn btn-dark" href="{{url('/auth/login')}}">Entrar</a>
+          <a type="button" class="btn btn-dark btn-xs" href="{{url('/auth/login')}}">Entrar</a>
           @endif
         </ul>
     </div>
   </header>
 
   @include('shared.navbar')
-
   @yield('content')
 
   <footer class="footer footer-color footer-display">

@@ -19,6 +19,17 @@
         </button>
     </div>
     @endif
+    
+    @if (count($laboratorios) == 0)
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">No hay salas creadas!</h4>
+        <p>Para poder crear un horario primero cree una sala <a href="{{ url('laboratorio/create') }}">aquí</a>.</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+
     <table id="ListTable" class="table table-hover table-bordered results">
         <thead>
             <tr>

@@ -38,28 +38,24 @@ class AuthController extends Controller {
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
 	//Redirige al index
-	public function index()
-	{
+	public function index() {
 		return view('welcome');
 	}
-	public function getRegister()
-	{
+
+	public function getRegister() {
 		$role= Role::all();
 		return view('auth.register',[
 			'role' => $role
 		]);
 	}
+
 	//Registrar Usuario
-	public function postRegister(Request $request)
-	{
+	public function postRegister(Request $request) {
 		//Valida los campos de registrar
 		$validator = $this->registrar->validator($request->all());
 		// si existe errores retorna a la vista Registrar con los errores
-		if ($validator->fails())
-		{
-			$this->throwValidationException(
-				$request, $validator
-			);
+		if ($validator->fails()) {
+			$this->throwValidationException($request, $validator);
 		}
 		//Crea el registro y autentifica
 		$this->auth->login($this->registrar->create($request->all()));
@@ -68,19 +64,20 @@ class AuthController extends Controller {
 		return redirect($this->redirectPath());
 	}
 
-	public function postLogin(Request $request)
-	{
+	public function postLogin(Request $request) {
 		//valida los campos name y password como requeridos
 		$this->validate($request, [
 			'name' => 'required', 'password' => 'required',
 		]);
+
 		//asigna el name y password como credenciales
 		$credentials = $request->only('name', 'password');
+
 		//logea el usuario, si logea correctamente redirecciona al index
-		if ($this->auth->attempt($credentials, $request->has('remember')))
-		{
+		if ($this->auth->attempt($credentials, $request->has('remember'))) {
 			return redirect()->intended($this->redirectPath());
 		}
+		
 		//si no logea correctamente muestra en pantalla el error
 		return redirect($this->loginPath())
 					->withInput($request->only('name', 'remember'))

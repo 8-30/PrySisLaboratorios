@@ -52,4 +52,12 @@ class Control extends Model {
 		return $query->join('laboratorio','control.LAB_CODIGO','=','laboratorio.LAB_CODIGO')->where('control.CON_DIA', $date)->where('laboratorio.EMP_CODIGO', $empresa);
 	}
 
+	public function scopeCruceHoras($query,$laboratorio,$horaI,$horaf,$dia){
+    	return $query->where('LAB_CODIGO',$laboratorio)->where('CON_HORA_ENTRADA',$horaI)->where('CON_HORA_SALIDA',$horaf)->where('CON_DIA',$dia);
+    }
+
+    public function scopeDuplicado($query,$materia,$horaI,$horaf,$dia){
+    	return $query->where('MAT_CODIGO',$materia)->where('CON_HORA_ENTRADA',$horaI)->where('CON_HORA_SALIDA',$horaf)->where('CON_DIA',$dia);
+    }
+
 }

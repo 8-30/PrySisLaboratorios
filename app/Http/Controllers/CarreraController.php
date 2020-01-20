@@ -4,6 +4,7 @@ use App\Http\Requests\CarreraStoreRequest;
 use App\Http\Requests\CarreraUpdateRequest;
 use App\Http\Controllers\Controller;
 use App\Carrera;
+use App\Materia;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -15,8 +16,7 @@ class CarreraController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
+	public function index() {
 		$carreras = Carrera::All();
 		return view('carrera.index', compact('carreras'));
 	
@@ -27,9 +27,7 @@ class CarreraController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
-	{
-		
+	public function create() {
 		return view('carrera.create');
 	}
 
@@ -39,8 +37,7 @@ class CarreraController extends Controller {
 	 * @param  Request  $request
 	 * @return Response
 	 */
-	public function store(CarreraStoreRequest $request)
-	{
+	public function store(CarreraStoreRequest $request) {
 		Carrera::create([
 			'CAR_CODIGO' => $request['CAR_CODIGO'],
 			'CAR_NOMBRE' => $request['CAR_NOMBRE'],
@@ -57,8 +54,7 @@ class CarreraController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
-	{
+	public function edit($id) {
 		$carrera = Carrera::find($id);
 		return view('carrera.update', ['carrera' => $carrera]);
 	}
@@ -69,8 +65,7 @@ class CarreraController extends Controller {
 	 * @param  Request  $request
 	 * @return Response
 	 */
-	public function update(CarreraUpdateRequest $request)
-	{
+	public function update(CarreraUpdateRequest $request) {
 		$carrera = Carrera::find($request['CAR_CODIGO']);
 		$carrera->fill($request->all());
 		$carrera->save();
@@ -85,18 +80,25 @@ class CarreraController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
-		Carrera::destroy($id);
-		return redirect('carrera')
-			->with('title','Carrera eliminada!')
-			->with('subtitle','Se ha eliminado correctamente la carrera.');
+	public function destroy($id) {
+		$validaMateria = Materia::where('CAR_CODIGO',$id)->first();
+		
+		if (count($validaMateria) === 1) {
+			return redirect('carrera')
+				->with('alert', 'alert-danger')
+				->with('title','Carrera no eliminada!')
+				->with('subtitle','El registro de la carrera no se ha eliminado, la carrera tiene registros relacionados.');
+		}else{
+			Carrera::destroy($id);
+			return redirect('carrera')
+				->with('alert', 'alert-success')
+				->with('title','Carrera eliminada!')
+				->with('subtitle','Se ha eliminado correctamente la carrera.');
+		}
 	}
 
 	//valida que este autenticado para acceder al controlador
-	public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
+	public function __construct() {
+			$this->middleware('auth');
+	}
 }

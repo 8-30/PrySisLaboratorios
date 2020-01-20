@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col">
             <div class="card border-primary mb-3">
-                    <a href="{{url('solocitud/controlSolicitudLaboratoriocreate')}}" class="btn btn-primary mb-2">Crear solicitud Vacia</a>
+                    <a href="{{url('solicitud/create')}}" class="btn btn-primary mb-2">Crear solicitud Vacia</a>
             </div>
         </div>
 
@@ -26,15 +26,13 @@
                         <div>
                             <label>Seleccione una Materia...</label>
                             <select  name="materiaCombo" id="materiaCombo" >
-                            <option value="0">------Seleccione------</option>>
-
-                           </select>
+                                <option value="0">------Seleccione------</option>>
+                            </select>
                         </div>
                         <div>
                             <label>Seleccione una Solicitud...</label>
                             <select  name="solicitudCombo"  id="solicitudCombo" >
-                            <option value="0">---------------------------Seleccione---------------------------</option>>
-                          
+                                <option value="0">---------------------------Seleccione---------------------------</option>>
                             </select>
                         </div>
                         <br>

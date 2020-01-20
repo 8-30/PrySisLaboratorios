@@ -10,7 +10,7 @@
 
 <div class="container-fluid">
     @if (session('title') && session('subtitle'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <div class="alert {{ session('alert') }} alert-dismissible fade show" role="alert">
         <h4 class="alert-heading">{{ session('title') }}</h4>
         <p>{{ session('subtitle') }}</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
