@@ -10,6 +10,15 @@
 @section('content')
 @include('shared.title', array('titulo' => 'Reporte Hoja de Control de Salas'))
 
+@if(empty($controles))
+  @if($mensaje!=null)
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <h4 class="alert-heading"><b>ADVERTENCIA:</b>   
+          {{$mensaje}}
+          </h4>
+      </div>    
+  @endif
+@endif
 <div class="container-fluid">
   <div class="card border-primary mb-3">
     <div class="card-header text-primary">Consultar</div>
@@ -32,9 +41,17 @@
           <div class="col">
             <label for="CAM_CODIGO">Campus<span style="color:#FF0000";>*</span></label>
             <select name="CAM_CODIGO" id="CAM_CODIGO" class="form-control">
-              <option disabled>Escoja un Campus...</option>
+              <option value="-1">Escoja un Campus...</option>
               @foreach ($campus as $camp)
-              <option value="{{ $camp->CAM_CODIGO }}">{{ $camp->CAM_NOMBRE }}</option>
+                @if(!empty($controles))
+                  @if($controles[0]->CAM_CODIGO==$camp->CAM_CODIGO)
+                    <option value="{{ $camp->CAM_CODIGO }}" id="{{ $camp->CAM_CODIGO }}" selected="selected" >{{ $camp->CAM_NOMBRE }}</option>
+                  @else
+                    <option value="{{ $camp->CAM_CODIGO }}" id="{{ $camp->CAM_CODIGO }}" >{{ $camp->CAM_NOMBRE }}</option>
+                  @endif
+                @else
+                  <option value="{{ $camp->CAM_CODIGO }}" id="{{ $camp->CAM_CODIGO }}" >{{ $camp->CAM_NOMBRE }}</option>
+                @endif
               @endforeach
             </select>
           </div>

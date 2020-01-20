@@ -7,6 +7,7 @@ use App\Docente;
 use App\Guia;
 use App\Laboratorio;
 use App\Materia;
+use App\Periodo;
 use App\Solicitud;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -55,27 +56,29 @@ class ControlController extends Controller {
 	{
 		$accion="";
 		$mensaje="";
+		$empresa = $request->user()->empresa->EMP_CODIGO;
 		$CON_FECHA = $request['CON_DIA'];
 		$dia=$this->saber_dia($CON_FECHA);
 		if ($dia!="SABADO" && $dia!="DOMINGO"){
-			$controles_guardados=DB::select('SELECT control.CON_CODIGO,control.CON_DIA FROM control WHERE control.CON_DIA="'.$CON_FECHA.'"');
+			$controles_guardados=DB::select('SELECT control.CON_CODIGO,control.CON_DIA,laboratorio.EMP_CODIGO FROM control , laboratorio WHERE control.LAB_CODIGO=laboratorio.LAB_CODIGO and control.CON_DIA="'.$CON_FECHA.'" and laboratorio.EMP_CODIGO="'.$empresa.'"');
 			$mensaje="Ya existen registro de esa fecha";
 			$accion='error';
+			$ocacional=$request['MAT_OCACIONAL'];
 			if(empty($controles_guardados)){
-				$codigo_periodo=DB::select('SELECT periodo.PER_CODIGO FROM periodo WHERE "'.$CON_FECHA.'" BETWEEN periodo.PER_FECHA_INICIO AND periodo.PER_FECHA_FIN' );
-				$codigo_periodo=$codigo_periodo[0]->PER_CODIGO;
+				$codigo_periodo=Periodo::where('PER_ESTADO', 1)->first();
+				$codigo_periodo=$codigo_periodo->PER_CODIGO;
 				$opcional=" and materia.MAT_OCACIONAL=0";
 
-				if($request['MAT_OCACIONAL']==1){
+				if($ocacional=='on'){
 					$opcional="";
 				}
 
 				$controles=array();
 				for($i=1;$i<13;$i++)
 				{
-					$aux_controles=DB::select('select materia.MAT_CODIGO, horario.HOR_HORA'.$i.' as HORA, horario.HOR_CODIGO, laboratorio.LAB_CODIGO, materia.DOC_CODIGO
+					$aux_controles=DB::select('select materia.MAT_CODIGO, horario.HOR_HORA'.$i.' as HORA, horario.HOR_CODIGO, laboratorio.LAB_CODIGO, materia.DOC_CODIGO, materia.MAT_OCACIONAL
 					from materia, horario, laboratorio,periodo,docente
-					where docente.DOC_CODIGO=materia.DOC_CODIGO and horario.PER_CODIGO=periodo.PER_CODIGO and periodo.PER_CODIGO=materia.PER_CODIGO  and horario.LAB_CODIGO=laboratorio.LAB_CODIGO and periodo.PER_CODIGO='.$codigo_periodo.' and horario.HOR_'.$dia.$i.'=materia.MAT_CODIGO'.$opcional );
+					where docente.DOC_CODIGO=materia.DOC_CODIGO and horario.PER_CODIGO=periodo.PER_CODIGO and periodo.PER_CODIGO=materia.PER_CODIGO  and horario.LAB_CODIGO=laboratorio.LAB_CODIGO and periodo.PER_CODIGO='.$codigo_periodo.' and horario.HOR_'.$dia.$i.'=materia.MAT_CODIGO'.$opcional.' and laboratorio.EMP_CODIGO='.$empresa );
 					foreach ($aux_controles as $con)
 					{
 						$con->ENTRADA=preg_split("/-/",$con->HORA)[0];
@@ -107,7 +110,7 @@ class ControlController extends Controller {
 				$controles=array_unique($controles,SORT_REGULAR);
 				
 				foreach($controles as $con){
-					DB::insert('insert into control (CON_DIA, CON_HORA_ENTRADA, CON_HORA_SALIDA, CON_NUMERO_HORAS,LAB_CODIGO, MAT_CODIGO, DOC_CODIGO, CON_EXTRA) values (?,?,?,?,?,?,?,?)', [$CON_FECHA,$con->ENTRADA,$con->SALIDA,$con->CANT_HORAS,$con->LAB_CODIGO,$con->MAT_CODIGO,$con->DOC_CODIGO,$request['MAT_OCACIONAL']]);
+					DB::insert('insert into control (CON_DIA, CON_HORA_ENTRADA, CON_HORA_SALIDA, CON_NUMERO_HORAS,LAB_CODIGO, MAT_CODIGO, DOC_CODIGO, CON_EXTRA) values (?,?,?,?,?,?,?,?)', [$CON_FECHA,$con->ENTRADA,$con->SALIDA,$con->CANT_HORAS,$con->LAB_CODIGO,$con->MAT_CODIGO,$con->DOC_CODIGO,$con->MAT_OCACIONAL]);
 				}
 				$accion='success';
 				$mensaje="Registros Generados";

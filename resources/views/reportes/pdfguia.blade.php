@@ -49,8 +49,9 @@ p{
               <th scope="row" id="centrado"width="55%"><h3>GUÍA PARA LAS PRÁCTICAS DE LABORATORIO, TALLER O CAMPO<h3></th>
               <th scope="row"width="25%">
                 <p>CÓDIGO: SGC.DI.505<br>
-                VERSIÓN: 1.0 <br>
-                FECHA ÚLTIMA REVISIÓN: 12/04/2017    
+                VERSIÓN: 2.0 <br>
+                FECHA ÚLTIMA <br>
+                REVISIÓN: 12/04/2017    
                 </p></th>
             </tr>
         </thead>
@@ -60,7 +61,7 @@ p{
         <thead>
             <tr>
               <td scope="row" id="fondo"width="15%"><br> DEPARTAMENTO: </td>
-              <td scope="row" id="centrado"width="35%"> </td>
+              <td scope="row" id="centrado"width="35%"> ELECTRICA Y ELECTRONICA </td>
               <td scope="row" id="fondo"width="7%"><br> CARRERA: </td>
               <td scope="row" id="centrado"width="43%"> {{$guia->CAR_NOMBRE}}</td>
             </tr>
