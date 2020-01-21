@@ -31,4 +31,8 @@ class Periodo extends Model {
 	public function scopeFiltroEmpresa($query,$empresa) {
 		return $query->where('EMP_CODIGO', $empresa);
 	}
+	//retorna periodo de empresa  que este activo
+	public function scopeFiltroEmpresaActivo($query,$empresa) {
+		return $query->where('EMP_CODIGO', $empresa)->where('PER_ESTADO',1);
+	}
 }

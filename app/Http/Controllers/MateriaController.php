@@ -23,11 +23,11 @@ class MateriaController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-
-		$periodoActual=Periodo::where('PER_ESTADO','1')->first();
-		$materias=Materia::with('carrera', 'docente')->where('PER_CODIGO',$periodoActual->PER_CODIGO)->get();
+		$emp_codigo=$request->user()->empresa->EMP_CODIGO;
+		$periodoActual=Periodo::FiltroEmpresaActivo($emp_codigo)->first();
+		$materias=Materia::FiltroEmpresaPeriodo($periodoActual->PER_CODIGO)->get();
 	
 		return view ('materia.index',['materias' => $materias,'periodo'=>$periodoActual]);
 	}
@@ -37,9 +37,10 @@ class MateriaController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create(Request $request)
 	{
-		$periodos= periodo::where('PER_ESTADO','1')->get();
+		$emp_codigo=$request->user()->empresa->EMP_CODIGO;
+		$periodos=Periodo::FiltroEmpresaActivo($emp_codigo)->get();
 		$docentes= docente::All();
 		$docentesOrdenados=$docentes->sortBy('DOC_APELLIDOS');
 		$carreras= carrera::All()->sortBy('CAR_NOMBRE');
@@ -59,7 +60,8 @@ class MateriaController extends Controller {
 	{       
 		$materiaValida = DB::table('materia')->where('MAT_NRC', $request->MAT_NRC)->where('PER_CODIGO', $request->PER_CODIGO)->get();
 		if (count($materiaValida) === 1){
-			$periodos= periodo::where('PER_ESTADO','1')->get();
+			$emp_codigo=$request->user()->empresa->EMP_CODIGO;
+			$periodos=Periodo::FiltroEmpresaActivo($emp_codigo)->get();
 			$docentes= docente::All();
 			$docentesOrdenados=$docentes->sortBy('DOC_APELLIDOS');
 			$carreras= carrera::All()->sortBy('CAR_NOMBRE');
@@ -116,9 +118,10 @@ class MateriaController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit(Request $request,$id)
 	{   
-		$periodos= periodo::where('PER_ESTADO','1')->get();
+		$emp_codigo=$request->user()->empresa->EMP_CODIGO;
+		$periodos=Periodo::FiltroEmpresaActivo($emp_codigo)->get();
 		$docentes= docente::All();
 		$docentesOrdenados=$docentes->sortBy('DOC_APELLIDOS');
 		$carreras= carrera::All()->sortBy('CAR_NOMBRE');

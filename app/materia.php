@@ -51,5 +51,9 @@ class Materia extends Model {
 	public function scopeFiltroEmpresa($query, $periodo) {
 		return $query->where('PER_CODIGO',$periodo)->orderBy('MAT_NOMBRE','ASC');
 	}
+	//retorna materias de la empresa
+	public function scopeFiltroEmpresaPeriodo($query, $periodo) {
+		return $query->with('carrera', 'docente')->where('PER_CODIGO',$periodo)->orderBy('MAT_NOMBRE','ASC');
+	}
 	
 }
