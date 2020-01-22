@@ -15,10 +15,13 @@ class HoraController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		$hora=Hora::all();
-		return view("hora.index", ["horas"=>$hora]);
+		$idempresa = $request->user()->empresa->EMP_CODIGO;
+		$horas=Hora::where('EMP_CODIGO',$idempresa)->get();
+
+		//return view("hora.index", ["horas"=>$hora]);
+		return view('hora.index', compact('horas','idempresa'));
 	}
 
 	/**

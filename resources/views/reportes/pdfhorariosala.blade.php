@@ -12,7 +12,7 @@ th, td {
    vertical-align: top;
    border:  solid #000;
    border: 2px solid black;
-   font-size: 11px;
+   font-size: 10px;
    font-family:sans-serif; 
    border-collapse:collapse;
 }
@@ -82,10 +82,8 @@ th, td {
         <table  border="0px"  >
                 <thead >
                     <tr>
-                      <td scope="row"  width="4%"> <b>REPORTE</td>
-                      <td scope="row" id="izquierda"width="30%">: HORARIO POR SALA </td>
-                    
-                    
+                      <td scope="row"  width="4%" style='font-size: 15px;'> <b>SALA</b> </td>
+                      <td scope="row" id="izquierda"width="20%" style='font-size: 15px;'> <b>: {{$horario->laboratorio->LAB_NOMBRE}}</b> </td>
                     </tr>
                 </thead>
           </table>
@@ -93,10 +91,7 @@ th, td {
                 <thead>
                     <tr>
                       <td scope="row"  width="4%"> <b>PERIODO</b> </td>
-                      
-                      <td scope="row" width="10%">: {{$periodox->PER_NOMBRE}}  </td>
-                      <td scope="row" id="derecha" width="5%"> <b> SALA</b> </td>
-                      <td scope="row" id="izquierda" width="5%">: {{$horario->laboratorio->LAB_NOMBRE}}   </td>   
+                      <td scope="row" width="10%">: {{$periodox->PER_NOMBRE}}  </td>  
                       <td scope="row" id="derecha" width="5%"> <b> CAPACIDAD</b> </td>
                       <td scope="row" id="izquierda" width="5%">: {{ $horario->laboratorio->LAB_CAPACIDAD }} PCs   </td> 
      
@@ -132,47 +127,47 @@ th, td {
        <table>
          <tbody >
               <tr>
-                    <td style="text-align: center; vertical-align: middle;" scope="row" width="10%" >  <b>HORA</b> </td>
-                    <td style="text-align: center; vertical-align: middle;" scope="row" width="10%" ><b>LUNES</b> </td>
-                    <td style="text-align: center; vertical-align: middle;" scope="row"  width="10%"> <b>MARTES</b></td>
-                    <td style="text-align: center; vertical-align: middle;" scope="row" width="10%" > <b>MIERCOLES</b> </td>
-                    <td style="text-align: center; vertical-align: middle;" scope="row" width="10%" > <b>JUEVES</b> </td>
-                    <td style="text-align: center; vertical-align: middle;" scope="row" width="10%" > <b>VIERNES</b> </td>             
+                    <td style="text-align: center; vertical-align: middle;" scope="row" width="8%" >  <b>HORA</b> </td>
+                    <td style="text-align: center; vertical-align: middle;" scope="row" width="15%" ><b>LUNES</b> </td>
+                    <td style="text-align: center; vertical-align: middle;" scope="row"  width="13%"> <b>MARTES</b></td>
+                    <td style="text-align: center; vertical-align: middle;" scope="row" width="13%" > <b>MIERCOLES</b> </td>
+                    <td style="text-align: center; vertical-align: middle;" scope="row" width="15%" > <b>JUEVES</b> </td>
+                    <td style="text-align: center; vertical-align: middle;" scope="row" width="13%" > <b>VIERNES</b> </td>             
 
               </tr>      
 
               @for ($x = 1; $x <= 13; $x++)
               <tr >
-                  <td >{{ $horario['HOR_HORA'.$x] }}</td>
-                  <td >
+                  <td ><b>{{ $horario['HOR_HORA'.$x] }}</b></td>
+                  <td class="col opts" style='font-size: 8.5px;'>
                       @if ($horario['HOR_LUNES'.$x] != 0 || $horario['HOR_LUNES'.$x] != NULL)
                       {{ $horario['HOR_LUNES'.$x] }} <span class="text-{{ $horario['HOR_LUNES'.$x.'_OPC'] }}"></span>
                       <br>
                       <b class="small font-weight-bold">{{ $horario['HOR_LUNES_DOC'.$x] }}</b>
                       @endif
                   </td>
-                  <td >
+                  <td class="col opts" style='font-size: 8.5px;'>
                       @if ($horario['HOR_MATES'.$x] != 0 || $horario['HOR_MATES'.$x] != NULL)
                       {{ $horario['HOR_MATES'.$x] }} <span class="text-{{ $horario['HOR_MARTES'.$x.'_OPC'] }}"></span>
                       <br>
                       <b class="small font-weight-bold">{{ $horario['HOR_MATES_DOC'.$x] }}</b>
                       @endif
                   </td>
-                  <td >
+                  <td class="col opts" style='font-size: 8.5px;'>
                       @if ($horario['HOR_MIERCOLES'.$x] != 0 || $horario['HOR_MIERCOLES'.$x] != NULL)
                       {{ $horario['HOR_MIERCOLES'.$x] }} <span class="text-{{ $horario['HOR_MIERCOLES'.$x.'_OPC'] }}"></span>
                       <br>
                       <b class="small font-weight-bold">{{ $horario['HOR_MIERCOLES_DOC'.$x] }}</b>
                       @endif
                   </td>
-                  <td >
+                  <td class="col opts" style='font-size: 8.5px;'>
                       @if ($horario['HOR_JUEVES'.$x] != 0 || $horario['HOR_JUEVES'.$x] != NULL)
                       {{ $horario['HOR_JUEVES'.$x] }} <span class="text-{{ $horario['HOR_JUEVES'.$x.'_OPC'] }}"></span>
                       <br>
                       <b class="small font-weight-bold">{{ $horario['HOR_JUEVES_DOC'.$x] }}</b>
                       @endif
                   </td>
-                  <td >
+                  <td class="col opts" style='font-size: 8.5px;'>
                       @if ($horario['HOR_VIERNES'.$x] != 0 || $horario['HOR_VIERNES'.$x] != NULL)
                       {{ $horario['HOR_VIERNES'.$x] }} <span class="text-{{ $horario['HOR_VIERNES'.$x.'_OPC'] }}"></span>
                       <br>
@@ -189,10 +184,7 @@ th, td {
       <table border="0px">
           <tr>
               <td scope="row"  style="width:60%; height:auto;"  >
-                  <p id="centrado"  style="font-size:13px">
-                      <B>REALIZADO POR</B>
-                      <br><br><br>
-                  </p>
+                  <br>
                   <p id="centrado">
                       Ing. Edgar F. Montaluisa P. MSc. 
                       <br>

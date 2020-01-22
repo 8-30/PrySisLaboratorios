@@ -2,7 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Empresa;
+use App\empresa;
 use App\Institucion;
 
 use Illuminate\Http\Request;
@@ -13,12 +13,16 @@ class EmpresaController extends Controller {
 	/**
 	 * Despliega la vista principal del módulo empresa
 	 *
+	 * @return Response
 	 * @return view "empresa.index" & $empresas
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		$empresa = Empresa::all();
-		return view("empresa.index", ["empresas" => $empresa]);
+		$idempresa = $request->user()->empresa->EMP_CODIGO;
+		$empresas = empresa::where('EMP_CODIGO',$idempresa)->get();
+
+		//return view("empresa.index", ["empresas" => $empresa]);
+		return view('empresa.index', compact('empresas','idempresa'));
 	}
 
 	/**
