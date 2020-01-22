@@ -101,8 +101,7 @@ class EventoOcacionalController extends Controller {
 			}else{
 				echo "aca";
 				return redirect('ocasionales')
-				->with('title', 'Evento Ocacional registrado!')
-				->with('subtitle', 'Cruce de horas u horas duplicadas.');
+				->with('mensajes','Cruce de horas u horas duplicadas.');
 			}
 	}
 
