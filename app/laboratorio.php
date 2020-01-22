@@ -39,5 +39,9 @@ class Laboratorio extends Model {
 	public function scopeFiltrarCampus($query,$campus){
 		return $query->select('LAB_CODIGO', 'LAB_NOMBRE', 'LAB_CAPACIDAD','LAB_ABREVIATURA','LAB_ESTADO')->where('CAM_CODIGO',$campus);
 	}
+	//retorna los laboratorios de la empresa
+	public function scopeFiltrarEmpresa($query,$empresa){
+		return $query->where('EMP_CODIGO',$empresa);
+	}
 
 }

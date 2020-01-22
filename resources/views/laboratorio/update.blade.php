@@ -4,7 +4,7 @@
  Author: Lorena Perez-David Esparza
  Revisado por: Lorena Perez-David Esparza
  -->
-@extends('app')
+ @extends('app')
 @section('content')
 @include('shared.title', array('titulo' => 'Actualizar Laboratorio'))
     
@@ -64,22 +64,6 @@
                     </select> 
                 </div>
             </div>
-
-            <div class="col">
-                <div class="form-group">
-                    <label for="EMP_CODIGO">Empresa<span style="color:#FF0000";>*</span></label>
-                    <select type="input" class="form-control" id="EMP_CODIGO" name="EMP_CODIGO"  >
-                        @foreach ($empresas as $emp)
-                            @if($emp->EMP_CODIGO==$laboratorio->EMP_CODIGO)
-                                <option value="{{$emp->EMP_CODIGO}}" selected="{{$emp->EMP_CODIGO}}">{{$emp->EMP_NOMBRE}}</option>
-                            @else
-                                <option value="{{$emp->EMP_CODIGO}}"  >{{$emp->EMP_NOMBRE}}</option>
-                            @endif
-                        @endforeach
-                    </select> 
-                </div>
-            </div>
-
         </div>
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary mb-2">Actualizar</button>

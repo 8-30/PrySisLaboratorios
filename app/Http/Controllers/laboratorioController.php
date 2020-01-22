@@ -17,9 +17,10 @@ class LaboratorioController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		$laboratorios = laboratorio::All();
+		$emp_codigo=$request->user()->empresa->EMP_CODIGO;
+		$laboratorios = laboratorio::FiltrarEmpresa($emp_codigo)->get();
 		return view('laboratorio.index', compact('laboratorios'));
 	}
 
@@ -52,13 +53,12 @@ class LaboratorioController extends Controller {
 			'LAB_NOMBRE' => $request['LAB_NOMBRE'], 
 			'LAB_CAPACIDAD' => $request['LAB_CAPACIDAD'], 
 			'CAM_CODIGO' => $request['CAM_CODIGO'], 
-			'EMP_CODIGO' => $request['EMP_CODIGO'],
+			'EMP_CODIGO' => $request->user()->empresa->EMP_CODIGO,
 			'LAB_ABREVIATURA' => $request['LAB_ABREVIATURA'], 
 			'LAB_ESTADO' => $estado
 		]);
 
 		return redirect('laboratorio')
-			->with('alert', 'alert-success')
 			->with('title','Laboratorio creado!')
 			->with('subtitle','Se ha creado correctamente el laboratorio.');
 	}

@@ -27,9 +27,10 @@ class EventoOcacionalController extends Controller {
 	{
 		$date = Carbon::now();
 		$empresa = $request->user()->empresa->EMP_CODIGO;
+		$periodoActual=Periodo::FiltroEmpresaActivo($empresa)->first();
 		$date = $date->format('Y-m-d');
 		//$control = Control::where('CON_DIA', $date)->get();
-		$data = Control::filtroEmpresa($date,$empresa)->get();
+		$data = Control::filtroEmpresaPeriodo($date,$empresa,$periodoActual->PER_CODIGO)->get();
 		return view('ocasionales.index', compact('data'));
 	}
 
@@ -101,7 +102,7 @@ class EventoOcacionalController extends Controller {
 			}else{
 				echo "aca";
 				return redirect('ocasionales')
-				->with('title', 'Evento Ocacional registrado!')
+				->with('title', 'Evento Ocacional No registrado!!!')
 				->with('subtitle', 'Cruce de horas u horas duplicadas.');
 			}
 	}

@@ -4,7 +4,7 @@
  Author: Lorena Perez-David Esparza
  Revisado por: Lorena Perez-David Esparza
  -->
-@extends('app')
+ @extends('app')
 @section('content')
 @include('shared.title', array('titulo' => 'Crear Laboratorio'))
 
@@ -54,16 +54,7 @@
                         </div>
                     </div>
 
-                <div class="col">
-                    <div class="form-group">
-                        <label for="EMP_CODIGO">Empresa<span style="color:#FF0000";>*</span></label>
-                        <select type="input" class="form-control" id="EMP_CODIGO" name="EMP_CODIGO" placeholder="Empresa"  required>
-                            @foreach ($empresas as $emp)
-                                    <option value="{{$emp->EMP_CODIGO}}">{{$emp->EMP_NOMBRE}}</option>
-                            @endforeach
-                        </select> 
-                    </div>
-                </div>
+                
             </div>
              <!-- Submit Button -->
                 <button type="submit" class="btn btn-primary mb-2">Crear</button>

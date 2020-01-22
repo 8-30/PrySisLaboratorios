@@ -5,8 +5,10 @@ use App\Http\Controllers\Controller;
 use App\Control;
 use App\Docente;
 use App\Guia;
+use App\campus;
 use App\Laboratorio;
 use App\Materia;
+use App\Periodo;
 use App\Solicitud;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -55,27 +57,29 @@ class ControlController extends Controller {
 	{
 		$accion="";
 		$mensaje="";
+		$empresa = $request->user()->empresa->EMP_CODIGO;
 		$CON_FECHA = $request['CON_DIA'];
 		$dia=$this->saber_dia($CON_FECHA);
 		if ($dia!="SABADO" && $dia!="DOMINGO"){
-			$controles_guardados=DB::select('SELECT control.CON_CODIGO,control.CON_DIA FROM control WHERE control.CON_DIA="'.$CON_FECHA.'"');
+			$controles_guardados=DB::select('SELECT control.CON_CODIGO,control.CON_DIA,laboratorio.EMP_CODIGO FROM control , laboratorio WHERE control.LAB_CODIGO=laboratorio.LAB_CODIGO and control.CON_DIA="'.$CON_FECHA.'" and laboratorio.EMP_CODIGO="'.$empresa.'"');
 			$mensaje="Ya existen registro de esa fecha";
 			$accion='error';
+			$ocacional=$request['MAT_OCACIONAL'];
 			if(empty($controles_guardados)){
-				$codigo_periodo=DB::select('SELECT periodo.PER_CODIGO FROM periodo WHERE "'.$CON_FECHA.'" BETWEEN periodo.PER_FECHA_INICIO AND periodo.PER_FECHA_FIN' );
-				$codigo_periodo=$codigo_periodo[0]->PER_CODIGO;
+				$codigo_periodo=Periodo::where('PER_ESTADO', 1)->first();
+				$codigo_periodo=$codigo_periodo->PER_CODIGO;
 				$opcional=" and materia.MAT_OCACIONAL=0";
 
-				if($request['MAT_OCACIONAL']==1){
+				if($ocacional=='on'){
 					$opcional="";
 				}
 
 				$controles=array();
 				for($i=1;$i<13;$i++)
 				{
-					$aux_controles=DB::select('select materia.MAT_CODIGO, horario.HOR_HORA'.$i.' as HORA, horario.HOR_CODIGO, laboratorio.LAB_CODIGO, materia.DOC_CODIGO
+					$aux_controles=DB::select('select materia.MAT_CODIGO, horario.HOR_HORA'.$i.' as HORA, horario.HOR_CODIGO, laboratorio.LAB_CODIGO, materia.DOC_CODIGO, materia.MAT_OCACIONAL
 					from materia, horario, laboratorio,periodo,docente
-					where docente.DOC_CODIGO=materia.DOC_CODIGO and horario.PER_CODIGO=periodo.PER_CODIGO and periodo.PER_CODIGO=materia.PER_CODIGO  and horario.LAB_CODIGO=laboratorio.LAB_CODIGO and periodo.PER_CODIGO='.$codigo_periodo.' and horario.HOR_'.$dia.$i.'=materia.MAT_CODIGO'.$opcional );
+					where docente.DOC_CODIGO=materia.DOC_CODIGO and horario.PER_CODIGO=periodo.PER_CODIGO and periodo.PER_CODIGO=materia.PER_CODIGO  and horario.LAB_CODIGO=laboratorio.LAB_CODIGO and periodo.PER_CODIGO='.$codigo_periodo.' and horario.HOR_'.$dia.$i.'=materia.MAT_CODIGO'.$opcional.' and laboratorio.EMP_CODIGO='.$empresa );
 					foreach ($aux_controles as $con)
 					{
 						$con->ENTRADA=preg_split("/-/",$con->HORA)[0];
@@ -107,7 +111,7 @@ class ControlController extends Controller {
 				$controles=array_unique($controles,SORT_REGULAR);
 				
 				foreach($controles as $con){
-					DB::insert('insert into control (CON_DIA, CON_HORA_ENTRADA, CON_HORA_SALIDA, CON_NUMERO_HORAS,LAB_CODIGO, MAT_CODIGO, DOC_CODIGO, CON_EXTRA) values (?,?,?,?,?,?,?,?)', [$CON_FECHA,$con->ENTRADA,$con->SALIDA,$con->CANT_HORAS,$con->LAB_CODIGO,$con->MAT_CODIGO,$con->DOC_CODIGO,$request['MAT_OCACIONAL']]);
+					DB::insert('insert into control (CON_DIA, CON_HORA_ENTRADA, CON_HORA_SALIDA, CON_NUMERO_HORAS,LAB_CODIGO, MAT_CODIGO, DOC_CODIGO, CON_EXTRA) values (?,?,?,?,?,?,?,?)', [$CON_FECHA,$con->ENTRADA,$con->SALIDA,$con->CANT_HORAS,$con->LAB_CODIGO,$con->MAT_CODIGO,$con->DOC_CODIGO,$con->MAT_OCACIONAL]);
 				}
 				$accion='success';
 				$mensaje="Registros Generados";
@@ -259,11 +263,13 @@ class ControlController extends Controller {
 		//
 		$date = Carbon::now();
 		$empresa = $request->user()->empresa->EMP_CODIGO;
-	
+		$periodoActual=Periodo::FiltroEmpresaActivo($empresa)->first();
 		$date = $date->format('Y-m-d');
+		//$date='2020-01-21';
 		//$control = Control::where('CON_DIA', $date)->get();
-		$control = Control::filtroEmpresa($date,$empresa)->get();
-		return view("control.consola", ["controles"=>$control]);
+		$control = Control::filtroEmpresaPeriodo($date,$empresa,$periodoActual->PER_CODIGO)->get();
+		$campus=0;
+		return view("control.consola", ["controles"=>$control])->with('campus', $campus);
 		
 	}
 
@@ -286,7 +292,16 @@ class ControlController extends Controller {
 
 		$control->save();
 		
-		return redirect("control/consola");
+		$campus = $request['campus'];
+		if ($campus!=0){
+			$controles=$this->getLaboratorio($campus,$request->user()->empresa->EMP_CODIGO);
+			//echo ($campus);
+			return view("control.consola", ["controles"=>$controles])->with('campus', $campus);
+		}else{
+			return redirect("control/consola");
+		}
+
+		
 	}
 
 
@@ -305,34 +320,34 @@ class ControlController extends Controller {
 		}
 
 		$control->save();
+
 		
-		return redirect("control/consola");
+		$campus = $request['campus'];
+		if ($campus!=0){
+			$controles=$this->getLaboratorio($campus,$request->user()->empresa->EMP_CODIGO);
+			//echo ($campus);
+			return view("control.consola", ["controles"=>$controles])->with('campus', $campus);
+		}else{
+			return redirect("control/consola");
+		}
 	}
 
-	public function filtroCampus(Request $request){
-		$campus = $request->input('campus');
-		$laboratorios = Laboratorio::filtrarCampus($campus)->get();
+	public function getLaboratorio($campus,$empresa){
+
 		$date = Carbon::now();
 		$date = $date->format('Y-m-d');
-		$controles =  array();
+		//$date='2020-01-21';
 		
-		for ($j=0; $j <sizeof($laboratorios) ; $j++) {
-			# code...
-			
-			$control = Control::where('CON_DIA', $date)->where('LAB_CODIGO', $laboratorios[$j]->LAB_CODIGO)->first();
-			
-			if ($control != null) {
-				# code...
-				array_push ( $controles , $control );
-			}else{
-				
-			}
-			
-		}
+		$control = Control::filtroEmpresaCampus($date,$empresa,$campus)->get();
 		
-		echo sizeof($controles);
+		return $control;
+	}
+	public function filtroCampus(Request $request){
+		$campus = $request->input('campus');
+		$empresa = $request->user()->empresa->EMP_CODIGO;
+		$controles=$this->getLaboratorio($campus,$empresa);
 		
-		return view("control.consola", ["controles"=>$controles]);
+		return view("control.consola", ["controles"=>$controles])->with('campus', $campus);
 	}
 
 	//valida que este autenticado para acceder al controlador
@@ -361,10 +376,25 @@ class ControlController extends Controller {
 			}
 			$guia->save();
 			$control->save();
-			return redirect("control/consola")->with('title', 'EXITO!')
-			->with('subtitle', 'El registro de la guia se ha realizado con exito');	
+			$campus = $request['campus'];
+			if ($campus!=0){
+				$controles=$this->getLaboratorio($campus,$request->user()->empresa->EMP_CODIGO);
+				//echo ($campus);
+				return view("control.consola", ["controles"=>$controles])->with('campus', $campus)->with('title', 'EXITO!')
+				->with('subtitle', 'El registro de la guia se ha realizado con exito');
+			}else{
+				return redirect("control/consola")->with('title', 'EXITO!')
+				->with('subtitle', 'El registro de la guia se ha realizado con exito');
+			}
 		}else{
-			return redirect("control/consola")->with('mensajes','No existe guia');	
+			$campus = $request['campus'];
+			if ($campus!=0){
+				$controles=$this->getLaboratorio($campus,$request->user()->empresa->EMP_CODIGO);
+				//echo ($campus);
+				return view("control.consola", ["controles"=>$controles])->with('campus', $campus)->with('mensajes','No existe guia');
+			}else{
+				return redirect("control/consola")->with('mensajes','No existe guia');
+			}
 		}
 
 	}
@@ -392,17 +422,33 @@ class ControlController extends Controller {
 			if ($control->SOL_CODIGO == null) {
 					# code...
 				$control->SOL_CODIGO = $solicitud->SOL_CODIGO;
-				$solicitud->SOL_ESTODO = 1;
+				$solicitud->SOL_ESTADO = 1;
 			}else{
 				$control->SOL_CODIGO = null;
-				$solicitud->SOL_ESTODO = 0;
+				$solicitud->SOL_ESTADO = 0;
 			}
 			$solicitud->save();
 			$control->save();
-			return redirect("control/consola")->with('title', 'EXITO!')
-			->with('subtitle', 'El registro de la solicitud se ha realizado con exito');	
+			$campus = $request['campus'];
+			if ($campus!=0){
+				$controles=$this->getLaboratorio($campus,$request->user()->empresa->EMP_CODIGO);
+				//echo ($campus);
+				return view("control.consola", ["controles"=>$controles])->with('campus', $campus)->with('title', 'EXITO!')
+				->with('subtitle', 'El registro de la solicitud se ha realizado con exito');
+			}else{
+				return redirect("control/consola")->with('title', 'EXITO!')
+				->with('subtitle', 'El registro de la solicitud se ha realizado con exito');
+			}
+
 		}else{
-			return redirect("control/consola")->with('mensajes','No existe solicitud');	
+			$campus = $request['campus'];
+			if ($campus!=0){
+				$controles=$this->getLaboratorio($campus,$request->user()->empresa->EMP_CODIGO);
+				//echo ($campus);
+				return view("control.consola", ["controles"=>$controles])->with('campus', $campus)->with('mensajes','No existe solicitud');
+			}else{
+				return redirect("control/consola")->with('mensajes','No existe solicitud');
+			}
 		}
 
 	}

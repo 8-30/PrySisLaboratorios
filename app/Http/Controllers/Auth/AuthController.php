@@ -37,11 +37,6 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
-	//Redirige al index
-	public function index() {
-		return view('welcome');
-	}
-
 	public function getRegister() {
 		$role= Role::all();
 		return view('auth.register',[
@@ -85,4 +80,16 @@ class AuthController extends Controller {
 						'name' => $this->getFailedLoginMessage(),
 					]);
 	}
+
+	//redirecciona a la url especificada
+	public function redirectPath()
+	{
+		if (property_exists($this, 'redirectPath'))
+		{
+			return $this->redirectPath;
+		}
+
+		return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
+	}
+
 }
