@@ -75,8 +75,6 @@
                         @foreach ($periodos as $per)
                             @if($per->PER_CODIGO==$periodo->PER_CODIGO)
                                 <option  selected value="{{$per->PER_CODIGO}}">{{$per->PER_NOMBRE}}</option>
-                            @else
-                                <option  value="{{$per->PER_CODIGO}}">{{$per->PER_NOMBRE}}</option>
                             @endif    
                         @endforeach
                         </select> 

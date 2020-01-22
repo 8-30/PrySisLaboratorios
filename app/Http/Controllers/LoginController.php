@@ -36,14 +36,16 @@ class LoginController extends Controller {
 	 */
 	public function index()
 	{
-		$objetos = DB::table('objeto_recuperado')
-					->where('OBR_FECHA_ENTREGA', '=', '0000-00-00')
-                    ->get();
+		$objetos = ObjetoRecuperado::
+					where('OBR_FECHA_ENTREGA', '=', '0000-00-00')
+					->orderBy('OBR_FECHA_RECEPCION', 'DESC')
+					->get();
 		$date = Carbon::now();
-		$noticias = DB::table('noticia')
-					->where("NOT_FECHA_INICIO","<=",$date)
+		$noticias = Noticia::
+					where("NOT_FECHA_INICIO","<=",$date)
 					->where("NOT_FECHA_FIN",">=",$date)
-                    ->get();
+					->orderBy('NOT_FECHA_INICIO', 'DESC')
+					->get();
 		return view('welcome',['objetos' => $objetos, 'noticias'=>$noticias]);
 	}
 	public function noticiadetail($id)
