@@ -6,8 +6,8 @@
     box-shadow: initial 0 -7px #E0E0E0;
 
 }
-.button1{
-  background-color: #047DF9 ; 
+.button1 {
+  background-color: #047DF9 ;
   border: none;
   color: white;
   padding: 5px 22px;
@@ -19,18 +19,25 @@
   cursor: pointer;
   border-radius: 4px;
 }
-.button2{	
-	  background-color: #FF5733; 
-  border: none;
-  color: white;
-  padding: 5px 22px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px;
-  }
 
-.button4 {border-radius: 25px;}
+.btn-orange {
+  color: #fff;
+  background-color: #FF5733;
+  border-color: #FF5733;
+}
+
+.btn-orange:hover {
+    color: #fff;
+    background-color: #c85123;
+    border-color: #c85123;
+}
+
+.btn-pulse {
+    -webkit-animation: msPulseEffect 1s infinite;
+    animation: msPulseEffect 1s infinite;
+}
+
+@keyframes msPulseEffect {
+    0% { box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.5); }
+    100% {  box-shadow: 0 0 0 20px rgba(0, 0, 0, 0); }
+}

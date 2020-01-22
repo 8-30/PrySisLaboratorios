@@ -217,5 +217,3 @@ Route::get('role', 'RoleController@index');
 Route::get('role/{id}/edit', 'RoleController@edit');
 Route::get('role/{id}/destroy', 'RoleController@destroy');
 Route::post('role/update', 'RoleController@update');
-
-
