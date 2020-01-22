@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Control;
 use App\Docente;
 use App\Guia;
+use App\campus;
 use App\Laboratorio;
 use App\Materia;
 use App\Periodo;
@@ -267,8 +268,8 @@ class ControlController extends Controller {
 		//$date='2020-01-21';
 		//$control = Control::where('CON_DIA', $date)->get();
 		$control = Control::filtroEmpresaPeriodo($date,$empresa,$periodoActual->PER_CODIGO)->get();
-		
-		return view("control.consola", ["controles"=>$control])->with('campus', $campus);;
+		$campus=0;
+		return view("control.consola", ["controles"=>$control])->with('campus', $campus);
 		
 	}
 
