@@ -7,6 +7,7 @@ use App\Docente;
 use App\Guia;
 use App\Laboratorio;
 use App\Materia;
+use App\Periodo;
 use App\Solicitud;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -259,10 +260,10 @@ class ControlController extends Controller {
 		//
 		$date = Carbon::now();
 		$empresa = $request->user()->empresa->EMP_CODIGO;
-	
+		$periodoActual=Periodo::FiltroEmpresaActivo($empresa)->first();
 		$date = $date->format('Y-m-d');
 		//$control = Control::where('CON_DIA', $date)->get();
-		$control = Control::filtroEmpresa($date,$empresa)->get();
+		$control = Control::filtroEmpresaPeriodo($date,$empresa,$periodoActual->PER_CODIGO)->get();
 		return view("control.consola", ["controles"=>$control]);
 		
 	}
