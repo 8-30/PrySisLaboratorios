@@ -91,24 +91,28 @@ class ReportesController extends Controller {
 
 	public function hojaControl(Request $request)
 	{
-		$controles= $this->listar($request['CON_DIA'],$request['CAM_CODIGO']);
+		$empresa = $request->user()->empresa->EMP_CODIGO;
+		$controles= $this->listar($request['CON_DIA'],$request['CAM_CODIGO'],$empresa);
+		if($request['CON_DIA']!=null){
+			$mensaje="No se encontraron controles con la fecha y campus seleccionado";
+		}else{
+			$mensaje=null;
+		}
 		$campus=DB::select('SELECT * FROM campus');
-		return view('reportes.hojaControl', compact('controles','campus'));
+		return view('reportes.hojaControl', compact('controles','campus','mensaje'));
 
 	}
 
 	// El nombre del metodo no esta claro a que modulo pertenece
-	public function listar($fecha,$campus)
+	public function listar($fecha,$campus,$empresa)
 	{
 		if($fecha==null){
 			$fecha = getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"];
 		}
-        $controles = DB::select('SELECT @rownum:=@rownum+1 AS ORD, control.MAT_CODIGO,materia.MAT_ABREVIATURA,materia.MAT_NRC,laboratorio.LAB_NOMBRE,control.CON_HORA_ENTRADA,CON_HORA_SALIDA,docente.DOC_CODIGO, docente.DOC_NOMBRES, docente.DOC_APELLIDOS, docente.DOC_TITULO,empresa.EMP_NOMBRE,control.CON_EXTRA,control.CON_DIA,campus.CAM_CODIGO, materia.MAT_NUM_EST,laboratorio.LAB_CODIGO
+        $controles = DB::select('SELECT @rownum:=@rownum+1 AS ORD, control.MAT_CODIGO,materia.MAT_ABREVIATURA,materia.MAT_NRC,laboratorio.LAB_NOMBRE,control.CON_HORA_ENTRADA,CON_HORA_SALIDA,docente.DOC_CODIGO, docente.DOC_NOMBRES, docente.DOC_APELLIDOS, docente.DOC_TITULO,empresa.EMP_NOMBRE,control.CON_EXTRA,control.CON_DIA,campus.CAM_CODIGO, materia.MAT_NUM_EST,laboratorio.LAB_CODIGO, laboratorio.CAM_CODIGO
 		FROM (SELECT @rownum:=0) r, control,materia,laboratorio,docente,campus,empresa
-		where laboratorio.EMP_CODIGO=empresa.EMP_CODIGO and control.MAT_CODIGO=materia.MAT_CODIGO and control.LAB_CODIGO=laboratorio.LAB_CODIGO and campus.CAM_CODIGO=laboratorio.CAM_CODIGO and materia.DOC_CODIGO=docente.DOC_CODIGO and control.CON_DIA="'.$fecha.'" and campus.CAM_CODIGO="'.$campus.'"
+		where laboratorio.EMP_CODIGO='.$empresa.' and laboratorio.EMP_CODIGO=empresa.EMP_CODIGO and control.MAT_CODIGO=materia.MAT_CODIGO and control.LAB_CODIGO=laboratorio.LAB_CODIGO and campus.CAM_CODIGO=laboratorio.CAM_CODIGO and materia.DOC_CODIGO=docente.DOC_CODIGO and control.CON_DIA="'.$fecha.'" and campus.CAM_CODIGO="'.$campus.'"
 		order by control.CON_HORA_ENTRADA ASC;');
-
-		//$controles["fecha"]=$fecha;
 		return $controles;
 	}
 
@@ -324,7 +328,8 @@ class ReportesController extends Controller {
 
 	public function pdfcontrol(Request $request)
 	{
-		$controles= $this->listar($request['CON_DIA'],$request['CAM_CODIGO']);
+		$empresa = $request->user()->empresa->EMP_CODIGO;
+		$controles= $this->listar($request['CON_DIA'],$request['CAM_CODIGO'],$empresa);
 		$pdf = PDF::loadView('reportes.pdfcontrol',compact('controles'))->setPaper('a4', 'landscape');
 
         return $pdf->stream('ReporteControl.pdf');

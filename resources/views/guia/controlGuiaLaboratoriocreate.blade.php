@@ -24,68 +24,68 @@
             <div class="form-group row">
                 <label for="GUI_TEMA"class="col-sm-2 col-form-label">Tema<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-6">
-                    <input type="input" class="form-control" id="GUI_TEMA" name="GUI_TEMA"   value="@if(isset($guia)) {{$guia->GUI_TEMA}} @endif" required>
+                    <input type="input" class="form-control" id="GUI_TEMA" name="GUI_TEMA"   value="@if(isset($guia)){{$guia->GUI_TEMA}}@endif" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_INTRODUCCION"class="col-sm-2 col-form-label">Introduccion<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <input type="input" class="form-control" id="GUI_INTRODUCCION" name="GUI_INTRODUCCION"   value="@if(isset($guia)) {{$guia->GUI_INTRODUCCION}} @endif" required>
+                        <input type="input" class="form-control" id="GUI_INTRODUCCION" name="GUI_INTRODUCCION"   value="@if(isset($guia)){{$guia->GUI_INTRODUCCION}}@endif" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_OBJETIVO"class="col-sm-2 col-form-label">Objetivos<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <input type="input" class="form-control" id="GUI_OBJETIVO" name="GUI_OBJETIVO"    value="@if(isset($guia)) {{$guia->GUI_OBJETIVO}} @endif" required>
+                        <input type="input" class="form-control" id="GUI_OBJETIVO" name="GUI_OBJETIVO"    value="@if(isset($guia)){{$guia->GUI_OBJETIVO}}@endif" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_EQUIPO_MATERIALES"class="col-sm-2 col-form-label">Equipos y Materiales<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <textarea type="input" class="form-control" id="GUI_EQUIPO_MATERIALES" name="GUI_EQUIPO_MATERIALES" required>@if(isset($guia)){{$guia->GUI_EQUIPO_MATERIALES}} @endif</textarea>
+                        <textarea type="input" class="form-control" id="GUI_EQUIPO_MATERIALES" name="GUI_EQUIPO_MATERIALES" required>@if(isset($guia)){{$guia->GUI_EQUIPO_MATERIALES}}@endif</textarea>
                     
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_TRABAJO_PREPARATORIO"class="col-sm-2 col-form-label">Instrucciones<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <textarea type="input" class="form-control" id="GUI_TRABAJO_PREPARATORIO" name="GUI_TRABAJO_PREPARATORIO" required>@if(isset($guia)){{$guia->GUI_TRABAJO_PREPARATORIO}} @endif</textarea>
+                        <textarea type="input" class="form-control" id="GUI_TRABAJO_PREPARATORIO" name="GUI_TRABAJO_PREPARATORIO" required>@if(isset($guia)){{$guia->GUI_TRABAJO_PREPARATORIO}}@endif</textarea>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_ACTIVIDADES"class="col-sm-2 col-form-label">Actividades por desarrollar<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <textarea type="input" class="form-control" id="GUI_ACTIVIDADES" name="GUI_ACTIVIDADES" required>@if(isset($guia)){{$guia->GUI_ACTIVIDADES}} @endif</textarea>
+                        <textarea type="input" class="form-control" id="GUI_ACTIVIDADES" name="GUI_ACTIVIDADES" required>@if(isset($guia)){{$guia->GUI_ACTIVIDADES}}@endif</textarea>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_RESULTADOS"class="col-sm-2 col-form-label">Resultados obtenidos<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <textarea type="input" class="form-control" id="GUI_RESULTADOS" name="GUI_RESULTADOS" required>@if(isset($guia)){{$guia->GUI_RESULTADOS}} @endif</textarea>                
+                        <textarea type="input" class="form-control" id="GUI_RESULTADOS" name="GUI_RESULTADOS" required>@if(isset($guia)){{$guia->GUI_RESULTADOS}}@endif</textarea>                
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_CONCLUSIONES"class="col-sm-2 col-form-label">Concluciones</label>
                 <div class="col-sm-10">
-                        <input type="input" class="form-control" id="GUI_CONCLUSIONES" name="GUI_CONCLUSIONES" value="@if(isset($guia)) {{$guia->GUI_CONCLUSIONES}} @endif">
+                        <input type="input" class="form-control" id="GUI_CONCLUSIONES" name="GUI_CONCLUSIONES" value="@if(isset($guia)){{$guia->GUI_CONCLUSIONES}}@endif">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_RECOMENDACIONES"class="col-sm-2 col-form-label">Recomendaciones</label>
                 <div class="col-sm-10">
-                        <input type="input" class="form-control" id="GUI_RECOMENDACIONES" name="GUI_RECOMENDACIONES" value="@if(isset($guia)) {{$guia->GUI_RECOMENDACIONES}} @endif">
+                        <input type="input" class="form-control" id="GUI_RECOMENDACIONES" name="GUI_RECOMENDACIONES" value="@if(isset($guia)){{$guia->GUI_RECOMENDACIONES}}@endif">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_REFERENCIAS_BIBLIOGRAFICAS"class="col-sm-2 col-form-label">Referencias Bibliograficas </label>
                 <div class="col-sm-10">
-                        <input type="input" class="form-control" id="GUI_REFERENCIAS_BIBLIOGRAFICAS" name="GUI_REFERENCIAS_BIBLIOGRAFICAS" value="@if(isset($guia)) {{$guia->GUI_REFERENCIAS_BIBLIOGRAFICAS}} @endif">
+                        <input type="input" class="form-control" id="GUI_REFERENCIAS_BIBLIOGRAFICAS" name="GUI_REFERENCIAS_BIBLIOGRAFICAS" value="@if(isset($guia)){{$guia->GUI_REFERENCIAS_BIBLIOGRAFICAS}}@endif">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="GUI_COORDINADOR"class="col-sm-2 col-form-label">Coordinador Area<span style="color:#FF0000";>*</span></label>
                 <div class="col-sm-10">
-                        <input type="input" class="form-control" id="GUI_COORDINADOR" name="GUI_COORDINADOR"  value="@if(isset($guia)) {{$guia->GUI_COORDINADOR}} @endif" required>
+                        <input type="input" class="form-control" id="GUI_COORDINADOR" name="GUI_COORDINADOR"  value="@if(isset($guia)){{$guia->GUI_COORDINADOR}}@endif" required>
                 </div>
             </div>
             <div class="form-group row">

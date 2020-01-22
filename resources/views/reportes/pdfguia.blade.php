@@ -6,36 +6,41 @@ table {
    width: 100%;
    border-collapse:collapse;
    border: 1px solid black;
-
+   font-family:sans-serif; 
 }
 th, td {
    text-align: left;
    vertical-align: top;
    border:  solid #000;
    border: 1px solid black;
-   font-size: 12px
+   font-size: 12px;
+   font-family:sans-serif; 
    border-collapse:collapse;
 }
 
 #internatabla{
   width: 100%;
    border: 0;
+   font-family:sans-serif; 
    border-collapse:collapse;
 }
 
 #centrado{
   vertical-align:bottom;
   text-align:left;
+  font-family:sans-serif; 
   font-size: 9px
 }
 #fondo{
   background-color:rgb(189, 189, 189);
   vertical-align:bottom;
   text-align:left;
+  font-family:sans-serif; 
   font-size: 9px
 }
 p{
   font-size:9px;
+  font-family:sans-serif; 
 }
 
 </style>
@@ -49,8 +54,9 @@ p{
               <th scope="row" id="centrado"width="55%"><h3>GUÍA PARA LAS PRÁCTICAS DE LABORATORIO, TALLER O CAMPO<h3></th>
               <th scope="row"width="25%">
                 <p>CÓDIGO: SGC.DI.505<br>
-                VERSIÓN: 1.0 <br>
-                FECHA ÚLTIMA REVISIÓN: 12/04/2017    
+                VERSIÓN: 2.0 <br>
+                FECHA ÚLTIMA <br>
+                REVISIÓN: 12/04/2017    
                 </p></th>
             </tr>
         </thead>
@@ -60,7 +66,7 @@ p{
         <thead>
             <tr>
               <td scope="row" id="fondo"width="15%"><br> DEPARTAMENTO: </td>
-              <td scope="row" id="centrado"width="35%"> </td>
+              <td scope="row" id="centrado"width="35%"> ELECTRICA Y ELECTRONICA </td>
               <td scope="row" id="fondo"width="7%"><br> CARRERA: </td>
               <td scope="row" id="centrado"width="43%"> {{$guia->CAR_NOMBRE}}</td>
             </tr>

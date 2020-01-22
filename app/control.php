@@ -54,6 +54,10 @@ class Control extends Model {
 		return $query->join('laboratorio','control.LAB_CODIGO','=','laboratorio.LAB_CODIGO')
 		->join('materia','control.MAT_CODIGO','=','materia.MAT_CODIGO')->where('control.CON_DIA', $date)->where('laboratorio.EMP_CODIGO', $empresa)->where('materia.PER_CODIGO',$periodo)->where('CON_EXTRA',1);
 	}
+		//busca la fecha de control que aun no tenga guia
+	public function scopeFiltroEmpresaCampus($query, $date,$empresa,$campus) {
+		return $query->join('laboratorio','control.LAB_CODIGO','=','laboratorio.LAB_CODIGO')->where('control.CON_DIA', $date)->where('laboratorio.EMP_CODIGO', $empresa)->where('laboratorio.CAM_CODIGO', $campus);
+	}
 
 	public function scopeCruceHoras($query,$laboratorio,$horaI,$horaf,$dia){
     	return $query->where('LAB_CODIGO',$laboratorio)->where('CON_HORA_ENTRADA',$horaI)->where('CON_HORA_SALIDA',$horaf)->where('CON_DIA',$dia);

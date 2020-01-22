@@ -58,7 +58,7 @@
                 <input type="hidden" class="form-control" name="CON_DIA" id="CON_DIA" value="{{$controles['fecha']}}" />
 
                 <div class="custom-control custom-switch ">
-                  <input type="checkbox" class="custom-control-input" id="MAT_OCACIONAL">
+                  <input type="checkbox" class="custom-control-input" id="MAT_OCACIONAL" name="MAT_OCACIONAL">
                   <label class="custom-control-label" for="MAT_OCACIONAL">Ocasional</label>
                 </div>
                 <br>
