@@ -53,40 +53,6 @@
                 </div>
             </div>
         </div>
-            
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="OBR_DESCRIPCION">Descripcion<span class="text-danger">*</span></label>
-                    <textarea type="text" class="form-control" id="OBR_DESCRIPCION" name="OBR_DESCRIPCION" 
-                    placeholder="Añada una descripción del objeto en pocas lineas..." rows="3" required>{{ $objeto->OBR_DESCRIPCION }}</textarea>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="OBR_OBSERVACION">Observacion</label>
-                    <textarea type="text" class="form-control" id="OBR_OBSERVACION"  name="OBR_OBSERVACION"
-                    placeholder="Añada una observación al objeto..." rows="3">{{ $objeto->OBR_OBSERVACION }}</textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="OBR_FECHA_RECEPCION">Fecha de recuperación<span class="text-danger">*</span></label>
-                    <input type="date" class="form-control" onchange="validarDateObjetos()" id="OBR_FECHA_RECEPCION" name="OBR_FECHA_RECEPCION" value="{{ $objeto->OBR_FECHA_RECEPCION }}"  required>
-                    <input type="date"  style="display:none;" class="form-control" id="f1" name="f1" value="{{ $objeto->OBR_FECHA_RECEPCION }}"  >
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="OBR_FECHA_ENTREGA">Fecha de entrega<span class="text-danger"></span></label>
-                    <input type="date" class="form-control" onchange="validarDateObjetos()" id="OBR_FECHA_ENTREGA"  name="OBR_FECHA_ENTREGA" value="{{ $objeto->OBR_FECHA_ENTREGA }}"  >
-                    <input type="date" class="form-control" style="display:none;" id="f2" name="f2" value="{{ $objeto->OBR_FECHA_ENTREGA }}"  >
-                </div>
-            </div>
-        </div>
         
         <div class="row">
             <div class="col">
@@ -113,6 +79,42 @@
                             @endif
                         @endforeach
                     </select> 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="OBR_DESCRIPCION">Descripcion<span class="text-danger">*</span></label>
+                    <textarea type="text" class="form-control" id="OBR_DESCRIPCION" name="OBR_DESCRIPCION" 
+                    placeholder="Añada una descripción del objeto en pocas lineas..." rows="3" required>{{ $objeto->OBR_DESCRIPCION }}</textarea>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="OBR_FECHA_RECEPCION">Fecha de recuperación<span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" onchange="validarDateObjetos()" id="OBR_FECHA_RECEPCION" name="OBR_FECHA_RECEPCION" value="{{ $objeto->OBR_FECHA_RECEPCION }}"  required>
+                    <input type="date"  style="display:none;" class="form-control" id="f1" name="f1" value="{{ $objeto->OBR_FECHA_RECEPCION }}"  >
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="OBR_FECHA_ENTREGA">Fecha de entrega<span class="text-danger"></span></label>
+                    <input type="date" class="form-control" onchange="validarDateObjetos()" id="OBR_FECHA_ENTREGA"  name="OBR_FECHA_ENTREGA" value="{{ $objeto->OBR_FECHA_ENTREGA }}"  >
+                    <input type="date" class="form-control" style="display:none;" id="f2" name="f2" value="{{ $objeto->OBR_FECHA_ENTREGA }}"  >
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="OBR_OBSERVACION">Observacion</label>
+                    <textarea type="text" class="form-control" id="OBR_OBSERVACION"  name="OBR_OBSERVACION"
+                    placeholder="Añada una observación al objeto..." rows="3">{{ $objeto->OBR_OBSERVACION }}</textarea>
                 </div>
             </div>
         </div>
