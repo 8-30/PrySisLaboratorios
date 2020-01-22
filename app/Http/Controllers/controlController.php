@@ -422,10 +422,10 @@ class ControlController extends Controller {
 			if ($control->SOL_CODIGO == null) {
 					# code...
 				$control->SOL_CODIGO = $solicitud->SOL_CODIGO;
-				$solicitud->SOL_ESTODO = 1;
+				$solicitud->SOL_ESTADO = 1;
 			}else{
 				$control->SOL_CODIGO = null;
-				$solicitud->SOL_ESTODO = 0;
+				$solicitud->SOL_ESTADO = 0;
 			}
 			$solicitud->save();
 			$control->save();
