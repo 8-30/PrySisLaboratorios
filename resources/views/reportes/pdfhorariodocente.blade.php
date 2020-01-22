@@ -73,7 +73,7 @@ th, td {
 
 <div id="header" > 
       <div  >
-          <img  style='height: 100%; width: 100%;' src="{{$laboratoriox->empresa->EMP_IMAGEN_ENCABEZADO}}" alt="Error Header">
+          <img  style='height: 100%; width: 100%;' src="{{$empresa->EMP_IMAGEN_ENCABEZADO}}" alt="Error Header">
       </div>
       <hr style="size:1px;color:SILVER; " />
       <div style="margin-top: 3px;   margin-bottom:px;" >
@@ -129,7 +129,7 @@ th, td {
        <table>
          <tbody >
               <tr>
-                    <td style="text-align: center; vertical-align: middle;" scope="row" width="10%" >  <b>HORA</b> </td>
+                    <td style="text-align: center; vertical-align: middle;" scope="row" width="6.5%" >  <b>HORA</b> </td>
                     <td style="text-align: center; vertical-align: middle;" scope="row" width="10%" ><b>LUNES</b> </td>
                     <td style="text-align: center; vertical-align: middle;" scope="row"  width="10%"> <b>MARTES</b></td>
                     <td style="text-align: center; vertical-align: middle;" scope="row" width="10%" > <b>MIERCOLES</b> </td>
@@ -140,7 +140,7 @@ th, td {
 
               @for ($x = 1; $x <= 13; $x++)
               <tr >
-                  <td >{{ $horario['HOR_HORA'.$x] }}</td>
+                  <td ><b>{{ $horario['HOR_HORA'.$x] }}</b></td>
                   <td >
                       @if ($horario['HOR_LUNES'.$x] != 0 || $horario['HOR_LUNES'.$x] != NULL)
                       {{ $horario['HOR_LUNES'.$x] }} <span class="text-{{ $horario['HOR_LUNES'.$x.'_OPC'] }}"></span>
@@ -186,10 +186,7 @@ th, td {
       <table border="0px">
           <tr>
               <td scope="row"  style="width:60%; height:auto;"  >
-                  <p id="centrado"  style="font-size:13px">
-                      <B>REALIZADO POR</B>
-                      <br><br><br>
-                  </p>
+                  <br>
                   <p id="centrado">
                       Ing. Edgar F. Montaluisa P. MSc. 
                       <br>
