@@ -46,14 +46,14 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="OBR_DESCRIPCION">Descripcion<span class="text-danger">*</span></label>
+                    <label for="OBR_DESCRIPCION">Descripción<span class="text-danger">*</span></label>
                     <textarea type="text" class="form-control" id="OBR_DESCRIPCION" name="OBR_DESCRIPCION" 
                     placeholder="Añada una descripción del objeto en pocas lineas..." rows="3" required></textarea>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="OBR_OBSERVACION">Observacion</label>
+                    <label for="OBR_OBSERVACION">Observación</label>
                     <textarea type="text" class="form-control" id="OBR_OBSERVACION"  name="OBR_OBSERVACION"
                     placeholder="Añada una observación al objeto..." rows="3"></textarea>
                 </div>

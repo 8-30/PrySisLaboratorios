@@ -44,7 +44,7 @@
                 
                 <div class="col">    
                     <div class="form-group">
-                        <label for="NOT_DESCRIPCION">Descripcion<span class="text-danger">*</span></label>
+                        <label for="NOT_DESCRIPCION">Descripción<span class="text-danger">*</span></label>
                         <textarea type="text" maxlength="460" class="form-control" 
                             id="NOT_DESCRIPCION" name="NOT_DESCRIPCION" required placeholder="Coloque una descripción de la noticia..."></textarea>
                     </div>
