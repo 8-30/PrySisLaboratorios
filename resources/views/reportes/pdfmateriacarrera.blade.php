@@ -20,7 +20,7 @@
 
     #margenes {
       margin-top: 0px;
-      margin-bottom: 20mm;
+      margin-bottom: 0mm;
       margin-right: 10mm;
       margin-left: 20mm;
       font-family: sans-serif;
@@ -69,7 +69,7 @@
     #header {
       position: fixed;
       left: 58pt;
-      top: -100px;
+      top: -110px;
       right: 29pt;
       text-align: center;
       font-family: sans-serif;
@@ -139,26 +139,32 @@
   </footer>
 
   <div id="margenes">
-    <div style="margin-top: 30px;">
+    <div style="margin-top: 10px;">
       <table>
         <tbody>
           <tr>
+                   <input type="hidden" value="{{$cont=1}}">
             <td style="text-align: center; vertical-align: middle;" scope="row" width="4%"> <b>ORD</b> </td>
-            <td style="text-align: center; vertical-align: middle;" scope="row" width="10%"><b>MATERIA</b> </td>
+            <td style="text-align: center; vertical-align: middle;" scope="row" width="18%"><b>MATERIA</b> </td>
             <td style="text-align: center; vertical-align: middle;" scope="row" width="5%"> <b>NRC</b></td>
-            <td style="text-align: center; vertical-align: middle;" scope="row" width="18%"> <b>DOCENTE</b> </td>
+            <td style="text-align: center; vertical-align: middle;" scope="row" width="15%"> <b>DOCENTE</b> </td>
             <td style="text-align: center; vertical-align: middle;" scope="row" width="4%"> <b>CREDITOS</b> </td>
             <td style="text-align: center; vertical-align: middle;" scope="row" width="4%"> <b>ESTUDIANTES</b> </td>
             <td style="text-align: center; vertical-align: middle;" scope="row" width="27%"> <b>ABREVIATURA</b> </td>
           </tr>
+
+    
+
           @for ($i = 0; $i < count($materias); $i++) 
           <tr>
-            <td scope="row" id="centrado" width="4%">{{$i}}</td>
-            <td style="text-align: center; vertical-align: middle;" scope="row" id="centrado" width="4%">
-              {{$materias[$i] -> MAT_NOMBRE}}</td>
-            <td style="text-align: center; vertical-align: middle;" scope="row" id="centrado" width="10%">
-              {{$materias[$i]->MAT_NRC}}</td>
+           
+
+            <td scope="row" id="centrado" width="4%">{{$cont++}}</td>
             <td style="text-align: left; vertical-align: middle;" scope="row" id="centrado" width="18%">
+              {{$materias[$i] -> MAT_NOMBRE}}</td>
+            <td style="text-align: center; vertical-align: middle;" scope="row" id="centrado" width="5%">
+              {{$materias[$i]->MAT_NRC}}</td>
+            <td style="text-align: left; vertical-align: middle;" scope="row" id="centrado" width="10%">
               {{$materias[$i] -> docente->DOC_NOMBRES.' '.$materias[$i]->docente->DOC_APELLIDOS}}</td>
             <td style="text-align: center; vertical-align: middle;" scope="row" id="centrado" width="4%">
               {{$materias[$i] -> MAT_CREDITOS}}</td>
@@ -170,8 +176,7 @@
           @endfor
         </tbody>
       </table>
-      <br><br><br><br><br>
-      
+  
       <table border="0px">
         <tr>
           <td scope="row">

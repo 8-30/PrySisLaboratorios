@@ -174,6 +174,7 @@ Route::get('reporte/guia/carrera', 'ReportesController@guiasPorCarrera');
 Route::post('reporte/guia/carrera', 'ReportesController@guiasPorCarreraPost');
 Route::get('reporte/carrera/pdfguia/{idperiodo}/{idcarrera}/{fechaInicial}/{fechaFinal}', 'ReportesController@pdfCarreraGuia');
 Route::get('reporte/pdfSolicitud/{id}', 'ReportesController@pdfSolicitud');
+Route::get('reporte/materia/comboCarrera/{id}', 'ReportesController@byCarreraGet');
 ///////////////////////////////////////////////////////////////////
 Route::get('guia/pdfGuia/{id}', 'GuiaController@pdfGuia');
 Route::get('guia/listarGuias/{id}', 'GuiaController@listarGuias');
@@ -217,3 +218,12 @@ Route::get('role', 'RoleController@index');
 Route::get('role/{id}/edit', 'RoleController@edit');
 Route::get('role/{id}/destroy', 'RoleController@destroy');
 Route::post('role/update', 'RoleController@update');
+////////////////////////////////////////////////////////////7
+Route::get('materiales/laboratorio', 'MaterialesController@index');
+Route::get('materiales/laboratorio/create', 'MaterialesController@create');
+Route::get('materiales/laboratorio/{id}/edit', 'MaterialesController@edit');
+Route::get('materiales/laboratorio/{id}/destroy', 'MaterialesController@destroy');
+Route::post('materiales/laboratorio/store', 'MaterialesController@store');
+Route::post('materiales/laboratorio/update', 'MaterialesController@update');
+
+

@@ -32,16 +32,17 @@
                 <div class="form-group">
                     <label for="SOL_NOMBRELAB">Nombre del Laboratorio<span class="text-danger">*</span></label>
                     <input type="hidden" class="form-control" id="LAB_CODIGO" name="LAB_CODIGO">
-                    <input type="input" onkeypress="return false" class="form-control" id="SOL_NOMBRELAB" name="SOL_NOMBRELAB" required>
+                    <input type="input" onkeypress="return false" class="form-control" id="SOL_NOMBRELAB" name="SOL_NOMBRELAB" required readonly>
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group">
                     <label for="SOL_HORARIO_USO">Horario de uso<span class="text-danger">*</span></label>
-                    <input type="input" onkeypress="return false" class="form-control" id="SOL_HORARIO_USO" name="SOL_HORARIO_USO" required>
+                    <input type="input" onkeypress="return false" class="form-control" id="SOL_HORARIO_USO" name="SOL_HORARIO_USO" required readonly>
                 </div>
             </div>
+
 
             <div class="col">
                 <div class="form-group">
