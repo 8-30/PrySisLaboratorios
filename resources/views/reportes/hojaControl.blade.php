@@ -31,8 +31,9 @@
 
           <div class="col">
             <label for="CAM_CODIGO">Campus<span style="color:#FF0000";>*</span></label>
+           
             <select name="CAM_CODIGO" id="CAM_CODIGO" class="form-control">
-              <option disabled>Escoja un Campus...</option>
+              <option>Escoja un Campus...</option>
               @foreach ($campus as $camp)
               <option value="{{ $camp->CAM_CODIGO }}">{{ $camp->CAM_NOMBRE }}</option>
               @endforeach
@@ -49,8 +50,8 @@
       <form class="form" id="form" action="{{url('reporte/pdfcontrol')}}" method="POST">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         @if(!empty($controles))
-        <input type="hidden" class="form-control" name="CON_DIA" id="CON_DIA" value="{{$controles[0]->CON_DIA}}" />
-        <input type="hidden" class="form-control" name="CAM_CODIGO" id="CAM_CODIGO"
+        <input type="hidden"  class="form-control" name="CON_DIA" id="CON_DIA" value="{{$controles[0]->CON_DIA}}" />
+        <input type="hidden"  class="form-control" name="CAM_CODIGO" id="CAM_CODIGO"
           value="{{$controles[0]->CAM_CODIGO}}" />
         @else
         <input type="hidden" class="form-control" name="CON_DIA" id="CON_DIA" />
@@ -81,7 +82,7 @@
       @foreach ($controles as $con)
       <tr>
         <td scope="row">{{$con -> ORD}}</td>
-        <td scope="row">{{$con -> MAT_ABREVIATURA}} - {{$con -> MAT_NRC}}</td>
+        <td scope="row">{{$con -> MAT_ABREVIATURA}}</td>
         <td scope="row">{{$con -> LAB_NOMBRE}}</td>
         <td scope="row">{{$con -> CON_HORA_ENTRADA}}</td>
         <td scope="row">{{$con -> CON_HORA_SALIDA}}</td>

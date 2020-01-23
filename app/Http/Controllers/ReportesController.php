@@ -91,7 +91,9 @@ class ReportesController extends Controller {
 
 	public function hojaControl(Request $request)
 	{
-		$controles= $this->listar($request['CON_DIA'],$request['CAM_CODIGO']);
+		$campus=$request['CON_MES'];
+		$fecha=$request['CAM_CODIGO'];
+		$controles= $this->listar($request['CON_MES'],$request['CAM_CODIGO']);
 		$campus=DB::select('SELECT * FROM campus');
 		return view('reportes.hojaControl', compact('controles','campus'));
 

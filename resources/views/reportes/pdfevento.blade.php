@@ -73,16 +73,16 @@ th, td {
 
 <div id="header" > 
       <div  >
-          <img  style='height: 100%; width: 100%;' src="{{$laboratoriox->empresa->EMP_IMAGEN_ENCABEZADO}}" alt="Error Header">
+      <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/reportes/encabezado.png';?>"/>
       </div>
-      <hr style="size:1px;color:SILVER; " />
+      <hr style="size:1px;color: SILVER; " />
       <div style="margin-top: 3px;   margin-bottom:px;" >
         
         <table  border="0px"  >
                 <thead >
                     <tr>
                       <td scope="row"  width="4%"> <b>REPORTE</td>
-                      <td scope="row" id="izquierda"width="30%">: EVENTOS OCASIONALES REGISTRADOS </td>
+                      <td scope="row" id="izquierda"width="30%">: HOJA DE CONTROL DIARIO  </td>
                     
                     
                     </tr>
@@ -153,7 +153,7 @@ th, td {
           <tr>
               <td scope="row"  style="width:60%; height:auto;"  >
                   <p id="centrado"  style="font-size:13px">
-                      <B>REALIZADO POR</B>
+                      <B>REALIZADO POR:</B>
                       <br><br><br>
                   </p>
                   <p id="centrado">
