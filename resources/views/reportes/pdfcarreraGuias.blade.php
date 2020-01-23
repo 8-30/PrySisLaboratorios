@@ -67,7 +67,8 @@ th, td {
 <body>
 <div id="header" > 
       <div  >
-          <img  style='height: 100%; width: 100%;' src="{{$laboratoriox->empresa->EMP_IMAGEN_ENCABEZADO}}" alt="Error Header">
+      
+          <img  style='height: 100%; width: 100%;' src="../public/images/reportes/encabezado.png" alt="Error Header">
       </div>
       <hr style="size:1px;color:SILVER; " />
       <div style="margin-top: 3px;   margin-bottom:px;" >

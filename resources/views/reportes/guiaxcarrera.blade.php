@@ -10,37 +10,36 @@
     </style>
 
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <form action="{{url('/reporte/guia/carrera')}}" method="post">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    
-                <div class="card border-primary mb-3">
-                    <div class="card-header text-primary">Consultar</div>
-                    <div class="card-body text-primary">
-                        <span style="font-weight: 300;">Periodo</span>
-                        <select class="form-control" id="PER_CODIGO" name="PER_CODIGO"  >
-                            @foreach ($periodos as $per)
-                                @if($valores!=null))
-                                    @if($per->PER_CODIGO==$valores->PER_CODIGO)
-                                        <option value="{{$per->PER_CODIGO}}" selected="{{$per->PER_CODIGO}}">{{$per->PER_NOMBRE}}</option>
-                                    @else
-                                        <option value="{{$per->PER_CODIGO}}"  >{{$per->PER_NOMBRE}}</option>
-                                    @endif
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <form action="{{url('/reporte/guia/carrera')}}" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+       
+                    <div class="card border-primary mb-3">
+                        <div class="card-header text-primary">Consultar</div>
+                        <div class="card-body text-primary">
+                            <span style="font-weight: 300;">Periodo</span>
+                        <select type="input" class="form-control" id="PER_CODIGO" name="PER_CODIGO"   required>
+                            @foreach ($periodos as $periodo)
+                                @if($periodo->PER_CODIGO==$valores['PER_CODIGO'])
+                                    <option value="{{ $periodo->PER_CODIGO }}" selected>{{ $periodo->PER_NOMBRE }}</option>
                                 @else
-                                    <option value="{{$per->PER_CODIGO}}"  >{{$per->PER_NOMBRE}}</option>
+                                    <option value="{{$periodo->PER_CODIGO}}">{{$periodo->PER_NOMBRE}}</option>
                                 @endif
                             @endforeach
-                        </select> 
-                    </div>
-                    <div class="card-body text-primary">
-                        <span style="font-weight: 300;">Carrera</span>
-                        <select class="form-control" id="CAR_CODIGO" name="CAR_CODIGO"  >
-                            @foreach ($carreras as $car)
-                                @if($valores!=null))
-                                    @if($car->CAR_CODIGO==$valores->CAR_CODIGO)
-                                        <option value="{{$car->CAR_CODIGO}}" selected="{{$car->CAR_CODIGO}}">{{$car->CAR_NOMBRE}}</option>
+                         </select> 
+                        </div>
+                        <div class="card-body text-primary">
+                            <span style="font-weight: 300;">Carrera</span>
+                            <select class="form-control" id="CAR_CODIGO" name="CAR_CODIGO"  >
+                                @foreach ($carreras as $car)
+                                    @if($valores!=null)
+                                        @if($car->CAR_CODIGO==$valores->CAR_CODIGO)
+                                           <option value="{{$car->CAR_CODIGO}}" selected="{{$car->CAR_CODIGO}}">{{$car->CAR_NOMBRE}}</option>
+                                        @else
+                                            <option value="{{$car->CAR_CODIGO}}"  >{{$car->CAR_NOMBRE}}</option>
+                                        @endif
                                     @else
                                         <option value="{{$car->CAR_CODIGO}}"  >{{$car->CAR_NOMBRE}}</option>
                                     @endif
@@ -50,10 +49,24 @@
                             @endforeach
                         </select> 
                     </div>
-                    <div class="card-body text-primary">
-                        <span style="font-weight: 300;">Fecha Inicial</span>
-                        @if(isset($fechaInicial))
-                            <input type="date" class="form-control"   id="FECHA_INCIAL" name="FECHA_INCIAL" value="{{$fechaInicial}}"></input>   
+                </form>
+            </div>
+            <div class="col">
+                <div class="card border-info mb-3">
+                    <div class="card-header text-info">Opciones</div>
+                    <div class="card-body text-info">
+                        <form>
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <h5 class="card-title">Descargar</h5>
+                        </form>
+                        <br>    
+                        
+                        @if ($guias != null)
+                            @if(count($guias)>0)
+                            <a href="{{url('reporte/carrera/pdfguia/'.$valores->PER_CODIGO.'/'.$valores->CAR_CODIGO.'/'.$valores->FECHA_INCIAL.'/'.$valores->FECHA_FINAL.'')}}" class="btn btn-info"><span class="oi oi-cloud-download"></span> Exportar a  PDF</a>
+                             @else
+                                 <button disabled class="btn btn-info"><span class="oi oi-cloud-download"></span> Exportar a PDF</button>
+                            @endif
                         @else
                             <input type="date" class="form-control"   id="FECHA_INCIAL" name="FECHA_INCIAL" ></input>   
                         @endif 

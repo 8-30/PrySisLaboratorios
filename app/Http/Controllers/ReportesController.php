@@ -329,9 +329,11 @@ class ReportesController extends Controller {
 		]);
 	}
 
-	public function guiasPorCarrera()
+	public function guiasPorCarrera(Request $request)
 	{
-		$periodos = Periodo::codigoNombre()->get();
+		$idempresa = $request->user()->empresa->EMP_CODIGO;
+		$periodos = Periodo::where('EMP_CODIGO', $idempresa)
+			->codigoNombre()->get();
 		$carreras = Carrera::codigoNombre()->get();
 
 		$request=null;
@@ -518,9 +520,12 @@ class ReportesController extends Controller {
 	{
 		$periodo=Periodo::find($idperiodo);
 		$carrera=Carrera::find($idcarrera);
-		$fechaFinal=$fechaFin;
 		$fechaInicial=$fechaIni;
-
+		$fechaFinal=$fechaFin;
+		$periodoId = $idperiodo;
+		$periodox=Periodo::find($periodoId);
+		$empresa = Empresa::find($periodox->EMP_CODIGO);
+		
 		$materias=Materia::materiasx($idperiodo,$idcarrera)->get();
 		$j=0;
 		$guias=null;
