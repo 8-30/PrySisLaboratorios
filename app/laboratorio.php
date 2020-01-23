@@ -20,6 +20,10 @@ class Laboratorio extends Model {
     {
         return $this->belongsTo('App\empresa', 'EMP_CODIGO');
 	}
+	public function material()
+    {
+        return $this->belongsTo('App\MaterialLaboratorio', 'MATLAB_CODIGO');
+	}
 
 	public function controles(){
 		return $this->hasMany('App\Control');

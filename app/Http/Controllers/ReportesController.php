@@ -202,7 +202,7 @@ class ReportesController extends Controller {
 		$periodos = Periodo::where('EMP_CODIGO', $idempresa)
 			->codigoNombre()->get();
 		$carreras = Carrera::codigoNombre()->get()->sortBy('CAR_NOMBRE');
-
+            
 		$request = null;
 		$materias = null;
 
@@ -214,14 +214,21 @@ class ReportesController extends Controller {
 			]);
 		}
 
-	public function materiaPorCarreraPost(Request $request) {
+  public function materiaPorCarreraPost(Request $request) {
 		$idempresa = $request->user()->empresa->EMP_CODIGO;
 		$periodos = Periodo::where('EMP_CODIGO', $idempresa)
 			->codigoNombre()->get();
+        
+
+        $periodoId = $request->input('periodo');
+        $carreraId = $request->input('carreraCombo');
+
+
 		$carreras = Carrera::codigoNombre()->get()->sortBy('CAR_NOMBRE');
-	  $materias = Materia::materiasx($request['PER_CODIGO'],$request['CAR_CODIGO'])->get();
-		$carreraSearch = Carrera::find($request['CAR_CODIGO']);
-		$periodoSearch = Periodo::find($request['PER_CODIGO']);
+	  $materias = Materia::materiasx($periodoId,$carreraId)->get();
+	 
+		$carreraSearch = Carrera::find($carreraId);
+		$periodoSearch = Periodo::find($periodoId);
 		$valores  = $request;
 		return view('reportes.materiaCarrera', [
 			'periodos' => $periodos,
@@ -232,6 +239,31 @@ class ReportesController extends Controller {
 			'carrerax'=> $carreraSearch
 		]);
 	}
+
+
+
+
+
+	public function byCarreraGet(Request $request,$id) {
+		if($request->ajax()){
+			
+          //  $materias=Materia::where('PER_CODIGO',$id)->get();
+
+          //  $Carrera=Carrera::All();
+
+
+           // foreach ($variable as $key => $value) {
+            	# code...
+            //}
+              $carreras=DB::select('SELECT * FROM carrera WHERE EXISTS(SELECT materia.CAR_CODIGO FROM materia where materia.CAR_CODIGO=carrera.CAR_CODIGO AND materia.PER_CODIGO="'.$id.'")');
+
+			$data =$carreras;
+
+
+			return response()->json($data);
+		}
+	}
+
 
 	public function eventosOcasionalesIndex()
 	{
@@ -514,14 +546,12 @@ class ReportesController extends Controller {
 	public function pdfSolicitud($id)
 	{
 		$solicitud = Solicitud::find($id);
-		$solicitud->laboratorio->empresa->materiales;
-		$solicitud->detalleSolicitud;
-		$solicitud->docente;
-		$solicitud->materia;
+		
 		$pdf = PDF::loadView('reportes.pdfsolicitud',compact('solicitud'))->setPaper('a4');
 
         return $pdf->stream('Reporte.pdf');
 	}
+
 
 	//valida que este autenticado para acceder al controlador
 	public function __construct()

@@ -29,7 +29,7 @@ class Empresa extends Model {
 	}
 	public function materiales() {
 
-		return $this->hasMany('App\MaterialLaboratorio',"EMP_CODIGO");
+		return $this->hasMany('App\MaterialLaboratorio');
 
 	}
 }

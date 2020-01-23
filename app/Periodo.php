@@ -12,6 +12,12 @@ class Periodo extends Model {
 		return $this->hasMany('App\Materia');
 	}
 
+	 public function materiales() {
+
+		return $this->hasMany('App\MaterialLaboratorio');
+
+	}
+
 	public function horarios() {
 		return $this->hasMany('App\Horario');
 	}
@@ -34,5 +40,9 @@ class Periodo extends Model {
 	//retorna periodo de empresa  que este activo
 	public function scopeFiltroEmpresaActivo($query,$empresa) {
 		return $query->where('EMP_CODIGO', $empresa)->where('PER_ESTADO',1);
+	}
+    
+    public function scopePeriodoActivoEmpresa($query,$empresa){
+		return $query->where('PER_ESTADO','1')->where('EMP_CODIGO',$empresa);
 	}
 }
