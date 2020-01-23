@@ -57,7 +57,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="NOT_DESCRIPCION">Descripcion<span style="color:#FF0000";>*</span></label>
+                    <label for="NOT_DESCRIPCION">Descripción<span style="color:#FF0000";>*</span></label>
                     <textarea type="text" maxlength="460"  class="form-control" id="NOT_DESCRIPCION" name="NOT_DESCRIPCION" required  placeholder="Coloque una descripción de la noticia...">{{$noticia->NOT_DESCRIPCION}}</textarea>
                     
                 </div>

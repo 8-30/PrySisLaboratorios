@@ -17,26 +17,16 @@
         <div class="card border-primary mb-3">
           <div class="card-header text-primary">Consultar</div>
           <div class="card-body text-primary">
-            <select class="form-control" title="Seleccione un Periodo..." name="PER_CODIGO"
-              data-live-search="true" data-width="100%">
-              @foreach ($periodos as $periodo)
-              @if($periodo->PER_CODIGO==$valores['PER_CODIGO'])
-              <option value="{{ $periodo->PER_CODIGO }}" selected>{{ $periodo->PER_NOMBRE }}</option>
-              @else
-              <option value="{{$periodo->PER_CODIGO}}">{{$periodo->PER_NOMBRE}}</option>
-              @endif
-              @endforeach
-            </select>
+            <select class="form-control" id="periodo" name="periodo" required>
+              <option value="0">------Seleccione------</option>>
+                 @foreach ($periodos as $periodo)
+                   <option value="{{ $periodo->PER_CODIGO }}">{{ $periodo->PER_NOMBRE }}</option>
+                @endforeach
+             </select>
+           
             <br>
-            <select class="form-control" title="Seleccione una Carrera..." name="CAR_CODIGO"
-              data-live-search="true" data-width="100%">
-              @foreach ($carreras as $carrera)
-              @if($carrera->CAR_CODIGO == $valores['CAR_CODIGO'])
-              <option value="{{$carrera->CAR_CODIGO}}" selected>{{ $carrera->CAR_NOMBRE }}</option>
-              @else
-              <option value="{{$carrera->CAR_CODIGO}}">{{ $carrera->CAR_NOMBRE }}</option>
-              @endif
-              @endforeach
+            <select class="form-control" id="carreraCombo" name="carreraCombo"  required>
+               <option value="0">------Seleccione------</option>>
             </select>
             <br>
             <button type="submit" class="btn btn-primary"><span class="oi oi-magnifying-glass"></span>
@@ -72,19 +62,14 @@
     </span>
 
     <span class="h6" style="margin-right:150px;">PERIODO: &emsp;
-      @foreach ($periodos as $per)
-      @if($per->PER_CODIGO == $valores['PER_CODIGO'])
-      <span style="font-weight: 300;">{{ $per->PER_NOMBRE }}</span>
-      @endif
-      @endforeach
+      <span style="font-weight: 300;">{{ $periodox->PER_NOMBRE }}</span>
+     
     </span>
 
     <span class="h6" style="margin-right:150px;">CARRERA: &emsp;
-      @foreach ($carreras as $car)
-      @if($car->CAR_CODIGO == $valores['CAR_CODIGO'])
-      <span style="font-weight: 300;">{{ $car->CAR_NOMBRE }}</span>
-      @endif
-      @endforeach
+      
+      <span style="font-weight: 300;">{{ $carrerax->CAR_NOMBRE }}</span>
+
     </span>
   </p>
   <table id="materiaCarreraTable" class="table table-hover table-bordered table-sm">
@@ -116,4 +101,4 @@
   </table>
   @endif
 </div>
-@endsection
+@endsection   

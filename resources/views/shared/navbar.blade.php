@@ -122,6 +122,8 @@
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{{url('/laboratorio')}}">Laboratorio</a>
         <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{{url('/materiales/laboratorio')}}">Materiales</a>
+        <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{{url('/parametro')}}">Parametro</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{{url('/carrera')}}">Carrera</a>

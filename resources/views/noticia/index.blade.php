@@ -26,7 +26,7 @@
         <div class="col"></div>
     </div>
     <p class="h3" style="color: #ED7624">
-        Noticias: <span class="font-weight-normal">{{ $empresa->EMP_NOMBRE }}</span>
+        <span class="font-weight-normal">{{ $empresa->EMP_NOMBRE }}</span>
     </p>
     <table class="table table-hover table-bordereds" id="ListTable">
         <thead>
