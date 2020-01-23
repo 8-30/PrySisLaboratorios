@@ -207,6 +207,7 @@ class GuiaController extends Controller {
 			'guia' => $guias,
 			'fecha'=>$control,
 			'last'=> $last,
+			'mensaje'=>null,
 		]);
 	}
    /**Crea la guia Apartir de una Guia anterior */
@@ -243,6 +244,7 @@ class GuiaController extends Controller {
 		return view('guia.controlGuiaLaboratoriocreate', [
 			'guia' => $guias,
 			'fecha'=>$control,
+			'mensaje'=>null
 		]);
 	}
 
@@ -258,7 +260,65 @@ class GuiaController extends Controller {
 		//obtiene materia y periodo id
 		$materia = session('MAT_CODIGO');
 		$periodo = session('PER_CODIGO');
+				//		
+				$count = Horario::obtenerHorarioPorPeriodo($periodo)->count();
+				$horario = Horario::obtenerHorarioPorPeriodo($periodo)->get();
+				$dias_materia=array();
+				if($request['GUI_FECHA']!=null){
+					for ($ind=0; $ind<=$count-1;$ind++) {
+						for ($x = 1; $x <= 13; $x++) {
+								if ($horario[$ind]['HOR_LUNES'.$x] == $materia) {
+									array_push($dias_materia,1);
+								}
+								if ($horario[$ind]['HOR_MATES'.$x] == $materia) {
+									array_push($dias_materia,2);
+								}
+		
+								if ($horario[$ind]['HOR_MIERCOLES'.$x] == $materia) {
+									array_push($dias_materia,3);
+								}
+								if ($horario[$ind]['HOR_JUEVES'.$x] == $materia) {
+									array_push($dias_materia,4);
+								}
+		
+								if ($horario[$ind]['HOR_VIERNES'.$x] == $materia) {
+									array_push($dias_materia,5);
+								}
+						}
+					}
+				}
+				$dia = date('w', strtotime( $request['GUI_FECHA']));
+			//
 
+		if($request['GUI_FECHA']==null || in_array($dia, $dias_materia)==null){
+			$guia_aux = new Guia;
+			$guia_aux->DOC_CODIGO=$docenteId;
+			$guia_aux->MAT_CODIGO = $materia;
+			$guia_aux->LAB_CODIGO = $request['LAB_CODIGO'];
+			$guia_aux->PER_CODIGO = $periodo;
+			$guia_aux->GUI_NUMERO = $request['GUI_NUMERO'];
+			$guia_aux->GUI_FECHA = $request['GUI_FECHA'];
+			$guia_aux->GUI_TEMA = $request['GUI_TEMA'];
+			$guia_aux->GUI_DURACION = $request['GUI_DURACION'];
+			$guia_aux->GUI_OBJETIVO = $request['GUI_OBJETIVO'];
+			$guia_aux->GUI_EQUIPO_MATERIALES = $request['GUI_EQUIPO_MATERIALES'];
+			$guia_aux->GUI_TRABAJO_PREPARATORIO = $request['GUI_TRABAJO_PREPARATORIO'];
+			$guia_aux->GUI_ACTIVIDADES = $request['GUI_ACTIVIDADES'];
+			$guia_aux->GUI_RESULTADOS = $request['GUI_RESULTADOS'];
+			$guia_aux->GUI_CONCLUSIONES = $request['GUI_CONCLUSIONES'];
+			$guia_aux->GUI_RECOMENDACIONES = $request['GUI_RECOMENDACIONES'];
+			$guia_aux->GUI_REFERENCIAS_BIBLIOGRAFICAS = $request['GUI_REFERENCIAS_BIBLIOGRAFICAS'];
+			$guia_aux->GUI_ELABORADO = $nombreDocente;
+			$guia_aux->GUI_COORDINADOR = $request['GUI_COORDINADOR'];
+			$guia_aux->GUI_REGISTRADO = 0;
+			$guia_aux->GUI_INTRODUCCION = $request['GUI_INTRODUCCION'];
+			$guia_aux->GUI_APROBADO = 0;
+			return view('guia.controlGuiaLaboratoriocreate', [
+				'guia' => $guia_aux,
+				'fecha'=>null,
+				'mensaje'=>"Error la fecha debe estar dentro de su horario"
+			]);
+		}
 		//asigna las variables a la guia y guarda
 		$guia = Guia::create([
 			'DOC_CODIGO' => $docenteId,

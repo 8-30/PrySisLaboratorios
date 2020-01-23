@@ -4,6 +4,12 @@
 
 <div class="container-fluid">
     <p><h6>Los campos con <span style="color:#FF0000";>*</span> son obligatorios</h6></p>
+    @if($mensaje!=null)
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading"><b>{{$mensaje}}</b>
+        </h4>
+    </div>
+    @endif
     <form class="form" id="form" action="{{url('/guia/guardarGuia')}}" method="POST">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" id="GUI_NUMERO" name="GUI_NUMERO" readonly value="@if(isset($guia)) {{$guia->GUI_NUMERO}} @endif">
