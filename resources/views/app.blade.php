@@ -14,14 +14,13 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="{{ URL::asset('css/index.css') }}" rel='stylesheet' type='text/css' />
   <link href="{{ URL::asset('css/table.css') }}" rel='stylesheet' type='text/css' />
+  <link href="{{ URL::asset('css/button.css') }}" rel='stylesheet' type="text/css"/>
   <style type="text/css">
-    img.guia{
-    width: 75px; height: 40px;
-    }
+    img.guia {
+      width: 75px; height: 40px;
     }
   </style>
   <!--
-  <link href="{{ URL::asset('css/slicebox.css') }}" rel='stylesheet' type="text/css"/>
 	<link href="{{ URL::asset('css/demo.css') }}" rel='stylesheet' type="text/css" />
 	<link href="{{ URL::asset('css/custom.css') }}" rel='stylesheet' type="text/css"/>
 	<script type="text/javascript" src="{{ URL::asset('js/modernizr.custom.46884.js') }}"></script>
