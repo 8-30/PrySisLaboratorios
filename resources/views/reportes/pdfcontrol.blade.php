@@ -28,7 +28,7 @@ th, td {
   text-align:center;
 }
 #fondo{
-  background-color:grey;
+  background-color: #E4E6E9;
   vertical-align:middle;
   text-align:center;
   font-size: 8px
@@ -60,7 +60,7 @@ p{
             <tr>
               <td scope="row" id="fondo"width="15%"> DEPARTAMENTO: </td>
               <td scope="row" id="centrado"width="35%"> Eléctrica y Electronica: </td>
-              <td scope="row" id="fondo"width="20%"> CARRERA: </td>
+              <td scope="row" id="fondo" width="20%"> CARRERA: </td>
               <td scope="row" id="centrado"width="30%"> </td>
             </tr>
         </thead>
@@ -77,9 +77,6 @@ p{
             
               <td scope="row" id="fondo"width="7%"> CODIGO DEL LAB: </td>
               <td scope="row" id="centrado"width="13%">
-               @if(!empty($controles)) 
-              {{$controles[0]->LAB_CODIGO}}
-              @endif</td>
             </tr>
   </table>
   <table>
@@ -106,7 +103,7 @@ p{
                   <table id=internatabla>
                     <tr>
                        <td scope="row" id="fondo" width="20%"> Doc </td>
-                        <td scope="row" id="fondo" width="60%"> Ana.Lab. </td>
+                        <td scope="row" id="fondo" width="60%"> Anal.Lab. </td>
                         <td scope="row" id="fondo" width="20%"> Est. </td>
                     </tr>
                   </table>
@@ -145,8 +142,7 @@ p{
           <td scope="row"id="centrado"width="3%">{{$con -> MAT_NUM_EST}}</td>
           <td scope="row"id="centrado"width="20%">
             <p>
-              {{$con -> MAT_ABREVIATURA}} - {{$con -> MAT_NRC}}<br>
-              {{$con -> DOC_NOMBRES}} {{$con -> DOC_APELLIDOS}}
+              {{$con -> DOC_TITULO}} {{$con -> DOC_NOMBRES}} {{$con -> DOC_APELLIDOS}}
             </p>
           </td>
           <td scope="row"id="centrado"width="23%"></td> 
@@ -155,7 +151,7 @@ p{
           <td scope="row"id="centrado"width="7%"></td>
           <td scope="row"id="centrado"width="11%">
             <p>
-              {{$con -> LAB_NOMBRE}}
+
               @if($con->CON_EXTRA==1)
               <br>OCACIONAL
               @endif
@@ -167,17 +163,20 @@ p{
   
          </tbody>   
 </table>
-<br><br><br>
+<h6><b>*Doc.</b> = docencia/docente, <b>Inv.</b> = Investigacion/Investigador, <b>Anal lab.</b> = Analista de Laboratorio, <b>Est.</b> = Estidiante/Tesista/Pasante </h6>
+
+<br>
 <table>
  <tr>
-  <td scope="row">
-  <p>OBSERVACIONES GENERALES<br><br><br></p>
+  <td scope="row" width="50%">
+  <p>OBSERVACIONES GENERALES:<br><br><br></p>
   </td>
-  <td scope="row"id="centrado">
-  <p>F.....................................................<br>
-  FIRMA....................................................<br>
-  &nbsp;RESPONSABLE DEL LABORATORIO
-  </p>
+  <td scope="row"id="centrado" width="50%">
+  <br>
+  <br>
+  F:..................................................................................................<br><br>
+  NOMBRE:....................................................................................<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>RESPONSABLE DEL LABORATORIO</b>
   </td>
  </tr>
 </table>
