@@ -6,7 +6,6 @@
     img.noticia{
     width: 150px; height: 150px;
     }
-    }
   </style>
 @endsection
 
@@ -21,7 +20,7 @@
             <h2 class="title">Noticias</h2>
             <div class="row">
                 @foreach ($noticias as $noticia)
-                <div class="col-4 pb-3">
+                <div class="col-6 col-md-4 pb-3">
                     <div class="card">
                         <img class="noticia" src="{{$noticia -> NOT_IMAGEN}}" class="card-img-top" alt="...">
                         <div class="card-body p-2">
@@ -48,7 +47,7 @@
             <h2 class="title">Objetos Recuperados En El Laboratorio</h2>
             <div class="row">
                 @foreach($objetos as $objeto)
-                <div class="col-4 pb-3">
+                <div class="col-6 col-md-4 pb-3">
                     <div class="card">
                         <img class="noticia" src="{{$objeto -> OBR_IMAGEN}}" class="card-img-top" alt="...">
                         <div class="card-body p-2">
