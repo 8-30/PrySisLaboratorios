@@ -12,6 +12,11 @@
         </button>
     </div>
     @endif
+    @if(session('mensajes'))
+        <div class="alert alert-warning">
+            {{ session('mensajes') }}
+        </div>
+    @endif
     <div class="row">
         <div class="col">
             <a href="{{url('ocasionales/create')}}" class="btn btn-success mb-2">Nuevo</a>
