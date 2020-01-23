@@ -1,6 +1,6 @@
 @extends('app')
 @section('content')
-@include('shared.title', array('titulo' => 'Consola de Control'))
+@include('shared.title', array('titulo' => 'Control Laboratorio'))
 
 <div class="container-fluid">
     @if (session('title') || isset($title))
@@ -107,10 +107,10 @@
                             <input type="hidden" name="CON_CODIGO" value="{{ $control->CON_CODIGO }}">
                             <input type="hidden" name="campus" value="{{$campus}}">
                             @if($control -> SOL_CODIGO == null)
-                                <button  type="submit" class="btn btn-light"><span class="badge badge-secondary">Guia Pendiente</span></button>
+                                <button  type="submit" class="btn btn-light"><span class="badge badge-secondary">Solicitud Pendiente</span></button>
                             @endif
                             @if($control -> SOL_CODIGO != null)
-                                <button  type="submit" class="btn btn-light"><span class="badge badge-secondary">Guia Pendiente</span></button>
+                                <button  type="submit" class="btn btn-light" disable><span class="badge badge-secondary">Solicitud Entregada</span></button>
                             @endif
                         </form>
                     @endif

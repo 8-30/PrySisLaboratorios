@@ -51,6 +51,6 @@ class Solicitud extends Model {
 	}
 
 	public function scopeSolParaControl($query, $fecha, $docente, $materia){
-		return $query->where('DOC_CODIGO',$docente)->where('MAT_CODIGO',$materia)->where('SOL_FECHA',$fecha);
+		return $query->where('DOC_CODIGO',$docente)->where('MAT_CODIGO',$materia)->where('SOL_FECHA_USO',$fecha);
 	}
 }
