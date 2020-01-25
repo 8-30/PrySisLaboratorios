@@ -79,7 +79,7 @@
 
          <span class="counter pull-right"></span>
     <p id="sala">
-       <span class="h4">REPORTE: ;
+       <span class="h4">REPORTE: 
             <span style="font-weight: 300;">EVENTO OCASIONAL</span>
         </span>
         <br>
@@ -87,7 +87,7 @@
             @if (count($data)>0)
                 <span style="font-weight: 300;">{{ $data[0]->PER_NOMBRE }}</span>
             @else
-                @if($periodoActual>count($periodos))
+                @if($periodoActual > count($periodos))
                     <span style="font-weight: 300;">{{ $periodos[0]->PER_NOMBRE }}</span>      
                 @endif
             @endif    
@@ -142,4 +142,3 @@
 </div>
 
 @endsection
-
