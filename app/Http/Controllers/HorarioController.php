@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Laboratorio;
 use App\Periodo;
+use App\Docente;
 use App\Horario;
 use App\Materia;
 use App\Hora;
@@ -53,14 +54,16 @@ class HorarioController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create($labId, $perId) {
+	public function create($labId, $perId, Request $request) {
 		$ids = array($labId, $perId);
+
 		$materias = Materia::select('MAT_CODIGO', 'MAT_ABREVIATURA')
 			->orderby('MAT_ABREVIATURA')
 			->where('PER_CODIGO', $perId)
-			->where('MAT_OCACIONAL', 0)
-			->get();
+			//->where('MAT_OCACIONAL', 0)
+			->get(); 
 		$horas = Hora::select('HORA_NOMBRE')->get();
+
 		return view('horario.create', ['horas' => $horas, 'materias' => $materias, 'ids' => $ids]);
 	}
 
