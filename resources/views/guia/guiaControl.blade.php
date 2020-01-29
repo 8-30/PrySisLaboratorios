@@ -3,7 +3,13 @@
 @include('shared.title', array('titulo' => 'Guías'))
 
 <div class="container-fluid">
-
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <p class="h4 alert-heading">
+            <b>ADVERTENCIA:</b> Existen {{ $pendientes }} Guías Pendiente de Entregar y {{ $por_crear }} Guias Pendientes por Crear.
+            <br>
+            - Por favor, revise el detalle al final de esta pantalla
+        </p>
+    </div>
 
     @if (session('title') && session('subtitle'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -15,20 +21,13 @@
         </div>
     @endif
 
-    <h2><span style="color:#ED7624"> Materia: {{$materia_guia[0] -> MAT_ABREVIATURA}} </span></h2>
-
-    @if ($pendientes>0) 
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <h4 class="alert-heading"><b>ADVERTENCIA:</b> Existen {{$pendientes}}  Guías Pendiente de Entregar  
-        @if ($por_crear > 0)
-            y {{$por_crear}} Guias Pendientes por Crear 
-        @endif 
-        - Por favor, Revice el detalle al final de esta pantalla 
-        </h4>
-    </div>    
+    @if (!empty($guias_pendientes))
+    <p class="h3" style="color: #ED7624">
+        Materia: <span class="font-weight-normal">{{ $guias_pendientes[0] -> MAT_ABREVIATURA }}</span>
+    </p>
     @endif
 
-    <a href="{{url('guia/crearGuia')}}" class="btn btn-success mb-2">Crear Guías</a>
+    <a href="{{url('guia/crearGuiaIndex')}}" class="btn btn-success mb-2">Crear Guías</a>
     <a href="{{url('guia/regresarListarGuia/'.$materia_guia[0]->DOC_CODIGO)}}" class="btn btn-danger mb-2 float-center">Regresar a Guías y Solicitudes</a>
 
     <table id="ListTable" class="table table-hover table-bordered results">

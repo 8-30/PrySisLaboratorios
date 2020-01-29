@@ -28,7 +28,7 @@ class Docente extends Model {
 	}
 
 	public function scopeCodigoNombre($query) {
-		return $query->select('DOC_CODIGO', 'DOC_TITULO', 'DOC_NOMBRES', 'DOC_APELLIDOS')->orderBy('DOC_APELLIDOS', 'ASC');;
+		return $query->select('DOC_CODIGO', 'DOC_TITULO', 'DOC_NOMBRES', 'DOC_APELLIDOS')->orderBy('DOC_APELLIDOS', 'ASC');
 	}
 
 	public function scopeNombreDocente($query,$id){
