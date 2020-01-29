@@ -48,7 +48,7 @@ class Control extends Model {
 		->where('MAT_CODIGO',$materiaId)->whereNull('CON_GUIA')->whereNull('CON_EXTRA')->whereNotNull('CON_REG_FIRMA_ENTRADA')->orderBy('CON_DIA','ASC')->limit(1);
 	}
 	public function scopeFiltroEmpresa($query, $date,$empresa) {
-		return $query->join('laboratorio','control.LAB_CODIGO','=','laboratorio.LAB_CODIGO')->where('control.CON_DIA', $date)->where('laboratorio.EMP_CODIGO', $empresa);
+		return $query->join('laboratorio','control.LAB_CODIGO','=','laboratorio.LAB_CODIGO')->where('control.CON_DIA', $date)->where('laboratorio.EMP_CODIGO', $empresa)->orderBy('control.CON_HORA_ENTRADA','ASC');;
 	}
 	public function scopeFiltroEmpresaPeriodo($query, $date,$empresa,$periodo) {
 		return $query->join('laboratorio','control.LAB_CODIGO','=','laboratorio.LAB_CODIGO')
@@ -56,7 +56,7 @@ class Control extends Model {
 	}
 		//busca la fecha de control que aun no tenga guia
 	public function scopeFiltroEmpresaCampus($query, $date,$empresa,$campus) {
-		return $query->join('laboratorio','control.LAB_CODIGO','=','laboratorio.LAB_CODIGO')->where('control.CON_DIA', $date)->where('laboratorio.EMP_CODIGO', $empresa)->where('laboratorio.CAM_CODIGO', $campus);
+		return $query->join('laboratorio','control.LAB_CODIGO','=','laboratorio.LAB_CODIGO')->where('control.CON_DIA', $date)->where('laboratorio.EMP_CODIGO', $empresa)->where('laboratorio.CAM_CODIGO', $campus)->orderBy('control.CON_HORA_ENTRADA','ASC');;
 	}
 
 	public function scopeCruceHoras($query,$laboratorio,$horaI,$horaf,$dia){

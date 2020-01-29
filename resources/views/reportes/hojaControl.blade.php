@@ -6,7 +6,7 @@
  Revisado por: Jerson Morocho
  -->
 
-@extends('app')
+ @extends('app')
 @section('content')
 @include('shared.title', array('titulo' => 'Reporte Hoja de Control de Salas'))
 
@@ -20,65 +20,69 @@
   @endif
 @endif
 <div class="container-fluid">
-  <div class="card border-primary mb-3">
-    <div class="card-header text-primary">Consultar</div>
-    <div class="card-body text-primary">
-      <form action="{{ url('reporte/hoja/control') }}" method="post">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-      
-        <div class="row">
-          <div class="col">
-            <div class="form-group">
-              <label for="CON_DIA">Fecha<span style="color:#FF0000";>*</span></label>
-              @if(!empty($controles))
-              <input type="date" class="form-control" name="CON_DIA" id="CON_DIA" value="{{ $controles[0]->CON_DIA }}" required/>
-              @else
-              <input type="date" class="form-control" name="CON_DIA" id="CON_DIA" required/>
-              @endif
-            </div>
-          </div>
-
-          <div class="col">
-            <label for="CAM_CODIGO">Campus<span style="color:#FF0000";>*</span></label>
-           
-            <select name="CAM_CODIGO" id="CAM_CODIGO" class="form-control">
-              <option value="-1">Escoja un Campus...</option>
-              @foreach ($campus as $camp)
-                @if(!empty($controles))
-                  @if($controles[0]->CAM_CODIGO==$camp->CAM_CODIGO)
-                    <option value="{{ $camp->CAM_CODIGO }}" id="{{ $camp->CAM_CODIGO }}" selected="selected" >{{ $camp->CAM_NOMBRE }}</option>
+  <div class="row">
+    <div class="col">
+      <div class="card border-primary mb-3">
+        <div class="card-header text-primary">Consultar</div>
+        <div class="card-body text-primary">
+          <form action="{{ url('reporte/hoja/control') }}" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                  <label for="CON_DIA">Fecha<span style="color:#FF0000";>*</span></label>
+                  @if(!empty($controles))
+                  <input type="date" class="form-control" name="CON_DIA" id="CON_DIA" value="{{ $controles[0]->CON_DIA }}" required/>
                   @else
-                    <option value="{{ $camp->CAM_CODIGO }}" id="{{ $camp->CAM_CODIGO }}" >{{ $camp->CAM_NOMBRE }}</option>
+                  <input type="date" class="form-control" name="CON_DIA" id="CON_DIA" required/>
                   @endif
-                @else
-                  <option value="{{ $camp->CAM_CODIGO }}" id="{{ $camp->CAM_CODIGO }}" >{{ $camp->CAM_NOMBRE }}</option>
-                @endif
-              @endforeach
-            </select>
-          </div>
-        </div>
-        <br>
-
-        <button type="submit" class="btn btn-primary mb-2"><span class="oi oi-magnifying-glass"></span>
-          Consultar
-        </button>
-      </form>
+                <label for="CAM_CODIGO">Campus<span style="color:#FF0000";>*</span></label>
+              
+                <select name="CAM_CODIGO" id="CAM_CODIGO" class="form-control">
+                  <option value="-1">Escoja un Campus...</option>
+                  @foreach ($campus as $camp)
+                    @if(!empty($controles))
+                      @if($controles[0]->CAM_CODIGO==$camp->CAM_CODIGO)
+                        <option value="{{ $camp->CAM_CODIGO }}" id="{{ $camp->CAM_CODIGO }}" selected="selected" >{{ $camp->CAM_NOMBRE }}</option>
+                      @else
+                        <option value="{{ $camp->CAM_CODIGO }}" id="{{ $camp->CAM_CODIGO }}" >{{ $camp->CAM_NOMBRE }}</option>
+                      @endif
+                    @else
+                      <option value="{{ $camp->CAM_CODIGO }}" id="{{ $camp->CAM_CODIGO }}" >{{ $camp->CAM_NOMBRE }}</option>
+                    @endif
+                  @endforeach
+                </select>
+                </div>
+            <br>
     
-      <form class="form" id="form" action="{{url('reporte/pdfcontrol')}}" method="POST">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        @if(!empty($controles))
-        <input type="hidden"  class="form-control" name="CON_DIA" id="CON_DIA" value="{{$controles[0]->CON_DIA}}" />
-        <input type="hidden"  class="form-control" name="CAM_CODIGO" id="CAM_CODIGO"
-          value="{{$controles[0]->CAM_CODIGO}}" />
-        @else
-        <input type="hidden" class="form-control" name="CON_DIA" id="CON_DIA" />
-        <input type="hidden" class="form-control" name="CAM_CODIGO" id="CAM_CODIGO" />
-        @endif
+            <button type="submit" class="btn btn-primary mb-2"><span class="oi oi-magnifying-glass"></span>
+              Consultar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+        <div class="card border-info mb-3">
+          <div class="card-header text-info">Opciones</div>
+            <div class="card-body text-info">
 
-        @if(!empty($controles))
-        <button type="submit" class="btn btn-info mb-2"><span class="oi oi-cloud-download"></span> Exportar a PDF</button>
-        @endif    
-      </form>
+            <form class="form" id="form" action="{{url('reporte/pdfcontrol')}}" method="POST">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            @if(!empty($controles))
+            <input type="hidden"  class="form-control" name="CON_DIA" id="CON_DIA" value="{{$controles[0]->CON_DIA}}" />
+            <input type="hidden"  class="form-control" name="CAM_CODIGO" id="CAM_CODIGO"
+              value="{{$controles[0]->CAM_CODIGO}}" />
+            @else
+            <input type="hidden" class="form-control" name="CON_DIA" id="CON_DIA" />
+            <input type="hidden" class="form-control" name="CAM_CODIGO" id="CAM_CODIGO" />
+            @endif
+    
+            @if(!empty($controles))
+            <button type="submit" class="btn btn-info mb-2"><span class="oi oi-cloud-download"></span> Exportar a PDF</button>
+            @endif    
+          </form>
+        
+            </div>
+        </div>
     </div>
   </div>
   <br>

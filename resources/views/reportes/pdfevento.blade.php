@@ -73,7 +73,7 @@ th, td {
 
 <div id="header" > 
       <div  >
-      <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/reportes/encabezado.png';?>"/>
+      <img  style='height: 100%; width: 100%;' src="{{$empresa->EMP_IMAGEN_ENCABEZADO}}" alt="Error Header">
       </div>
       <hr style="size:1px;color: SILVER; " />
       <div style="margin-top: 3px;   margin-bottom:px;" >

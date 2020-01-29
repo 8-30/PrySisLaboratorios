@@ -141,8 +141,9 @@ p{
           <td scope="row"id="centrado"width="9%">1</td>
           <td scope="row"id="centrado"width="3%">{{$con -> MAT_NUM_EST}}</td>
           <td scope="row"id="centrado"width="20%">
-            <p>
-              {{$con -> DOC_TITULO}} {{$con -> DOC_NOMBRES}} {{$con -> DOC_APELLIDOS}}
+          <p>
+              {{$con -> MAT_ABREVIATURA}} - {{$con -> MAT_NRC}}<br>
+              {{$con-> DOC_TITULO}} {{$con -> DOC_NOMBRES}} {{$con -> DOC_APELLIDOS}}
             </p>
           </td>
           <td scope="row"id="centrado"width="23%"></td> 
