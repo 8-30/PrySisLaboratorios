@@ -504,7 +504,7 @@ class HorarioController extends Controller {
 		$materias = Materia::select('MAT_CODIGO', 'MAT_ABREVIATURA')
 			->orderby('MAT_ABREVIATURA')
 			->where('PER_CODIGO', $perId)
-			->where('MAT_OCACIONAL', 0)
+			//->where('MAT_OCACIONAL', 0)
 			->get();
 		return view('horario.update', ['horario' => $horario, 'materias' => $materias]);
 	}
