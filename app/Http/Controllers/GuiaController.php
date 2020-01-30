@@ -22,9 +22,18 @@ class GuiaController extends Controller {
 	public function listarGuias($id) {
 			session(['MAT_CODIGO' => $id]);
 			$materia = $id;
-			$guias_terminadas = DB::select('select guia.GUI_REGISTRADO, guia.GUI_CODIGO,materia.MAT_ABREVIATURA, guia.GUI_NUMERO,guia.GUI_FECHA, guia.GUI_TEMA, laboratorio.LAB_NOMBRE from laboratorio,guia,materia where materia.MAT_CODIGO=guia.MAT_CODIGO and laboratorio.LAB_CODIGO=guia.LAB_CODIGO and guia.MAT_CODIGO='.$materia );
-			$guias_pendientes = DB::select('select materia.MAT_ABREVIATURA, control.CON_DIA,control.CON_EXTRA,control.CON_HORA_ENTRADA, control.CON_HORA_SALIDA,control.CON_NUMERO_HORAS,control.CON_GUIA,control.CON_REG_FIRMA_ENTRADA from control, materia where control.MAT_CODIGO='.$materia.' and materia.MAT_CODIGO=control.MAT_CODIGO');
-			$materia_guia = DB::select('select materia.MAT_ABREVIATURA, materia.DOC_CODIGO from materia where materia.MAT_CODIGO='.$materia);
+			$guias_terminadas = DB::select('SELECT guia.GUI_REGISTRADO, guia.GUI_CODIGO,materia.MAT_ABREVIATURA, 
+			guia.GUI_NUMERO,guia.GUI_FECHA, guia.GUI_TEMA, laboratorio.LAB_NOMBRE 
+			from laboratorio,guia,materia 
+			where materia.MAT_CODIGO=guia.MAT_CODIGO and 
+			laboratorio.LAB_CODIGO=guia.LAB_CODIGO and guia.MAT_CODIGO="'.$materia.'";' );
+			$guias_pendientes = DB::select('SELECT materia.MAT_ABREVIATURA, control.CON_DIA,
+			control.CON_EXTRA,control.CON_HORA_ENTRADA, control.CON_HORA_SALIDA,control.CON_NUMERO_HORAS,
+			control.CON_GUIA,control.CON_REG_FIRMA_ENTRADA from control, materia 
+			where control.MAT_CODIGO="'.$materia.'"
+			 and materia.MAT_CODIGO=control.MAT_CODIGO;');
+			$materia_guia = DB::select('SELECT materia.MAT_ABREVIATURA, materia.DOC_CODIGO 
+			from materia where materia.MAT_CODIGO="'.$materia.'";');
 			$pendietes = 0;
 			$creadas = 0;
 			foreach ($guias_terminadas as $ter ) {
@@ -82,7 +91,7 @@ class GuiaController extends Controller {
 			->where('DOC_CLAVE',$request['clave'])->first();
 
 		if(count($docentes) == 0) {
-			return redirect('guias_y_solicitudes/login')
+			return redirect('guia/login')
 				->with('title', 'Auntenticación incorrecta!')
 				->with('subtitle', 'Ingrese el usuario y clave correctas.');
 		} else {
@@ -153,7 +162,8 @@ class GuiaController extends Controller {
 
 	public function crearGuiaIndex() {
 		$periodos = Periodo::codigoNombre()->get();
-		$materia_guia = DB::select('select materia.MAT_ABREVIATURA from materia where materia.MAT_CODIGO='.session('MAT_CODIGO'));
+		$idMateria = session('MAT_CODIGO');
+		$materia_guia = DB::select('SELECT materia.MAT_ABREVIATURA from materia where materia.MAT_CODIGO="'.$idMateria.'";');
 		return view('guia.crearGuia', [
 			'periodos' => $periodos,
 			'materia' => $materia_guia[0]->MAT_ABREVIATURA
@@ -207,7 +217,6 @@ class GuiaController extends Controller {
 			'guia' => $guias,
 			'fecha'=>$control,
 			'last'=> $last,
-			'mensaje'=>null,
 		]);
 	}
    /**Crea la guia Apartir de una Guia anterior */
@@ -244,7 +253,6 @@ class GuiaController extends Controller {
 		return view('guia.controlGuiaLaboratoriocreate', [
 			'guia' => $guias,
 			'fecha'=>$control,
-			'mensaje'=>null
 		]);
 	}
 
@@ -260,65 +268,7 @@ class GuiaController extends Controller {
 		//obtiene materia y periodo id
 		$materia = session('MAT_CODIGO');
 		$periodo = session('PER_CODIGO');
-				//		
-				$count = Horario::obtenerHorarioPorPeriodo($periodo)->count();
-				$horario = Horario::obtenerHorarioPorPeriodo($periodo)->get();
-				$dias_materia=array();
-				if($request['GUI_FECHA']!=null){
-					for ($ind=0; $ind<=$count-1;$ind++) {
-						for ($x = 1; $x <= 13; $x++) {
-								if ($horario[$ind]['HOR_LUNES'.$x] == $materia) {
-									array_push($dias_materia,1);
-								}
-								if ($horario[$ind]['HOR_MATES'.$x] == $materia) {
-									array_push($dias_materia,2);
-								}
-		
-								if ($horario[$ind]['HOR_MIERCOLES'.$x] == $materia) {
-									array_push($dias_materia,3);
-								}
-								if ($horario[$ind]['HOR_JUEVES'.$x] == $materia) {
-									array_push($dias_materia,4);
-								}
-		
-								if ($horario[$ind]['HOR_VIERNES'.$x] == $materia) {
-									array_push($dias_materia,5);
-								}
-						}
-					}
-				}
-				$dia = date('w', strtotime( $request['GUI_FECHA']));
-			//
 
-		if($request['GUI_FECHA']==null || in_array($dia, $dias_materia)==null){
-			$guia_aux = new Guia;
-			$guia_aux->DOC_CODIGO=$docenteId;
-			$guia_aux->MAT_CODIGO = $materia;
-			$guia_aux->LAB_CODIGO = $request['LAB_CODIGO'];
-			$guia_aux->PER_CODIGO = $periodo;
-			$guia_aux->GUI_NUMERO = $request['GUI_NUMERO'];
-			$guia_aux->GUI_FECHA = $request['GUI_FECHA'];
-			$guia_aux->GUI_TEMA = $request['GUI_TEMA'];
-			$guia_aux->GUI_DURACION = $request['GUI_DURACION'];
-			$guia_aux->GUI_OBJETIVO = $request['GUI_OBJETIVO'];
-			$guia_aux->GUI_EQUIPO_MATERIALES = $request['GUI_EQUIPO_MATERIALES'];
-			$guia_aux->GUI_TRABAJO_PREPARATORIO = $request['GUI_TRABAJO_PREPARATORIO'];
-			$guia_aux->GUI_ACTIVIDADES = $request['GUI_ACTIVIDADES'];
-			$guia_aux->GUI_RESULTADOS = $request['GUI_RESULTADOS'];
-			$guia_aux->GUI_CONCLUSIONES = $request['GUI_CONCLUSIONES'];
-			$guia_aux->GUI_RECOMENDACIONES = $request['GUI_RECOMENDACIONES'];
-			$guia_aux->GUI_REFERENCIAS_BIBLIOGRAFICAS = $request['GUI_REFERENCIAS_BIBLIOGRAFICAS'];
-			$guia_aux->GUI_ELABORADO = $nombreDocente;
-			$guia_aux->GUI_COORDINADOR = $request['GUI_COORDINADOR'];
-			$guia_aux->GUI_REGISTRADO = 0;
-			$guia_aux->GUI_INTRODUCCION = $request['GUI_INTRODUCCION'];
-			$guia_aux->GUI_APROBADO = 0;
-			return view('guia.controlGuiaLaboratoriocreate', [
-				'guia' => $guia_aux,
-				'fecha'=>null,
-				'mensaje'=>"Error la fecha debe estar dentro de su horario"
-			]);
-		}
 		//asigna las variables a la guia y guarda
 		$guia = Guia::create([
 			'DOC_CODIGO' => $docenteId,

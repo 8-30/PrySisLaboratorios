@@ -18,7 +18,7 @@
                 @endif
 
                 <div class="card-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{url('/guias_y_solicitudes')}}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{url('/guia/crearGuiaIndex')}}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group row">
                             <label for="email_address" class="col-md-4 col-form-label text-md-right" ><h3 style="color: #ED7624">Usuario *</h3></label>

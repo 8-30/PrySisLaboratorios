@@ -308,13 +308,15 @@ class ReportesController extends Controller {
 		]);
 	}
 
+	///REPORTES DE GUIAS POR DOCENTE
 	public function usoGuiasEntregadas(Request $request)
 	{
 		$idempresa = $request->user()->empresa->EMP_CODIGO;
-		$periodos = Periodo::where('EMP_CODIGO', $idempresa)
-			->codigoNombre()->get();
+		$periodos = Periodo::where('EMP_CODIGO', $idempresa)->codigoNombre()->get();
 		$docentes = docente::codigoNombre()->get();
-
+		$guiaSearch = guia::codigoNombre()->get();
+		$periodoSearch = Periodo::find($request['PER_CODIGO']);
+		$materias=Materia::materiasxP($request['PER_CODIGO'],$request['DOC_CODIGO'])->get();
 		$request=null;
 		$controles=null;
 
@@ -322,7 +324,10 @@ class ReportesController extends Controller {
 			'periodos' => $periodos,
 			'docentes' => $docentes,
 			'valores'=>$request,
-			'controles'=>$controles
+			'guiax'=>$guiaSearch,
+			'periodox'=>$periodoSearch,
+			'controles'=>$controles,
+			"materias"=>$materias
 		]);
 	}
 
@@ -330,7 +335,8 @@ class ReportesController extends Controller {
 	{
 		$periodos = Periodo::codigoNombre()->get();
 		$docentes = docente::codigoNombre()->get();
-
+		$guiaSearch = guia::codigoNombre()->get();
+		$periodoSearch = Periodo::find($request['PER_CODIGO']);
 		$materias=Materia::materiasxP($request['PER_CODIGO'],$request['DOC_CODIGO'])->get();
 		$controles= null;
 		for($i=0;$i<sizeof($materias);$i++){
@@ -341,9 +347,35 @@ class ReportesController extends Controller {
 			'periodos' => $periodos->reverse(),
 			'docentes' => $docentes,
 			'valores'=>$request,
-			'controles'=>$controles
+			'periodox'=>$periodoSearch,
+			'guiax'=>$guiaSearch,
+			'controles'=>$controles,
+			'materias' =>$materias
 		]);
 	}
+
+	//REPORTE GUIAS PENDIENTES
+	public function GuiasPendientes(Request $request)
+	{
+		$controles= $this->listarPen($request['PER_CODIGO']);
+		$periodo=DB::select('SELECT * FROM periodo');
+
+		return view('reportes.guiaspendientes', compact('controles','periodo'));
+
+	}
+	public function listarPen($periodo)
+	{
+        $controles = DB::select('SELECT @rownum:=@rownum+1 AS ORD, 
+		control.MAT_CODIGO,materia.MAT_NOMBRE,materia.MAT_NRC,periodo.PER_NOMBRE,control.CON_HORA_ENTRADA,control.CON_HORA_SALIDA,docente.DOC_CODIGO, 
+		docente.DOC_NOMBRES,docente.DOC_APELLIDOS,docente.DOC_TITULO,guia.GUI_FECHA,control.CON_EXTRA,control.CON_HORA_ENTRADA_R,control.CON_HORA_SALIDA_R,
+		control.CON_REG_FIRMA_ENTRADA,control.CON_REG_FIRMA_SALIDA,control.CON_CODIGO,control.CON_GUIA,periodo.PER_CODIGO
+		FROM (SELECT @rownum:=0) r, control,materia,guia,docente,periodo
+		where control.MAT_CODIGO=materia.MAT_CODIGO and control.GUI_CODIGO=guia.GUI_CODIGO and guia.PER_CODIGO=periodo.PER_CODIGO and control.DOC_CODIGO=docente.DOC_CODIGO 
+		and periodo.PER_CODIGO="'.$periodo.'"
+		order by control.CON_HORA_ENTRADA ASC;');
+		
+		return $controles;
+	}	
 
 	public function guiasPorCarrera(Request $request)
 	{
@@ -564,6 +596,30 @@ class ReportesController extends Controller {
 
         return $pdf->stream('Reporte.pdf');
 	}
+
+	public function pdfguiapendiente(Request $request)
+	{
+		$controles= $this->listarPen($request['PER_CODIGO']);
+		$periodoSearch = Periodo::find($request['PER_CODIGO']);
+		$pdf = PDF::loadView('reportes.pdfguiapendiente',['periodox'=> $periodoSearch],compact('controles'))->setPaper('a4', 'landscape');
+		
+        return $pdf->stream('ReporteGuiasPendientes.pdf');
+	}
+
+	public function pdfusoguiaentregada()
+	{
+		$periodos = Periodo::codigoNombre()->get();
+		$carreras = Carrera::codigoNombre()->get();
+		$docentes = Carrera::codigoNombre()->get();
+		$materias = Materia::codigoNombre()->get();
+		$periodos = $periodos->reverse();
+		$periodox = Periodo::codigoNombre()->get();
+		$fechaActual = Carbon::now()->format('Y-m-d');
+		$pdf = PDF::loadView('reportes.pdfusoguiaentregada', compact('materias','fechaActual'))->setPaper('a4');
+
+		return $pdf->stream('Reporte.pdf');
+	}
+
 	public function pdfSolicitud($id)
 	{
 		$solicitud = Solicitud::find($id);

@@ -66,9 +66,8 @@ th, td {
 
 <body>
 <div id="header" > 
-      <div  >
-      
-          <img  style='height: 100%; width: 100%;' src="../public/images/reportes/encabezado.png" alt="Error Header">
+      <div>
+        <img style='height: 100%; width: 40%;' alt="Error Header" src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/reportes/espelogo.png';?>"/>
       </div>
       <hr style="size:1px;color:SILVER; " />
       <div style="margin-top: 3px;   margin-bottom:px;" >

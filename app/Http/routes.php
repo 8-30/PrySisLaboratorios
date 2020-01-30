@@ -12,9 +12,8 @@
 Route::get('/', 'WelcomeController@index');
 Route::get('/noticiadetail/{id}', 'WelcomeController@noticiadetail');
 Route::get('/objetodetail/{id}', 'WelcomeController@objetodetail');
-Route::get('guias_y_solicitudes/login', 'GuiaController@login');
-Route::get('guias_y_solicitudes/logout', 'GuiaController@logout');
-Route::post('guias_y_solicitudes', 'GuiaController@index');
+Route::get('guia/login', 'GuiaController@login');
+Route::get('guia/logout', 'GuiaController@logout');
 
 ///////////////////////////////////////////////////////////////////
 Route::controllers([
@@ -150,6 +149,8 @@ Route::get('reporte/fechacontrol', 'ReportesController@fechaControl');
 Route::post('reporte/pdfcontrol', 'ReportesController@pdfcontrol');
 Route::get('reporte/pdfevento/{id}/{fechaInicial}/{fechaFinal}', 'ReportesController@pdfevento');
 Route::get('reporte/pdfmateriacarrera/{idperiodo}/{idcarrera}', 'ReportesController@pdfmateriacarrera');
+Route::post('reporte/pdfguiapendiente', 'ReportesController@pdfguiapendiente');
+Route::get('reporte/pdfusoguiaentregada/', 'ReportesController@pdfusoguiaentregada');
 Route::get('reporte/pdfhorariosala/{idperiodo}/{idlaboratorio}', 'ReportesController@pdfhorariosala');
 Route::get('reporte/pdfhorariodocente/{idperiodo}/{iddocente}', 'ReportesController@pdfhorariodocente');
 Route::post('reporte/actualizarControl', 'ReportesController@actualizarControl');
@@ -170,18 +171,23 @@ Route::post('reporte/materia/carrera', 'ReportesController@materiaPorCarreraPost
 Route::get('reporte/guia/docente', 'ReportesController@usoGuiasEntregadas');
 Route::post('reporte/guia/docente', 'ReportesController@usoGuiasEntregadasPost');
 
+Route::get('reporte/guia/materia', 'ReportesController@GuiasPendientes');
+Route::post('reporte/guia/materia', 'ReportesController@GuiasPendientes');
+
 Route::get('reporte/guia/carrera', 'ReportesController@guiasPorCarrera');
 Route::post('reporte/guia/carrera', 'ReportesController@guiasPorCarreraPost');
 Route::get('reporte/carrera/pdfguia/{idperiodo}/{idcarrera}/{fechaInicial}/{fechaFinal}', 'ReportesController@pdfCarreraGuia');
 Route::get('reporte/pdfSolicitud/{id}', 'ReportesController@pdfSolicitud');
 Route::get('reporte/materia/comboCarrera/{id}', 'ReportesController@byCarreraGet');
 ///////////////////////////////////////////////////////////////////
+Route::get('guia','GuiaController@index');
 Route::get('guia/pdfGuia/{id}', 'GuiaController@pdfGuia');
 Route::get('guia/listarGuias/{id}', 'GuiaController@listarGuias');
 Route::get('guia/{id}/edit', 'GuiaController@edit');
 Route::get('guia/{id}/destroy', 'GuiaController@destroy');
 Route::post('guia/update', 'GuiaController@update');
-Route::get('guia/crearGuia', 'GuiaController@crearGuiaIndex');
+Route::get('guia/crearGuiaIndex', 'GuiaController@crearGuiaIndex');
+Route::post('guia/crearGuiaIndex', 'GuiaController@crearGuiaIndex');
 Route::get('guia/comboMateria/{id}', 'GuiaController@byPeriodoGet');
 Route::get('guia/comboGuia/{id}', 'GuiaController@byGuiaGet');
 Route::get('guia/controlGuiaLaboratoriocreate', 'GuiaController@controlGuiaLaboratoriocreate');

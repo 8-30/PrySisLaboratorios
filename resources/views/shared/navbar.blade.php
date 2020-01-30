@@ -4,7 +4,7 @@
  Author: Jerson Morocho
  Revisado por: DevOps
  -->
- <nav class="navbar navbar-expand-lg navbar-dark nav-color">
+<nav class="navbar navbar-expand-lg navbar-light nav-color" style="height: 20px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;padding-left: 10px;">
   @if(Auth::check())
   <ul class="navbar-nav mr-auto">
     @if(Auth::user()->authorizeAccion("menu_proceso"))
@@ -43,7 +43,7 @@
         <div class="dropdown-divider"></div>
         @endif
         @if(Auth::user()->authorizeAccion("menu_proceso_RegistrarGuiaAnterior"))
-        <a class="dropdown-item" href="{{url('control')}}">Registrar Guia Anterior</a>
+        <a class="dropdown-item" href="{{url('control/Guia_Anterior')}}">Registrar Guia Anterior</a>
         <div class="dropdown-divider"></div>
         @endif
         <a class="dropdown-item" href="{{url('objeto')}}">Objetos Recuperados</a>
@@ -84,7 +84,7 @@
         <div class="dropdown-divider"></div>
         @endif
         @if(Auth::user()->authorizeAccion("menu_reporte_GuiasPendientes"))
-        <a class="dropdown-item" href="{{url('reporte/guia/docente')}}">Guias Pendientes</a>
+        <a class="dropdown-item" href="{{url('reporte/guia/materia')}}">Guias Pendientes</a>
         <div class="dropdown-divider"></div>
         @endif
         @if(Auth::user()->authorizeAccion("menu_reporte_GuiasEntregadas"))
@@ -130,7 +130,7 @@
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{{url('/control')}}">Control</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="/">Guias</a>
+        <a class="dropdown-item" href="{{url('/guia')}}">Guias</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{{url('/campus')}}">Campus</a>
       </div>
