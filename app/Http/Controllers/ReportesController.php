@@ -552,12 +552,8 @@ class ReportesController extends Controller {
 	{
 		$periodo=Periodo::find($idperiodo);
 		$carrera=Carrera::find($idcarrera);
-		$fechaInicial=$fechaIni;
 		$fechaFinal=$fechaFin;
-		$periodoId = $idperiodo;
-		$periodox=Periodo::find($periodoId);
-		$empresa = Empresa::find($periodox->EMP_CODIGO);
-		
+		$fechaInicial=$fechaIni;
 		$materias=Materia::materiasx($idperiodo,$idcarrera)->get();
 		$j=0;
 		$guias=null;

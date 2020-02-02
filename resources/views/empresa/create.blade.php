@@ -18,7 +18,7 @@
     <div align="center">
         <img src="{{URL::asset('images/icons/imgicon.png')}}" alt="seleccione una imagen" id="pic" width="500" height="200" />
     </div>
-    <p><h5>Los campos con <span style="color:#FF0000";>*</span> son obligatorios</h5></p> 
+    <p><h5>Los campos con <span style=a"color:#FF0000";>*</span> son obligatorios</h5></p> 
     <form action="{{url('/empresa/store')}}" method="post">
     
         <input type="hidden" name="_token" value="{{ csrf_token() }}">

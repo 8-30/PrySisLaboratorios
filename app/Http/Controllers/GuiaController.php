@@ -18,75 +18,121 @@ use DB;
 use PDF;
 
 class GuiaController extends Controller {
-	//listar las guias de la materia de Docente logeado
-	public function listarGuias($id) {
-			session(['MAT_CODIGO' => $id]);
-			$materia = $id;
-			$guias_terminadas = DB::select('SELECT guia.GUI_REGISTRADO, guia.GUI_CODIGO,materia.MAT_ABREVIATURA, 
-			guia.GUI_NUMERO,guia.GUI_FECHA, guia.GUI_TEMA, laboratorio.LAB_NOMBRE 
-			from laboratorio,guia,materia 
-			where materia.MAT_CODIGO=guia.MAT_CODIGO and 
-			laboratorio.LAB_CODIGO=guia.LAB_CODIGO and guia.MAT_CODIGO="'.$materia.'";' );
-			$guias_pendientes = DB::select('SELECT materia.MAT_ABREVIATURA, control.CON_DIA,
-			control.CON_EXTRA,control.CON_HORA_ENTRADA, control.CON_HORA_SALIDA,control.CON_NUMERO_HORAS,
-			control.CON_GUIA,control.CON_REG_FIRMA_ENTRADA from control, materia 
-			where control.MAT_CODIGO="'.$materia.'"
-			 and materia.MAT_CODIGO=control.MAT_CODIGO;');
-			$materia_guia = DB::select('SELECT materia.MAT_ABREVIATURA, materia.DOC_CODIGO 
-			from materia where materia.MAT_CODIGO="'.$materia.'";');
-			$pendietes = 0;
-			$creadas = 0;
-			foreach ($guias_terminadas as $ter ) {
-				if ($ter->GUI_REGISTRADO != 1) {
-					$creadas++;
-				}
-			}
-			foreach ($guias_pendientes as $pen) {
-				if ($pen->CON_GUIA != 1 & $pen->CON_EXTRA != 1 & $pen->CON_REG_FIRMA_ENTRADA != null) {
-					$pendietes++;
-				}
-			}
-			$por_crear = $pendietes-$creadas;
-			return view('guia.guiaControl')
-				->with('guias_terminadas', $guias_terminadas)
-				->with('guias_pendientes', $guias_pendientes)
-				->with('pendientes',$pendietes)
-				->with('por_crear',$por_crear)
-				->with('materia_guia',$materia_guia);
+
+	//CRUD NUEVO GUIAS 
+	public function index()
+	{
+		$guia = Guia::all();
+		$docentes = Docente::all();
+		$materias=Materia::all();
+		$laboratorios=Laboratorio::all();
+		$periodos=Periodo::all();
+		return view("CrudGuia.index", ["guias" => $guia,
+		"docentes" => $docentes,
+		"materias"=>$materias,
+		"laboratorios"=>$laboratorios,
+		"periodos"=>$periodos]);
 	}
-
-	public function edit($id) {
-		$guia = Guia::find($id);
-
-		return view('guia.updateGuia', ['guia' => $guia]);
+	public function create()
+	{
+		$docentes = Docente::all();
+		$materias=Materia::all();
+		$laboratorios=Laboratorio::all();
+		$periodos=Periodo::all();
+		return view('CrudGuia.create', ["docentes" => $docentes,
+		"materias"=>$materias,
+		"laboratorios"=>$laboratorios,
+		"periodos"=>$periodos]);
 	}
+	public function store(Request $request)
+	{
 
-	public function update(Request $request) {
-		$materia = session('MAT_CODIGO');
-		$guia = Guia::find($request['GUI_CODIGO']);
-		$guia->fill($request->all());
+		Guia::create([
+			'DOC_CODIGO' => 				$request['DOC_CODIGO'],
+			'MAT_CODIGO' => 				$request['MAT_CODIGO'],
+			'LAB_CODIGO' => 				$request['LAB_CODIGO'],
+			'PER_CODIGO' => 				$request['PER_CODIGO'],
+			'GUI_NUMERO' => 				$request['GUI_NUMERO'],
+            'GUI_FECHA' => 				    $request['GUI_FECHA'],
+            'GUI_TEMA' => 				    $request['GUI_TEMA'],
+			'GUI_DURACION' => 			    $request['GUI_DURACION'],
+			'GUI_OBJETIVO' => 				$request['GUI_OBJETIVO'],
+			'GUI_EQUIPO_MATERIALES' => 	    $request['GUI_EQUIPO_MATERIALES'],
+			'GUI_TRABAJO_PREPARATORIO' => 	$request['GUI_TRABAJO_PREPARATORIO'],
+			'GUI_ACTIVIDADES' => 	        $request['GUI_ACTIVIDADES'],
+			'GUI_RESULTADOS' => 		    $request['GUI_RESULTADOS'],
+			'GUI_CONCLUSIONES' => 	        $request['GUI_CONCLUSIONES'],
+			'GUI_RECOMENDACIONES' => 		$request['GUI_RECOMENDACIONES'],
+			'GUI_REFERENCIAS_BIBLIOGRAFICAS' => $request['GUI_REFERENCIAS_BIBLIOGRAFICAS'],
+			'GUI_ELABORADO' => 				$request['GUI_ELABORADO'],
+			'GUI_APROBADO' => 				$request['GUI_APROBADO'],
+			'GUI_REGISTRADO' => 				$request['GUI_REGISTRADO'],
+			'GUI_INTRODUCCION' => 				$request['GUI_INTRODUCCION'],
+			'GUI_COORDINADOR' => 				$request['GUI_COORDINADOR'],
+		]);
+
+		return redirect('guia');
+	}
+	public function edit($id)
+	{
+		$guia =	Guia::find($id);
+		$docentes = Docente::all();
+		$materias=Materia::all();
+		$laboratorios=Laboratorio::all();
+		$periodos=Periodo::all();
+		
+		return view("CrudGuia.edit", [
+			"guia" => $guia,
+			"docentes" => $docentes,
+			"materias"=>$materias,
+			"laboratorios"=>$laboratorios,
+			"periodos"=>$periodos
+		]);
+	}
+	public function update(Request $request)
+	{
+		$guia =	guia::find( $request['GUI_CODIGO']);
+		$guia->fill([
+			'DOC_CODIGO' => 				$request['DOC_CODIGO'],
+			'MAT_CODIGO' => 				$request['MAT_CODIGO'],
+			'LAB_CODIGO' => 				$request['LAB_CODIGO'],
+			'PER_CODIGO' => 				$request['PER_CODIGO'],
+			'GUI_NUMERO' => 				$request['GUI_NUMERO'],
+            'GUI_FECHA' => 				    $request['GUI_FECHA'],
+            'GUI_TEMA' => 				    $request['GUI_TEMA'],
+			'GUI_DURACION' => 			    $request['GUI_DURACION'],
+			'GUI_OBJETIVO' => 				$request['GUI_OBJETIVO'],
+			'GUI_EQUIPO_MATERIALES' => 	    $request['GUI_EQUIPO_MATERIALES'],
+			'GUI_TRABAJO_PREPARATORIO' => 	$request['GUI_TRABAJO_PREPARATORIO'],
+			'GUI_ACTIVIDADES' => 	        $request['GUI_ACTIVIDADES'],
+			'GUI_RESULTADOS' => 		    $request['GUI_RESULTADOS'],
+			'GUI_CONCLUSIONES' => 	        $request['GUI_CONCLUSIONES'],
+			'GUI_RECOMENDACIONES' => 		$request['GUI_RECOMENDACIONES'],
+			'GUI_REFERENCIAS_BIBLIOGRAFICAS' => $request['GUI_REFERENCIAS_BIBLIOGRAFICAS'],
+			'GUI_ELABORADO' => 				$request['GUI_ELABORADO'],
+			'GUI_APROBADO' => 				$request['GUI_APROBADO'],
+			'GUI_REGISTRADO' => 				$request['GUI_REGISTRADO'],
+			'GUI_INTRODUCCION' => 				$request['GUI_INTRODUCCION'],
+			'GUI_COORDINADOR' => 				$request['GUI_COORDINADOR'],
+		]);
 		$guia->save();
-
-		return redirect('guia/listarGuias/'.$materia)
-			->with('title', 'Guia actualizada!')
-			->with('subtitle', 'La actualización de la guía se ha realizado con éxito.');
+		return redirect('guia');
 	}
+
 
 	public function destroy($id) {
-		$materia = session('MAT_CODIGO');
-
 		Guia::destroy($id);
-
-		return redirect('guia/listarGuias/'.$materia)
-			->with('title', 'Guia Eliminada!')
-			->with('subtitle', 'El registro de la guía se ha eliminado con éxito.');
+		return redirect('guia');
 	}
+
+
+	////FIN DE CRUD ACTUALIZADO
 
 	public function login() {
 		return view('guias.login');
 	}
 
-	public function index(Request $request) {
+	public function indexActual(Request $request) {
 		$docentes = Docente::where('DOC_MIESPE', $request['usuario'])
 			->where('DOC_CLAVE',$request['clave'])->first();
 
@@ -140,7 +186,7 @@ class GuiaController extends Controller {
 				}
 			}
 
-			return view('guias.index', [
+			return view('guias.indexActual', [
 				'periodo' => $periodo,
 				'docente' => $docentes,
 				'count' => $count
@@ -149,25 +195,9 @@ class GuiaController extends Controller {
 		}
 	}
 
-	public function regresarListarGuia($doc_id) {
-		$docente = Docente::where('DOC_CODIGO',$doc_id)->first();
-		$requestObj = new Request(array('usuario' => $docente->DOC_MIESPE, 'clave' => $docente->DOC_CLAVE));
-		return $this->index($requestObj);
-	}
-
 	public function logout() {
 		session()->forget('DOC_CODIGO');
 		return view('guias.login');
-	}
-
-	public function crearGuiaIndex() {
-		$periodos = Periodo::codigoNombre()->get();
-		$idMateria = session('MAT_CODIGO');
-		$materia_guia = DB::select('SELECT materia.MAT_ABREVIATURA from materia where materia.MAT_CODIGO="'.$idMateria.'";');
-		return view('guia.crearGuia', [
-			'periodos' => $periodos,
-			'materia' => $materia_guia[0]->MAT_ABREVIATURA
-		]);
 	}
 
 /**Obtines las materias del docente del periodo seleccionado */
@@ -254,47 +284,6 @@ class GuiaController extends Controller {
 			'guia' => $guias,
 			'fecha'=>$control,
 		]);
-	}
-
-   /*Guardar GUIA*/
-   public function guardarGuia(Request $request) {
-		//obtiene el id de docente
-		$docenteId = session('DOC_CODIGO');
-
-		//busca el docente y crea el nombre con el titulo
-		$docente = Docente::find($docenteId);
-		$nombreDocente=$docente->DOC_TITULO." ".$docente->DOC_NOMBRES." ".$docente->DOC_APELLIDOS;
-
-		//obtiene materia y periodo id
-		$materia = session('MAT_CODIGO');
-		$periodo = session('PER_CODIGO');
-
-		//asigna las variables a la guia y guarda
-		$guia = Guia::create([
-			'DOC_CODIGO' => $docenteId,
-			'MAT_CODIGO' => $materia,
-			'LAB_CODIGO' => $request['LAB_CODIGO'],
-			'PER_CODIGO' => $periodo,
-			'GUI_NUMERO' => $request['GUI_NUMERO'],
-			'GUI_FECHA' => $request['GUI_FECHA'],
-			'GUI_TEMA' => $request['GUI_TEMA'],
-			'GUI_DURACION' => $request['GUI_DURACION'],
-			'GUI_OBJETIVO' => $request['GUI_OBJETIVO'],
-			'GUI_EQUIPO_MATERIALES' => $request['GUI_EQUIPO_MATERIALES'],
-			'GUI_TRABAJO_PREPARATORIO' => $request['GUI_TRABAJO_PREPARATORIO'],
-			'GUI_ACTIVIDADES' => $request['GUI_ACTIVIDADES'],
-			'GUI_RESULTADOS' => $request['GUI_RESULTADOS'],
-			'GUI_CONCLUSIONES' => $request['GUI_CONCLUSIONES'],
-			'GUI_RECOMENDACIONES' => $request['GUI_RECOMENDACIONES'],
-			'GUI_REFERENCIAS_BIBLIOGRAFICAS' => $request['GUI_REFERENCIAS_BIBLIOGRAFICAS'],
-			'GUI_ELABORADO' => $nombreDocente,
-			'GUI_COORDINADOR' => $request['GUI_COORDINADOR'],
-			'GUI_REGISTRADO' => 0,
-			'GUI_INTRODUCCION' => $request['GUI_INTRODUCCION'],
-			'GUI_APROBADO' => 0,
-		]);
-
-		return redirect('guia/listarGuias/'.$materia);
 	}
 
 	public function pdfGuia($id) {

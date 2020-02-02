@@ -16,7 +16,9 @@ class Guia extends Model {
 	public function scopeGuiasxCarrera($query, $materia){
         return $query->where('MAT_CODIGO',$materia);
     }
-
+	public function guias(){
+		return $this->belongsTo('App\docente','DOC_CODIGO');
+	}
 	public function docentes(){
 		return $this->belongsTo('App\docente','DOC_CODIGO');
 	}

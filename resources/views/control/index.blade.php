@@ -1,99 +1,57 @@
 <!--
- Sistema de Gestion de Laboratorios - ESPE
- 
- Author: Daniel Lopez, Jipson Murillo
- Revisado por: Jerson Morocho
- -->
-
+ * Sistema de Gestion de Laboratorios - ESPE
+ *
+ * Author: Mauro Morales - Jerson Morocho
+ * Revisado por: 
+ *
+-->
 @extends('app')
 @section('content')
-@include('shared.title', array('titulo' => 'Generar Control'))
+@include('shared.title', array('titulo' => 'Controles'))
 
 <div class="container-fluid">
-  @if (session('success'))
+  @if (session('title') && session('subtitle'))
   <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <h4 class="alert-heading">{{ session('success') }}</h4>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+      <h4 class="alert-heading">{{ session('title') }}</h4>
+      <p>{{ session('subtitle') }}</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
   </div>
   @endif
-  @if (session('error'))
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <h4 class="alert-heading">{{ session('error') }}</h4>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-
   <div class="row">
       <div class="col">
-          <form action="{{url('/control')}}" method="post">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-              <div class="card border-primary mb-3">
-                  <div class="card-header text-primary">Fecha</div>
-                  <div class="card-body text-primary">
-                    <div class="form-group">
-                      @if (!session('fecha'))
-                      <input type="date" class="form-control" name="CON_DIA" id="CON_DIA" value="{{$controles['fecha']}}" />
-                      @else
-                      <input type="date" class="form-control" name="CON_DIA" id="CON_DIA" value="{{session('fecha')}}" />
-                      @endif
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary"><span class="oi oi-magnifying-glass"></span> Seleccionar</button>
-                  </div>
-              </div>
-          </form>
+          <a href="{{url('control/create')}}" class="btn btn-success mb-2">Nuevo</a>
       </div>
-
-      <div class="col">
-        <div class="card border-info mb-3">
-          <div class="card-header text-info">Opciones</div>
-            <div class="card-body text-info">
-              <form class="form" id="form" action="{{ url('control/generar') }}" method="POST">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" class="form-control" name="CON_DIA" id="CON_DIA" value="{{$controles['fecha']}}" />
-
-                <div class="custom-control custom-switch ">
-                  <input type="checkbox" class="custom-control-input" id="MAT_OCACIONAL" name="MAT_OCACIONAL">
-                  <label class="custom-control-label" for="MAT_OCACIONAL">Ocasional</label>
-                </div>
-                <br>
-                <button class="btn btn-info"><span class="oi oi-cloud-download"></span> Generar Control</button>
-              </form>
-
-              
-          </div>
-        </div>
-      </div>
-  </div>
-
-
-  <br>
-  <table id="ListTable" class="table table-hover table-bordered results">
+      <div class="col"></div>
+  </div>  
+  <span class="counter pull-right"></span>
+  <table id="ListTable" class="table table-hover table-bordered table-responsive results">
     <thead>
       <tr>
-        <th scope="row">MATERIA</th>
-        <th scope="row">REGISTRO</th>
-
-      </tr>
+        <th scope="row">codigo</th> 
+        <th scope="row">Fecha</th>
+        <th scope="row">Registro entrada</th>
+        <th scope="row">Registro Salida</th> 
+        <th scope="row">Acciones</th>
+      </tr>       
     </thead>
     <tbody>
-      @foreach ($controles as $con)
-      @if($con != $controles["fecha"])
+    @foreach ($controles as $control)
       <tr>
-        <td scope="row">{{$con -> LAB_NOMBRE}}</td>
-        <td scope="row">{{$con -> REGISTROS}}</td>
+        <td scope="row">{{ $control->CON_CODIGO}}</td>
+        <td scope="row">{{ $control->CON_DIA }}</td>
+        <td scope="row">{{ $control->CON_REG_FIRMA_ENTRADA }}</td>
+        <td scope="row">{{ $control->CON_REG_FIRMA_SALIDA }}</td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="{{url('control/'.$control->CON_CODIGO.'/edit')}}" class="btn btn-primary mb-2"><span class="oi oi-pencil"></span></a>
+            <a href="{{url('control/'.$control->CON_CODIGO.'/destroy')}}" class="btn btn-danger mb-2"><span class="oi oi-trash"></span></a>
+          </div>
+        </td>
       </tr>
-
-      @endif
-      @endforeach
-
+    @endforeach
     </tbody>
   </table>
-
-</div>
+</div >
 @endsection
