@@ -4,7 +4,7 @@
  Author: Jerson Morocho
  Revisado por: DevOps
  -->
-<nav class="navbar navbar-expand-lg navbar-light nav-color" style="height: 20px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;padding-left: 10px;">
+ <nav class="navbar navbar-expand-lg navbar-light nav-color" style="height: 20px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;padding-left: 10px;">
   @if(Auth::check())
   <ul class="navbar-nav mr-auto">
     @if(Auth::user()->authorizeAccion("menu_proceso"))
@@ -122,8 +122,6 @@
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{{url('/laboratorio')}}">Laboratorio</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{url('/materiales/laboratorio')}}">Materiales</a>
-        <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{{url('/parametro')}}">Parametro</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{{url('/carrera')}}">Carrera</a>
@@ -154,12 +152,8 @@
     </li>
     @endif
   </ul>
+  @endif
   <div class="position-absolute" style="right:0">
-    <a class="btn btn-orange" href="{{url('/guias_y_solicitudes/login')}}"><span class="oi oi-book"></span> Guías y Solicitudes</a>
+    <a class="nav-link text-light" href="{{url('/guia/login')}}"><span class="oi oi-book"></span> Guías y Solicitudes</a>
   </div>
-  @else
-  <div class="m-auto">
-    <a class="btn btn-orange btn-pulse" href="{{url('/guias_y_solicitudes/login')}}"><span class="oi oi-book"></span> Guías y Solicitudes</a>
-  </div>
-@endif
 </nav>

@@ -1,6 +1,6 @@
 @extends('app')
 @section('content')
-@include('shared.title', array('titulo' => 'Consola de Control'))
+@include('shared.title', array('titulo' => 'Registro de Control'))
 
 
  <body >
@@ -9,7 +9,7 @@
 </div>
         <div class="container">
          
-         <form  action="/control/store"  method="post">
+         <form  action="{{url('/control/store')}}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="row"> 
                 <div class="col">
